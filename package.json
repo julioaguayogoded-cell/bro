@@ -1,0 +1,5 @@
+{
+  "name": "bro-os-backend",
+  "type": "module",
+  "scripts": { "start": "node server.js" }
+}

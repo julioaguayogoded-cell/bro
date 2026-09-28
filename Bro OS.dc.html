@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Bro OS — Prototipo v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#E6E9F0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
+input{font:inherit}
+a{color:#3068ED}a:hover{color:#1f4fc4}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(48,104,237,.5)}70%{box-shadow:0 0 0 16px rgba(48,104,237,0)}100%{box-shadow:0 0 0 0 rgba(48,104,237,0)}}
+@keyframes sube{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes puntos{0%,100%{opacity:.3}50%{opacity:1}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px 10px;font-family:Inter,system-ui,sans-serif;color:#111;font-size:15px;line-height:1.45">
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center">
+    <div style="display:flex;gap:3px;padding:4px;border-radius:999px;background:#111">
+      <button onClick="{{ verNino }}" style="padding:8px 16px;border-radius:999px;font-family:Outfit;font-weight:700;font-size:13px;background:{{ swNinoBg }};color:{{ swNinoTx }}">Julio · Bro OS</button>
+      <button onClick="{{ verPadre }}" style="padding:8px 16px;border-radius:999px;font-family:Outfit;font-weight:700;font-size:13px;background:{{ swPadreBg }};color:{{ swPadreTx }}">Laura · Bro Parent</button>
+    </div>
+    <button onClick="{{ reiniciar }}" style="font-size:12.5px;color:#6B7280;padding:8px 10px">Reiniciar demo</button>
+  </div>
+
+  <div style="width:100%;max-width:400px;height:min(860px,calc(100vh - 86px));min-height:620px;border-radius:40px;border:8px solid #111;overflow:hidden;position:relative;display:flex;flex-direction:column;background:#F5F6F9;box-shadow:0 30px 60px rgba(17,17,17,.18)">
+
+  <sc-if value="{{ cargando }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="assets/logo.png" alt="Bro" style="width:84px;height:84px"></div>
+  </sc-if>
+
+  <!-- ===================== JULIO · BRO OS ===================== -->
+  <sc-if value="{{ esNino }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+      <div style="display:flex;align-items:center;gap:11px;padding:14px 16px 12px;background:#fff;border-bottom:1px solid #E4E7EE">
+        <sc-if value="{{ puedeVolver }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ volver }}" aria-label="Volver" style="width:34px;height:34px;border-radius:50%;background:#F5F6F9;display:grid;place-items:center;font-size:20px;flex:none">‹</button>
+        </sc-if>
+        <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none">
+        <div style="min-width:0">
+          <div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">{{ titulo }}</div>
+          <div style="font-size:12px;color:#6B7280">{{ subtitulo }}</div>
+        </div>
+        <div style="margin-left:auto;width:36px;height:36px;border-radius:50%;background:#3068ED;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700;flex:none">J</div>
+      </div>
+
+      <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:110px">
+
+        <!-- INICIO -->
+        <sc-if value="{{ p.inicio }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px 0">
+            <div>
+              <div style="font-family:Outfit;font-size:44px;font-weight:800;letter-spacing:-.035em;line-height:.95">{{ hora }}</div>
+              <div style="font-size:12.5px;color:#6B7280;margin-top:4px">{{ fecha }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E4E7EE;border-radius:14px;padding:8px 12px">
+              <span style="font-size:20px">⛅</span>
+              <div><div style="font-family:Outfit;font-size:16px;font-weight:700;line-height:1">26°</div><div style="font-size:10.5px;color:#6B7280">Madrid</div></div>
+            </div>
+          </div>
+          <div style="padding:12px 18px 0">
+            <div style="height:7px;border-radius:99px;background:#E4E7EE;overflow:hidden"><div style="height:100%;border-radius:99px;background:#82B94F;width:{{ pantallaPct }}"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#6B7280;margin-top:6px"><span>{{ pantallaTxt }}</span><span>Noche a las 22:00</span></div>
+          </div>
+
+          <button onClick="{{ escuchar }}" style="margin:16px 16px 0;width:calc(100% - 32px);display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 18px 20px;border-radius:24px;background:linear-gradient(150deg,#3068ED,#6f49d8);color:#fff;text-align:center;box-shadow:0 12px 28px rgba(48,104,237,.28)">
+            <div style="width:88px;height:88px;border-radius:50%;padding:4px;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
+              <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#2a5ad6,#5a39c4);display:grid;place-items:center">
+                <img src="assets/facew.png" alt="" style="width:62%;height:62%">
+              </div>
+            </div>
+            <div>
+              <div style="font-family:Outfit;font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.1">{{ heroTitulo }}</div>
+              <div style="font-size:13px;opacity:.9;margin-top:5px;text-wrap:pretty">Dímelo y te llevo. Toca para hablar o escribe abajo.</div>
+            </div>
+          </button>
+
+          <div style="display:flex;gap:8px;overflow-x:auto;padding:12px 16px 2px">
+            <sc-for list="{{ sugerencias }}" as="s" hint-placeholder-count="4">
+              <button onClick="{{ s.onClick }}" style="flex:none;background:#fff;border:1px solid #E4E7EE;border-radius:999px;padding:9px 14px;font-size:12.5px;font-weight:600">«{{ s.txt }}»</button>
+            </sc-for>
+          </div>
+
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 9px;letter-spacing:-.01em">Ahora mismo</div>
+          <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ ahora }}" as="it" hint-placeholder-count="3">
+              <button onClick="{{ it.onClick }}" style="display:flex;gap:12px;padding:14px;border-bottom:1px solid #E4E7EE;width:100%;align-items:center">
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:10.5px;font-weight:700;color:#3068ED">{{ it.k }}</div>
+                  <div style="font-family:Outfit;font-size:15px;font-weight:600;margin-top:2px;overflow-wrap:anywhere">{{ it.titulo }}</div>
+                  <div style="font-size:12.5px;color:#6B7280;margin-top:2px">{{ it.texto }}</div>
+                </div>
+                <span style="color:#9AA1AE;font-size:18px">›</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <button onClick="{{ irAura }}" style="margin:14px 16px 0;width:calc(100% - 32px);background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:15px;display:flex;gap:14px;align-items:center">
+            <svg width="84" height="84" viewBox="0 0 104 104" style="flex:none">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#82B94F" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r1.c }}" stroke-dashoffset="{{ r1.off }}" transform="rotate(-90 52 52)"></circle>
+              <circle cx="52" cy="52" r="31" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+              <circle cx="52" cy="52" r="31" fill="none" stroke="#3068ED" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r2.c }}" stroke-dashoffset="{{ r2.off }}" transform="rotate(-90 52 52)"></circle>
+              <circle cx="52" cy="52" r="18" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+              <circle cx="52" cy="52" r="18" fill="none" stroke="#E56648" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r3.c }}" stroke-dashoffset="{{ r3.off }}" transform="rotate(-90 52 52)"></circle>
+            </svg>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+              <div style="font-family:Outfit;font-size:15px;font-weight:700">Aura de hoy</div>
+              <div style="font-size:12.5px;color:#6B7280">Has dormido <b style="color:#111">{{ aura.sueno.total }}</b></div>
+              <div style="font-size:12.5px;color:#6B7280"><b style="color:#111">{{ aura.pasosTxt }}</b> pasos · <b style="color:#111">{{ aura.activos }} min</b> activo</div>
+            </div>
+            <span style="color:#9AA1AE;font-size:18px">›</span>
+          </button>
+
+          <sc-if value="{{ mostrarAtajos }}" hint-placeholder-val="{{ true }}">
+            <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 9px;letter-spacing:-.01em">O ve tú</div>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 6px;padding:0 16px">
+              <sc-for list="{{ atajos }}" as="a" hint-placeholder-count="8">
+                <button onClick="{{ a.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                  <div style="width:54px;height:54px;border-radius:16px;background:#fff;border:1px solid #E4E7EE;display:grid;place-items:center;font-size:22px">{{ a.ic }}</div>
+                  <span style="font-size:10.5px;color:#6B7280;text-align:center;line-height:1.2">{{ a.t }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <!-- FLUJO GUIADO -->
+        <sc-if value="{{ p.flujo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 0">
+            <div style="display:flex;gap:5px">
+              <sc-for list="{{ flujo.barras }}" as="b" hint-placeholder-count="3">
+                <div style="flex:1;height:5px;border-radius:99px;background:{{ b.color }}"></div>
+              </sc-for>
+            </div>
+          </div>
+          <sc-for list="{{ flujo.respuestas }}" as="r" hint-placeholder-count="0">
+            <div style="margin:14px 16px 8px;display:flex;gap:10px;align-items:flex-start">
+              <img src="assets/logo.png" alt="" style="width:26px;height:26px;flex:none">
+              <div style="font-size:14px;color:#6B7280;padding-top:3px">{{ r.p }}</div>
+            </div>
+            <div style="margin:0 16px;display:flex;justify-content:flex-end">
+              <span style="background:#3068ED;color:#fff;border-radius:17px;border-bottom-right-radius:5px;padding:10px 13px;font-size:14.5px;max-width:82%">{{ r.r }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ flujo.hayPregunta }}" hint-placeholder-val="{{ true }}">
+            <div style="margin:16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:16px;animation:sube .3s ease-out">
+              <div style="font-size:11px;font-weight:700;color:#3068ED">BRO AI · PASO {{ flujo.paso }} DE {{ flujo.total }}</div>
+              <div style="font-family:Outfit;font-size:20px;font-weight:700;letter-spacing:-.02em;margin-top:5px">{{ flujo.pregunta }}</div>
+            </div>
+            <div style="padding:0 16px;display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ flujo.opciones }}" as="o" hint-placeholder-count="3">
+                <button onClick="{{ o.onClick }}" style="width:100%;background:#fff;border:1px solid #E4E7EE;border-radius:14px;padding:14px 15px;font-size:14.5px;font-weight:600" style-hover="border-color:#3068ED;background:rgba(48,104,237,.06)">{{ o.txt }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ flujo.hayFin }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:16px;border-radius:22px;background:#82B94F;color:#fff;padding:26px 20px;text-align:center;animation:sube .3s ease-out">
+              <div style="font-family:Outfit;font-size:26px;font-weight:800;letter-spacing:-.03em">Hecho</div>
+              <div style="margin-top:8px;font-size:14px;line-height:1.45;text-wrap:pretty">{{ flujo.finDi }}</div>
+            </div>
+            <div style="padding:0 16px"><button onClick="{{ flujo.onFin }}" style="display:block;width:100%;padding:14px;border-radius:14px;background:#3068ED;color:#fff;font-weight:700;font-family:Outfit;font-size:15px;text-align:center">{{ flujo.finBoton }}</button></div>
+          </sc-if>
+        </sc-if>
+
+        <!-- AURA -->
+        <sc-if value="{{ p.aura }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:16px;background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:16px">
+            <div style="display:flex;gap:16px;align-items:center">
+              <svg width="112" height="112" viewBox="0 0 104 104" style="flex:none">
+                <circle cx="52" cy="52" r="44" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+                <circle cx="52" cy="52" r="44" fill="none" stroke="#82B94F" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r1.c }}" stroke-dashoffset="{{ r1.off }}" transform="rotate(-90 52 52)"></circle>
+                <circle cx="52" cy="52" r="31" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+                <circle cx="52" cy="52" r="31" fill="none" stroke="#3068ED" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r2.c }}" stroke-dashoffset="{{ r2.off }}" transform="rotate(-90 52 52)"></circle>
+                <circle cx="52" cy="52" r="18" fill="none" stroke="#F0F2F6" stroke-width="10"></circle>
+                <circle cx="52" cy="52" r="18" fill="none" stroke="#E56648" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ r3.c }}" stroke-dashoffset="{{ r3.off }}" transform="rotate(-90 52 52)"></circle>
+              </svg>
+              <div style="flex:1;display:flex;flex-direction:column;gap:9px;min-width:0">
+                <div style="display:flex;gap:7px;align-items:center"><i style="width:8px;height:8px;border-radius:50%;background:#82B94F"></i><b style="font-family:Outfit;font-size:16px">{{ aura.pasosTxt }}</b><span style="font-size:11px;color:#6B7280">pasos</span></div>
+                <div style="display:flex;gap:7px;align-items:center"><i style="width:8px;height:8px;border-radius:50%;background:#3068ED"></i><b style="font-family:Outfit;font-size:16px">{{ aura.activos }} min</b><span style="font-size:11px;color:#6B7280">activo</span></div>
+                <div style="display:flex;gap:7px;align-items:center"><i style="width:8px;height:8px;border-radius:50%;background:#E56648"></i><b style="font-family:Outfit;font-size:16px">{{ aura.movimiento }}</b><span style="font-size:11px;color:#6B7280">kcal en movimiento</span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid #E4E7EE">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><b style="font-family:Outfit;font-size:15px">Sueño · {{ aura.sueno.total }}</b><span style="font-size:11px;color:#6B7280">{{ aura.sueno.dormir }} → {{ aura.sueno.despertar }}</span></div>
+              <div style="display:flex;height:34px;gap:2px;border-radius:7px;overflow:hidden">
+                <sc-for list="{{ aura.fases }}" as="f" hint-placeholder-count="9">
+                  <div style="flex:{{ f.flex }};background:{{ f.color }};border-radius:3px"></div>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:11px;margin-top:8px;flex-wrap:wrap;font-size:10.5px;color:#6B7280">
+                <span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#3068ED"></i>Profundo</span>
+                <span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#7fa4ff"></i>Ligero</span>
+                <span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#6f49d8"></i>REM</span>
+                <span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#E56648"></i>Despierto</span>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:12px">
+                <div style="flex:1;background:#F5F6F9;border-radius:12px;padding:10px 11px"><b style="font-family:Outfit;font-size:15px;display:block">{{ aura.sueno.calidad }}</b><span style="font-size:10.5px;color:#6B7280">Calidad</span></div>
+                <div style="flex:1;background:#F5F6F9;border-radius:12px;padding:10px 11px"><b style="font-family:Outfit;font-size:15px;display:block">{{ aura.sueno.ayer }}</b><span style="font-size:10.5px;color:#6B7280">Anoche anterior</span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid #E4E7EE">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><b style="font-family:Outfit;font-size:14.5px">Pantalla y movimiento</b><span style="padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(130,185,79,.16);color:#54812b">En equilibrio</span></div>
+              <div style="display:flex;height:26px;gap:2px;border-radius:9px;overflow:hidden">
+                <div style="flex:{{ aura.pantalla }};background:#4b5563;color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center">{{ aura.pantallaTxt }}</div>
+                <div style="flex:{{ aura.actividad }};background:#82B94F;color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center">{{ aura.actividadTxt }}</div>
+              </div>
+              <div style="font-size:11.5px;color:#6B7280;margin-top:8px">Por cada hora de pantalla te has movido 40 minutos. Vas bien.</div>
+              <div style="margin-top:14px;font-size:12px;color:#6B7280">Los últimos 7 días</div>
+              <div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:6px">
+                <sc-for list="{{ aura.semana }}" as="d" hint-placeholder-count="7">
+                  <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;align-items:stretch">
+                    <div style="height:{{ d.hp }};background:#4b5563;border-radius:3px"></div>
+                    <div style="height:{{ d.ha }};background:#82B94F;border-radius:3px"></div>
+                    <div style="font-size:9.5px;color:#9AA1AE;text-align:center">{{ d.dia }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:12.5px;color:#6B7280;margin:0 16px;text-wrap:pretty">Laura ve estas mismas tendencias. Ni más, ni menos.</div>
+        </sc-if>
+
+        <!-- COMUNIDADES -->
+        <sc-if value="{{ p.comunidades }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:16px 16px 9px">Tus comunidades</div>
+          <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ comunidades }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E4E7EE">
+                <div style="width:42px;height:42px;border-radius:13px;background:#F5F6F9;display:grid;place-items:center;font-size:19px;flex:none">{{ c.ic }}</div>
+                <div style="flex:1;min-width:0"><b style="display:block;font-size:14.5px;font-weight:600">{{ c.nombre }}</b><span style="font-size:12.5px;color:#6B7280">{{ c.para }} · {{ c.dirige }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 4px">Tus Bros</div>
+          <div style="font-size:12.5px;color:#6B7280;margin:0 16px 10px">Conexiones mutuas, hechas en persona con tu código Bro.</div>
+          <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ bros }}" as="b" hint-placeholder-count="3">
+              <button onClick="{{ b.onClick }}" style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E4E7EE;width:100%">
+                <div style="width:42px;height:42px;border-radius:50%;background:{{ b.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700;flex:none">{{ b.ini }}</div>
+                <div style="flex:1;min-width:0"><b style="display:block;font-size:14.5px;font-weight:600">{{ b.nombre }} {{ b.apellido }}</b><span style="font-size:12.5px;color:#6B7280">{{ b.de }}</span></div>
+                <sc-if value="{{ b.sinLeer }}" hint-placeholder-val="{{ false }}"><span style="background:#E56648;color:#fff;border-radius:999px;font-size:10.5px;font-weight:700;padding:2px 7px">1</span></sc-if>
+                <span style="color:#9AA1AE;font-size:18px">›</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- CHAT -->
+        <sc-if value="{{ p.chat }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 14px 4px;display:flex;flex-direction:column;gap:9px">
+            <div style="align-self:center;background:#EEF1F6;color:#4b5563;font-size:12px;padding:8px 12px;border-radius:12px;text-align:center">Solo tú y {{ chatCon }}. Laura no lee esto.</div>
+            <sc-for list="{{ mensajes }}" as="m" hint-placeholder-count="2">
+              <sc-if value="{{ m.mio }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self:flex-end;max-width:84%;padding:10px 13px;border-radius:17px;border-bottom-right-radius:5px;background:#3068ED;color:#fff;font-size:14.5px">{{ m.txt }}</div>
+              </sc-if>
+              <sc-if value="{{ m.suyo }}" hint-placeholder-val="{{ true }}">
+                <div style="align-self:flex-start;max-width:84%;padding:10px 13px;border-radius:17px;border-bottom-left-radius:5px;background:#fff;border:1px solid #E4E7EE;font-size:14.5px">{{ m.txt }}</div>
+              </sc-if>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;padding:10px 14px">
+            <input value="{{ chatTxt }}" onChange="{{ onChatTxt }}" onKeyDown="{{ onChatKey }}" placeholder="Mensaje a {{ chatCon }}" style="flex:1;min-width:0;border:1px solid #E4E7EE;background:#fff;border-radius:999px;padding:11px 15px;font-size:14.5px;outline:none">
+            <button onClick="{{ enviarChat }}" aria-label="Enviar" style="width:44px;height:44px;border-radius:50%;background:#3068ED;color:#fff;font-size:17px;flex:none;display:grid;place-items:center">↑</button>
+          </div>
+        </sc-if>
+
+        <!-- PLAN -->
+        <sc-if value="{{ p.plan }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:16px;background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:18px">
+            <span style="display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;background:{{ plan.chipBg }};color:{{ plan.chipTx }}">{{ plan.estadoTxt }}</span>
+            <div style="font-family:Outfit;font-size:22px;font-weight:800;letter-spacing:-.02em;margin-top:10px">{{ plan.titulo }}</div>
+            <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E4E7EE;font-size:13.5px;margin-top:6px"><span style="color:#6B7280;width:92px;flex:none;font-size:12.5px">Cuándo</span><div>{{ plan.cuando }}</div></div>
+            <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E4E7EE;font-size:13.5px"><span style="color:#6B7280;width:92px;flex:none;font-size:12.5px">Dónde</span><div>{{ plan.donde }}</div></div>
+            <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E4E7EE;font-size:13.5px"><span style="color:#6B7280;width:92px;flex:none;font-size:12.5px">Van</span><div>{{ plan.van }}</div></div>
+            <div style="display:flex;gap:10px;padding:10px 0;font-size:13.5px"><span style="color:#6B7280;width:92px;flex:none;font-size:12.5px">Organiza</span><div>{{ plan.organiza }}</div></div>
+            <sc-if value="{{ plan.hayDetalle }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:6px;background:#F5F6F9;border-radius:12px;padding:10px 12px;font-size:13px">{{ plan.detalle }}</div>
+            </sc-if>
+          </div>
+          <div style="padding:0 16px">
+            <sc-if value="{{ plan.borrador }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ plan.onPedir }}" style="display:block;width:100%;padding:14px;border-radius:14px;background:#3068ED;color:#fff;font-weight:700;font-family:Outfit;font-size:15px;text-align:center">Pedir permiso a Laura con Bro</button>
+            </sc-if>
+            <sc-if value="{{ plan.pedido }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:16px;border:1px dashed #E4E7EE;border-radius:16px;background:#fff;text-align:center;font-size:13.5px;color:#6B7280">Enviado. Cambia a <b style="color:#111">Laura</b> arriba para decidir como madre.</div>
+            </sc-if>
+            <sc-if value="{{ plan.aprobado }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:16px;border-radius:16px;background:#82B94F;color:#fff;text-align:center;font-family:Outfit;font-weight:700">Laura ha dicho que sí. ¡A patinar!</div>
+            </sc-if>
+            <sc-if value="{{ plan.rechazado }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:16px;border-radius:16px;background:rgba(229,102,72,.12);color:#bf4527;text-align:center;font-size:13.5px">Esta vez no. Bro te sugiere hablarlo con Laura en persona.</div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <!-- PROYECTOS -->
+        <sc-if value="{{ p.proyectos }}" hint-placeholder-val="{{ false }}">
+          <div style="height:14px"></div>
+          <sc-for list="{{ proyectos }}" as="pr" hint-placeholder-count="1">
+            <div style="margin:0 16px 11px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:15px">
+              <div style="font-size:10.5px;font-weight:700;color:#3068ED">{{ pr.pasoTxt }} · {{ pr.con }}</div>
+              <div style="font-family:Outfit;font-size:17px;font-weight:700;margin-top:3px">{{ pr.titulo }}</div>
+              <div style="font-size:13px;color:#6B7280;margin-top:3px">Siguiente: {{ pr.siguiente }}</div>
+              <div style="height:6px;border-radius:99px;background:#F0F2F6;margin-top:11px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#82B94F;width:{{ pr.pct }}"></div></div>
+            </div>
+          </sc-for>
+          <div style="padding:0 16px"><button onClick="{{ nuevoProyecto }}" style="display:block;width:100%;padding:14px;border-radius:14px;background:#fff;border:1px solid #E4E7EE;font-weight:700;font-family:Outfit;font-size:15px;text-align:center">Crear otro con Bro</button></div>
+        </sc-if>
+
+        <!-- LOGROS -->
+        <sc-if value="{{ p.logros }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:12.5px;color:#6B7280;margin:16px 16px 11px">Acuerdos con Laura. Tú marcas, ella confía.</div>
+          <sc-for list="{{ logros }}" as="l" hint-placeholder-count="1">
+            <div style="margin:0 16px 11px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:15px">
+              <div style="font-size:10.5px;font-weight:700;color:#6B7280">DE {{ l.deMay }} · {{ l.txt }}</div>
+              <div style="font-family:Outfit;font-size:17px;font-weight:700;margin-top:2px">{{ l.titulo }}</div>
+              <div style="height:6px;border-radius:99px;background:#F0F2F6;margin-top:10px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#3068ED;width:{{ l.pct }}"></div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px;padding-top:10px;border-top:1px solid #E4E7EE">
+                <span style="font-size:12.5px;color:#6B7280">Premio: <b style="color:#111">{{ l.premio }}</b></span>
+                <sc-if value="{{ l.pendiente }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ l.onSumar }}" style="flex:none;padding:8px 13px;border-radius:999px;background:#3068ED;color:#fff;font-size:12.5px;font-weight:700">+1 hecho</button>
+                </sc-if>
+                <sc-if value="{{ l.completo }}" hint-placeholder-val="{{ false }}">
+                  <span style="flex:none;padding:6px 11px;border-radius:999px;background:#82B94F;color:#fff;font-size:12px;font-weight:700">Conseguido</span>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+
+        <!-- MONEDERO -->
+        <sc-if value="{{ p.monedero }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:16px;border-radius:22px;padding:20px;color:#fff;background:{{ monedero.fondo }}">
+            <div style="font-size:11.5px;opacity:.75">Saldo</div>
+            <div style="font-family:Outfit;font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:2px">{{ monedero.saldo }}</div>
+            <div style="margin-top:10px;font-size:12.5px;opacity:.85">{{ monedero.sub }}</div>
+          </div>
+          <sc-if value="{{ monedero.activo }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+              <sc-for list="{{ monedero.movimientos }}" as="mv" hint-placeholder-count="1">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E4E7EE">
+                  <div style="flex:1"><b style="display:block;font-size:14.5px">{{ mv.t }}</b><span style="font-size:12px;color:#6B7280">{{ mv.f }}</span></div>
+                  <b style="font-family:Outfit;color:#54812b">+{{ mv.v }} €</b>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ monedero.puedePedir }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:0 16px"><button onClick="{{ monedero.onPedir }}" style="display:block;width:100%;padding:14px;border-radius:14px;background:#3068ED;color:#fff;font-weight:700;font-family:Outfit;font-size:15px;text-align:center">Pedir a Laura que lo active</button></div>
+          </sc-if>
+        </sc-if>
+
+        <!-- APPS -->
+        <sc-if value="{{ p.apps }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:16px 16px 9px">Mis apps</div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 8px;padding:0 16px">
+            <sc-for list="{{ instaladas }}" as="a" hint-placeholder-count="3">
+              <button onClick="{{ a.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:56px;height:56px;border-radius:16px;background:{{ a.color }};display:grid;place-items:center;font-size:25px;box-shadow:{{ a.sombra }}">{{ a.ic }}</div>
+                <span style="font-size:10.5px;color:#6B7280">{{ a.nombre }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 4px">Bro Store</div>
+          <div style="font-size:12.5px;color:#6B7280;margin:0 16px 10px">Solo apps revisadas para perfil 13. Laura decide.</div>
+          <sc-for list="{{ tienda }}" as="a" hint-placeholder-count="3">
+            <div style="margin:0 16px 10px;background:#fff;border:1px solid {{ a.borde }};border-radius:18px;padding:14px;display:flex;gap:12px;align-items:center">
+              <div style="width:48px;height:48px;border-radius:14px;background:{{ a.color }};display:grid;place-items:center;font-size:22px;flex:none">{{ a.ic }}</div>
+              <div style="flex:1;min-width:0"><b style="display:block;font-family:Outfit;font-size:15.5px">{{ a.nombre }}</b><span style="font-size:12.5px;color:#6B7280">{{ a.que }}</span></div>
+              <sc-if value="{{ a.puedePedir }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ a.onPedir }}" style="flex:none;padding:8px 13px;border-radius:999px;background:#3068ED;color:#fff;font-size:12.5px;font-weight:700">Pedir</button>
+              </sc-if>
+              <sc-if value="{{ a.hayChip }}" hint-placeholder-val="{{ false }}">
+                <span style="flex:none;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;background:#EEF0F4;color:#57606f">{{ a.chip }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </sc-if>
+
+        <!-- PRIVACIDAD -->
+        <sc-if value="{{ p.privacidad }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:16px 16px 6px">Sí ve</div>
+          <div style="margin:0 16px">
+            <sc-for list="{{ veSi }}" as="t" hint-placeholder-count="4">
+              <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E4E7EE;font-size:13.5px"><span style="color:#54812b;width:18px;flex:none">✓</span><div>{{ t }}</div></div>
+            </sc-for>
+          </div>
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 6px">No ve</div>
+          <div style="margin:0 16px">
+            <sc-for list="{{ veNo }}" as="t" hint-placeholder-count="4">
+              <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E4E7EE;font-size:13.5px"><span style="color:#bf4527;width:18px;flex:none">✕</span><div>{{ t }}</div></div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px;color:#6B7280;margin:14px 16px">Si algún día eso cambia, Bro te lo dirá antes, no después.</div>
+        </sc-if>
+      </div>
+
+      <!-- Respuesta de Bro -->
+      <sc-if value="{{ hayBro }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:12px;right:12px;bottom:84px;z-index:20;background:#111;color:#fff;border-radius:20px;padding:13px 14px;box-shadow:0 14px 30px rgba(17,17,17,.3);animation:sube .25s ease-out;display:flex;gap:11px;align-items:flex-start">
+          <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:50%;padding:2px">
+          <div style="flex:1;min-width:0">
+            <sc-if value="{{ bro.hayOye }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#9AA1AE;margin-bottom:3px">«{{ bro.oye }}»</div></sc-if>
+            <sc-if value="{{ bro.pensando }}" hint-placeholder-val="{{ false }}"><div style="font-size:18px;letter-spacing:3px;animation:puntos 1s infinite">•••</div></sc-if>
+            <div style="font-size:14.5px;line-height:1.4;text-wrap:pretty">{{ bro.di }}</div>
+          </div>
+          <button onClick="{{ cerrarBro }}" aria-label="Cerrar" style="color:#9AA1AE;font-size:16px;flex:none;width:24px;height:24px">✕</button>
+        </div>
+      </sc-if>
+
+      <!-- Dock de Bro AI -->
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:15;display:flex;gap:8px;align-items:center;padding:10px 12px 14px;background:#fff;border-top:1px solid #E4E7EE">
+        <button onClick="{{ irInicio }}" aria-label="Inicio" style="width:44px;height:44px;border-radius:50%;background:#F5F6F9;display:grid;place-items:center;flex:none">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ inicioColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>
+        </button>
+        <input value="{{ texto }}" onChange="{{ onTexto }}" onKeyDown="{{ onTextoKey }}" placeholder="Dile a Bro qué quieres hacer" style="flex:1;min-width:0;border:1px solid #E4E7EE;background:#F5F6F9;border-radius:999px;padding:12px 15px;font-size:14.5px;outline:none">
+        <button onClick="{{ micOEnviar }}" aria-label="Hablar con Bro" style="width:50px;height:50px;border-radius:50%;padding:3px;flex:none;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
+          <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center;color:#fff;font-size:18px">
+            <sc-if value="{{ hayTexto }}" hint-placeholder-val="{{ false }}"><span>↑</span></sc-if>
+            <sc-if value="{{ sinTexto }}" hint-placeholder-val="{{ true }}"><img src="assets/facew.png" alt="" style="width:62%;height:62%"></sc-if>
+          </div>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== LAURA · BRO PARENT ===================== -->
+  <sc-if value="{{ esPadre }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;background:#0E1526;color:#F2F5FB">
+      <div style="display:flex;align-items:center;gap:11px;padding:14px 16px 12px;border-bottom:1px solid #26314F">
+        <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:2px">
+        <div><div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">Bro Parent</div><div style="font-size:12px;color:#97A2BC">Laura · familia de Julio</div></div>
+        <div style="margin-left:auto;width:36px;height:36px;border-radius:50%;background:#E56648;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700">L</div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding-bottom:28px">
+        <div style="padding:18px 16px 2px">
+          <div style="font-family:Outfit;font-size:24px;font-weight:800;letter-spacing:-.03em">Tu decisión</div>
+          <div style="color:#97A2BC;font-size:13.5px;margin-top:4px">Bro solo te avisa cuando hace falta que decidas algo.</div>
+        </div>
+
+        <sc-for list="{{ pendientes }}" as="s" hint-placeholder-count="1">
+          <div style="margin:14px 16px 0;border-radius:18px;padding:16px;background:rgba(229,102,72,.13);border:1px solid rgba(229,102,72,.38);animation:sube .3s ease-out">
+            <div style="font-size:10.5px;font-weight:700;color:#f0a58c">{{ s.tipoTxt }}</div>
+            <div style="font-family:Outfit;font-size:16px;font-weight:700;margin-top:2px">{{ s.titulo }}</div>
+            <div style="margin:5px 0 13px;font-size:13px;color:#eec4b5;line-height:1.42">{{ s.detalle }}</div>
+            <div style="display:flex;gap:9px">
+              <button onClick="{{ s.onSi }}" style="flex:1;padding:12px;border-radius:14px;background:#82B94F;color:#fff;font-weight:700;font-family:Outfit;text-align:center">Sí</button>
+              <button onClick="{{ s.onNo }}" style="flex:1;padding:12px;border-radius:14px;background:#18213A;border:1px solid #26314F;color:#F2F5FB;font-weight:700;font-family:Outfit;text-align:center">No</button>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ sinPendientes }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:14px 16px 0;padding:20px 18px;text-align:center;color:#97A2BC;font-size:13.5px;border:1px dashed #26314F;border-radius:18px">Nada que decidir ahora. Está bien que sea así.<br><span style="font-size:12px">Prueba: como Julio, dile a Bro «quiero ir al skate».</span></div>
+        </sc-if>
+
+        <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:24px 16px 9px">Aura de Julio</div>
+        <div style="margin:0 16px;background:#18213A;border:1px solid #26314F;border-radius:18px;padding:15px">
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;background:#222d4c;border-radius:12px;padding:10px 11px"><b style="font-family:Outfit;font-size:15px;display:block">{{ aura.sueno.total }}</b><span style="font-size:10.5px;color:#97A2BC">Sueño anoche</span></div>
+            <div style="flex:1;background:#222d4c;border-radius:12px;padding:10px 11px"><b style="font-family:Outfit;font-size:15px;display:block">{{ aura.pantallaTxt }}</b><span style="font-size:10.5px;color:#97A2BC">Pantalla hoy</span></div>
+            <div style="flex:1;background:#222d4c;border-radius:12px;padding:10px 11px"><b style="font-family:Outfit;font-size:15px;display:block">{{ aura.actividadTxt }}</b><span style="font-size:10.5px;color:#97A2BC">Movimiento</span></div>
+          </div>
+          <div style="font-size:12.5px;color:#97A2BC;margin-top:11px">En equilibrio. Nada de lo que hablar hoy.</div>
+        </div>
+
+        <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:24px 16px 4px">Del colegio</div>
+        <div style="font-size:12.5px;color:#97A2BC;margin:0 16px 10px">Bro lee el buzón del centro y te deja solo lo que hay que hacer.</div>
+        <sc-for list="{{ colegio }}" as="c" hint-placeholder-count="3">
+          <div style="margin:0 16px 10px;background:#18213A;border:1px solid #26314F;border-radius:16px;padding:14px">
+            <div style="font-size:11.5px;color:#97A2BC">{{ c.de }}</div>
+            <div style="font-family:Outfit;font-size:15px;font-weight:700;margin:3px 0 4px">{{ c.asunto }}</div>
+            <div style="font-size:12.5px;color:#97A2BC;line-height:1.4">{{ c.resumen }}</div>
+            <sc-if value="{{ c.pendiente }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ c.onHacer }}" style="margin-top:11px;padding:9px 14px;border-radius:999px;background:#3068ED;color:#fff;font-size:12.5px;font-weight:700">{{ c.accion }}</button>
+            </sc-if>
+            <sc-if value="{{ c.hecho }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:11px;display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(130,185,79,.18);color:#a8d17a">Hecho</div>
+            </sc-if>
+          </div>
+        </sc-for>
+
+        <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:24px 16px 4px">Acuerdos</div>
+        <div style="font-size:12.5px;color:#97A2BC;margin:0 16px 10px">Tú los creas. Bro se los recuerda a Julio.</div>
+        <div style="margin:0 16px;background:#18213A;border:1px solid #26314F;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ logros }}" as="l" hint-placeholder-count="1">
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #26314F">
+              <div style="flex:1;min-width:0"><b style="display:block;font-size:14px">{{ l.titulo }}</b><span style="font-size:12px;color:#97A2BC">{{ l.txt }} · {{ l.premio }}</span></div>
+            </div>
+          </sc-for>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:9px">
+            <input value="{{ acTitulo }}" onChange="{{ onAcTitulo }}" placeholder="Escríbelo como se lo dirías a Julio" style="width:100%;background:#0E1526;border:1px solid #26314F;color:#F2F5FB;border-radius:12px;padding:12px 13px;font-size:14px;outline:none">
+            <div style="display:flex;gap:9px">
+              <input value="{{ acMeta }}" onChange="{{ onAcMeta }}" type="number" min="1" max="30" aria-label="Veces" style="width:74px;background:#0E1526;border:1px solid #26314F;color:#F2F5FB;border-radius:12px;padding:12px 13px;font-size:14px;outline:none">
+              <input value="{{ acPremio }}" onChange="{{ onAcPremio }}" placeholder="Premio (opcional)" style="flex:1;min-width:0;background:#0E1526;border:1px solid #26314F;color:#F2F5FB;border-radius:12px;padding:12px 13px;font-size:14px;outline:none">
+            </div>
+            <button onClick="{{ crearAcuerdo }}" style="padding:12px;border-radius:12px;background:#3068ED;color:#fff;font-weight:700;font-family:Outfit;text-align:center">Crear acuerdo</button>
+          </div>
+        </div>
+
+        <sc-if value="{{ hayResueltas }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:24px 16px 9px">Ya decidido</div>
+          <div style="margin:0 16px;background:#18213A;border:1px solid #26314F;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ resueltas }}" as="r" hint-placeholder-count="1">
+              <div style="display:flex;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid #26314F;font-size:13.5px"><span>{{ r.titulo }}</span><b style="color:{{ r.color }};flex:none">{{ r.res }}</b></div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Llamada -->
+  <sc-if value="{{ hayLlamada }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:40;background:linear-gradient(170deg,#1b2540,#0b1020);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:70px 24px 44px">
+      <div style="text-align:center">
+        <div style="width:104px;height:104px;border-radius:50%;display:grid;place-items:center;font-family:Outfit;font-weight:700;font-size:36px;margin:0 auto 18px;background:{{ llamada.color }}">{{ llamada.ini }}</div>
+        <div style="font-family:Outfit;font-size:27px;font-weight:700">{{ llamada.nombre }}</div>
+        <div style="margin-top:6px;opacity:.7;font-size:14px">{{ llamada.estado }}</div>
+      </div>
+      <div style="font-size:12px;opacity:.55;text-align:center;max-width:250px">{{ llamada.nota }}</div>
+      <button onClick="{{ colgar }}" aria-label="Colgar" style="width:70px;height:70px;border-radius:50%;background:#E5484D;color:#fff;font-size:26px;display:grid;place-items:center">✆</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hayAviso }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:16px;right:16px;top:74px;z-index:50;background:#111;color:#fff;padding:12px 15px;border-radius:14px;font-size:13.5px;animation:sube .2s ease-out">{{ aviso }}</div>
+  </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;modoInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;nino&quot;,&quot;padre&quot;],&quot;default&quot;:&quot;nino&quot;,&quot;tsType&quot;:&quot;'nino'|'padre'&quot;},&quot;velocidadBro&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rapida&quot;,&quot;normal&quot;,&quot;lenta&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mostrarAtajos&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;vozSimulada&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { db: null, modo: null, pantalla: 'inicio', id: null, pila: [], texto: '', bro: null, escuchando: false, flujo: null, llamada: null, chatTxt: '', aviso: null, acTitulo: '', acMeta: '3', acPremio: '', ahora: new Date() };
+  scrollRef = React.createRef();
+  ejemplo = 0;
+  EJEMPLOS = ['Quiero ir al skate el sábado', '¿Cuánto he dormido?', 'Escribe a Hugo', 'Quiero montar un proyecto nuevo', 'Abre Spotify', 'Llama a mamá'];
+
+  async componentDidMount() {
+    this.api = await import('./backend/api.js');
+    this.llamar('estado');
+    this.reloj = setInterval(() => this.setState({ ahora: new Date() }), 30000);
+  }
+  componentWillUnmount() { clearInterval(this.reloj); clearInterval(this.tCall); }
+
+  async llamar(ruta, datos) {
+    const r = await this.api.llamar(ruta, datos);
+    if (r.estado) this.setState({ db: r.estado });
+    return r;
+  }
+  retraso() { return { rapida: 350, normal: 800, lenta: 1500 }[this.props.velocidadBro || 'normal']; }
+  avisar(t) { this.setState({ aviso: t }); clearTimeout(this.tAviso); this.tAviso = setTimeout(() => this.setState({ aviso: null }), 2600); }
+
+  // ---------- Navegación ----------
+  ir(pantalla, id = null) {
+    this.setState(s => ({ pantalla, id, pila: pantalla === 'inicio' ? [] : [...s.pila, { pantalla: s.pantalla, id: s.id }] }),
+      () => { if (this.scrollRef.current) this.scrollRef.current.scrollTop = 0; });
+  }
+  volver() { this.setState(s => { const pila = [...s.pila]; const prev = pila.pop() || { pantalla: 'inicio', id: null }; return { pila, ...prev }; }); }
+
+  ejecutar(a) {
+    if (!a) return;
+    if (a.llamar) return this.llamarA(a.llamar);
+    if (a.flujo) return this.empezarFlujo(a.flujo, a.id);
+    if (a.pantalla === 'chat') this.llamar('leerChat', { con: a.id });
+    if (a.abrir) { const app = this.state.db.apps.find(x => x.id === a.id); if (app) this.avisar('Abriendo ' + app.nombre + '…'); }
+    this.ir(a.pantalla, a.id || null);
+  }
+
+  // ---------- Bro AI ----------
+  async pedir(texto) {
+    texto = (texto || '').trim(); if (!texto) return;
+    clearTimeout(this.tBro);
+    this.setState({ texto: '', bro: { oye: texto, di: '', pensando: true } });
+    const r = await this.llamar('interpretar', { texto });
+    if (r.accion) {
+      this.setState({ bro: { oye: texto, di: r.di } });
+      setTimeout(() => this.ejecutar(r.accion), this.retraso());
+      this.tBro = setTimeout(() => this.setState({ bro: null }), this.retraso() + 2400);
+      return;
+    }
+    let di = 'Eso todavía no sé hacerlo. Prueba «quiero ir al skate» o «llévame a mis comunidades».';
+    try {
+      if (window.claude && window.claude.complete)
+        di = await window.claude.complete(`Eres Bro AI, el asistente del móvil de Julio (13 años, Madrid). Responde en español en 1 o 2 frases cortas, cercano y claro, sin emojis. Si pide algo peligroso o de adultos, redirígelo con tacto a hablarlo con su madre Laura. Julio dice: ${texto}`);
+    } catch (e) {}
+    this.setState({ bro: { oye: texto, di } });
+  }
+
+  escuchar() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.setState({ escuchando: true, bro: { oye: '', di: 'Te escucho…' } });
+    const fin = q => { this.setState({ escuchando: false }); if (q) this.pedir(q); else this.setState({ bro: { oye: '', di: 'No te he pillado. Toca y prueba otra vez.' } }); };
+    const simular = () => {
+      const q = this.EJEMPLOS[this.ejemplo++ % this.EJEMPLOS.length];
+      setTimeout(() => this.setState({ bro: { oye: q, di: 'Te escucho…' } }), 700);
+      setTimeout(() => fin(q), 1500);
+    };
+    if (!SR || this.props.vozSimulada !== false) return simular();
+    let oido = '', empezo = false, r;
+    const guardia = setTimeout(() => { if (!empezo) { try { r.abort(); } catch (e) {} simular(); } }, 1500);
+    try {
+      r = new SR(); r.lang = 'es-ES'; r.interimResults = true;
+      r.onaudiostart = () => { empezo = true; clearTimeout(guardia); };
+      r.onresult = e => { oido = Array.from(e.results).map(x => x[0].transcript).join(' '); this.setState({ bro: { oye: oido, di: 'Te escucho…' } }); };
+      r.onerror = () => { clearTimeout(guardia); if (!empezo) simular(); };
+      r.onend = () => { if (empezo) fin(oido); };
+      r.start();
+    } catch (e) { clearTimeout(guardia); simular(); }
+  }
+
+  // ---------- Flujos guiados ----------
+  async empezarFlujo(nombre, id) {
+    const r = await this.llamar('flujo', { flujo: nombre, id, respuestas: [] });
+    this.setState({ flujo: { nombre, id, respuestas: [], ...r } });
+    this.ir('flujo');
+  }
+  async responder(op) {
+    const f = this.state.flujo;
+    const respuestas = [...f.respuestas, { p: f.pregunta.p, r: op }];
+    const r = await this.llamar('flujo', { flujo: f.nombre, id: f.id, respuestas: respuestas.map(x => x.r) });
+    this.setState({ flujo: { nombre: f.nombre, id: f.id, titulo: f.titulo, total: f.total, respuestas, pregunta: r.pregunta || null, paso: r.paso, fin: r.fin || null } });
+    if (this.scrollRef.current) this.scrollRef.current.scrollTop = 99999;
+  }
+
+  // ---------- Llamada ----------
+  llamarA(nombre) {
+    const info = { 'Mamá': ['M', '#E56648'], 'Papá': ['P', '#3068ED'], 'Emergencias': ['112', '#E5484D'] }[nombre] || [nombre[0], '#3068ED'];
+    const nota = nombre === 'Emergencias' ? 'El 112 funciona siempre, aunque el móvil esté bloqueado o sin tiempo.' : 'Las llamadas a familia no gastan tiempo de pantalla ni se cortan de noche.';
+    this.setState({ llamada: { nombre, ini: info[0], color: info[1], estado: 'Llamando…', nota, seg: 0 } });
+    clearInterval(this.tCall);
+    this.tCall = setTimeout(() => {
+      this.tCall = setInterval(() => this.setState(s => {
+        if (!s.llamada) return null;
+        const seg = s.llamada.seg + 1;
+        return { llamada: { ...s.llamada, seg, estado: `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}` } };
+      }), 1000);
+    }, 1800);
+  }
+
+  renderVals() {
+    const s = this.state, db = s.db, P = this.props;
+    const modo = s.modo || P.modoInicial || 'nino';
+    const base = {
+      cargando: !db, esNino: !!db && modo === 'nino', esPadre: !!db && modo === 'padre',
+      swNinoBg: modo === 'nino' ? '#fff' : 'transparent', swNinoTx: modo === 'nino' ? '#111' : 'rgba(255,255,255,.6)',
+      swPadreBg: modo === 'padre' ? '#fff' : 'transparent', swPadreTx: modo === 'padre' ? '#111' : 'rgba(255,255,255,.6)',
+      verNino: () => this.setState({ modo: 'nino' }), verPadre: () => this.setState({ modo: 'padre', bro: null }),
+      reiniciar: async () => { const r = await this.api.reiniciar(); this.setState({ db: r.estado, pantalla: 'inicio', id: null, pila: [], flujo: null, bro: null }); this.avisar('Demo reiniciada.'); },
+      aviso: s.aviso, hayAviso: !!s.aviso
+    };
+    if (!db) return base;
+
+    const ir = (pantalla, id) => () => this.ejecutar({ pantalla, id });
+    const fmt = m => { const h = Math.floor(m / 60), x = m % 60; return (h ? h + ' h ' : '') + (x ? x + ' min' : '') || '0 min'; };
+    const anillo = (pct, r) => { const c = 2 * Math.PI * r; return { c, off: c * (1 - Math.min(pct, 1)) }; };
+    const A = db.aura;
+    const maxSem = Math.max(...A.semana.map(([p, a]) => p + a));
+    const dias = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+
+    const titulos = {
+      inicio: ['Bro', 'Julio · perfil 13'], aura: ['Aura', 'Sueño y movimiento'], comunidades: ['Comunidades', 'Lo que hacéis juntos'],
+      chat: [s.id, 'Conexión mutua'], plan: ['Plan', 'Necesita el visto bueno de Laura'], proyectos: ['Proyectos', 'Lo que estás construyendo'],
+      flujo: [s.flujo ? s.flujo.titulo : 'Bro AI', 'Pregunto yo, decides tú'], logros: ['Logros', 'Tu camino'], monedero: ['Monedero', 'Tu dinero'],
+      apps: ['Apps', 'Lo que tienes y lo que puedes pedir'], privacidad: ['Qué ve Laura', 'Y qué no. Sin letra pequeña.']
+    }[s.pantalla] || ['Bro', ''];
+    const p = {}; Object.keys({ inicio: 1, aura: 1, comunidades: 1, chat: 1, plan: 1, proyectos: 1, flujo: 1, logros: 1, monedero: 1, apps: 1, privacidad: 1 }).forEach(k => p[k] = s.pantalla === k);
+
+    const plan = db.planes.find(x => x.id === (s.pantalla === 'plan' ? s.id : 'skate')) || db.planes[0];
+    const chipPlan = { borrador: ['Propuesta', '#EEF0F4', '#57606f'], pedido: ['Esperando a Laura', 'rgba(48,104,237,.12)', '#3068ED'], aprobado: ['Aprobado', 'rgba(130,185,79,.16)', '#54812b'], rechazado: ['No aprobado', 'rgba(229,102,72,.14)', '#bf4527'] }[plan.estado];
+    const chat = db.chats[s.id] || { mensajes: [] };
+    const f = s.flujo;
+    const monPend = db.solicitudes.some(x => x.tipo === 'monedero' && x.estado === 'pendiente');
+    const enviarChat = async () => { const t = s.chatTxt.trim(); if (!t) return; this.setState({ chatTxt: '' }); await this.llamar('enviarMensaje', { con: s.id, txt: t }); };
+    const tipoTxt = { plan: 'PLAN FÍSICO · JULIO PIDE PERMISO', app: 'APP NUEVA · BRO STORE', monedero: 'MONEDERO' };
+    const hayTexto = !!s.texto.trim();
+
+    return {
+      ...base,
+      titulo: titulos[0], subtitulo: titulos[1], p,
+      puedeVolver: s.pila.length > 0, volver: () => this.volver(),
+      scrollRef: this.scrollRef,
+      irInicio: () => this.ir('inicio'), irAura: ir('aura'),
+      inicioColor: s.pantalla === 'inicio' ? '#3068ED' : '#9AA1AE',
+      hora: s.ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      fecha: s.ahora.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }),
+      pantallaPct: Math.round((1 - db.nino.minutosUsados / db.nino.minutosPantalla) * 100) + '%',
+      pantallaTxt: 'Te queda ' + fmt(db.nino.minutosPantalla - db.nino.minutosUsados) + ' de pantalla',
+      heroTitulo: s.escuchando ? 'Te escucho…' : '¿Qué hacemos, Julio?',
+      orbAnim: s.escuchando ? 'pulso 1.3s ease-in-out infinite' : 'none',
+      sugerencias: this.EJEMPLOS.map(t => ({ txt: t, onClick: () => this.pedir(t) })),
+      ahora: db.ahora.map(it => ({ ...it, onClick: () => this.ejecutar(it.accion) })),
+      mostrarAtajos: P.mostrarAtajos !== false,
+      atajos: [['💬', 'Bros', 'comunidades'], ['🌙', 'Aura', 'aura'], ['🛹', 'Plan', 'plan', 'skate'], ['🛠️', 'Proyectos', 'proyectos'], ['🏆', 'Logros', 'logros'], ['💳', 'Monedero', 'monedero'], ['📲', 'Apps', 'apps'], ['🛡️', 'Qué ve Laura', 'privacidad']]
+        .map(([ic, t, pa, id]) => ({ ic, t, onClick: ir(pa, id) })),
+
+      r1: anillo(A.pasos / A.metaPasos, 44), r2: anillo(A.activos / A.metaActivos, 31), r3: anillo(A.movimiento / A.metaMovimiento, 18),
+      aura: {
+        ...A, pasosTxt: A.pasos.toLocaleString('es-ES'), pantallaTxt: fmt(A.pantalla), actividadTxt: fmt(A.actividad),
+        fases: A.sueno.fases.map(([color, flex]) => ({ color, flex })),
+        semana: A.semana.map(([pa, ac], i) => ({ hp: Math.round(pa / maxSem * 62) + 'px', ha: Math.round(ac / maxSem * 62) + 'px', dia: dias[i] }))
+      },
+
+      comunidades: db.comunidades,
+      bros: db.bros.map(b => ({ ...b, ini: b.nombre[0], sinLeer: db.chats[b.nombre] && db.chats[b.nombre].sinLeer, onClick: ir('chat', b.nombre) })),
+
+      chatCon: s.id, chatTxt: s.chatTxt,
+      mensajes: chat.mensajes.map(m => ({ txt: m.txt, mio: m.de === 'yo', suyo: m.de !== 'yo' })),
+      onChatTxt: e => this.setState({ chatTxt: e.target.value }),
+      onChatKey: e => { if (e.key === 'Enter') enviarChat(); },
+      enviarChat,
+
+      plan: {
+        ...plan, estadoTxt: chipPlan[0], chipBg: chipPlan[1], chipTx: chipPlan[2], hayDetalle: !!plan.detalle,
+        borrador: plan.estado === 'borrador', pedido: plan.estado === 'pedido', aprobado: plan.estado === 'aprobado', rechazado: plan.estado === 'rechazado',
+        onPedir: () => this.empezarFlujo('permiso', plan.id)
+      },
+
+      proyectos: db.proyectos.map(x => ({ ...x, pasoTxt: `PASO ${x.paso} DE ${x.pasos}`, con: x.con.toUpperCase(), pct: Math.round(x.paso / x.pasos * 100) + '%' })),
+      nuevoProyecto: () => this.empezarFlujo('proyecto'),
+
+      flujo: f ? {
+        paso: f.paso, total: f.total, pregunta: f.pregunta ? f.pregunta.p : '',
+        hayPregunta: !!f.pregunta, hayFin: !!f.fin,
+        barras: Array.from({ length: f.total || 3 }, (_, i) => ({ color: i < f.respuestas.length ? '#82B94F' : '#E4E7EE' })),
+        respuestas: f.respuestas,
+        opciones: f.pregunta ? f.pregunta.opciones.map(o => ({ txt: o, onClick: () => this.responder(o) })) : [],
+        finDi: f.fin ? f.fin.di : '', finBoton: f.fin ? f.fin.boton : '',
+        onFin: () => { const a = f.fin.accion; this.setState({ pila: [] }); this.ejecutar(a); }
+      } : { barras: [], respuestas: [], opciones: [] },
+
+      logros: db.logros.map(l => {
+        const completo = l.progreso >= l.meta;
+        return { ...l, deMay: l.de.toUpperCase(), txt: `${l.progreso} de ${l.meta}`, pct: Math.round(l.progreso / l.meta * 100) + '%', completo, pendiente: !completo,
+          onSumar: async () => { const r = await this.llamar('sumarLogro', { id: l.id }); if (r.completado) this.avisar(`¡Conseguido! Premio: ${l.premio}.`); } };
+      }),
+
+      monedero: {
+        activo: db.monedero.activo, movimientos: db.monedero.movimientos,
+        saldo: db.monedero.saldo.toFixed(2).replace('.', ',') + ' €',
+        fondo: db.monedero.activo ? 'linear-gradient(135deg,#111,#2b3550)' : 'linear-gradient(135deg,#6B7280,#9AA1AE)',
+        sub: db.monedero.activo ? 'Activo · límite semanal que pone Laura' : monPend ? 'Esperando a que Laura lo active' : 'Desactivado. Laura tiene que activarlo.',
+        puedePedir: !db.monedero.activo && !monPend,
+        onPedir: async () => { const r = await this.llamar('pedirMonedero'); if (r.di) this.avisar(r.di); }
+      },
+
+      instaladas: db.apps.filter(a => a.estado === 'instalada').map(a => ({ ...a, sombra: a.id === s.id ? '0 0 0 3px #3068ED' : 'none', onClick: () => this.avisar('Abriendo ' + a.nombre + '…') })),
+      tienda: db.apps.filter(a => a.estado !== 'instalada').map(a => ({
+        ...a, borde: a.id === s.id ? '#3068ED' : '#E4E7EE', puedePedir: a.estado === 'disponible', hayChip: a.estado !== 'disponible',
+        chip: { pendiente: 'Esperando a Laura', denegada: 'Laura dijo que no', noApta: 'No apta · 13' }[a.estado],
+        onPedir: async () => { const r = await this.llamar('pedirApp', { id: a.id }); if (r.di) this.avisar(r.di); }
+      })),
+
+      veSi: ['En qué comunidades estás, para qué existen y quién las dirige', 'Los planes físicos que necesitan su permiso', 'Cuánto usas el móvil, por tipo de actividad', 'Las tendencias de Aura: lo mismo que ves tú'],
+      veNo: ['Tus conversaciones con Bro AI', 'Tus mensajes con Hugo, Lucía o cualquier Bro', 'Lo que buscas o lo que ves', 'Nada sobre cómo te sientes. Eso no se analiza.', 'Dónde has estado'],
+
+      hayBro: !!s.bro && modo === 'nino',
+      bro: s.bro ? { ...s.bro, hayOye: !!s.bro.oye, pensando: !!s.bro.pensando } : {},
+      cerrarBro: () => this.setState({ bro: null }),
+      texto: s.texto, hayTexto, sinTexto: !hayTexto,
+      onTexto: e => this.setState({ texto: e.target.value }),
+      onTextoKey: e => { if (e.key === 'Enter') this.pedir(s.texto); },
+      micOEnviar: () => hayTexto ? this.pedir(s.texto) : this.escuchar(),
+      escuchar: () => this.escuchar(),
+
+      hayLlamada: !!s.llamada, llamada: s.llamada || {},
+      colgar: () => { clearInterval(this.tCall); clearTimeout(this.tCall); this.setState({ llamada: null }); },
+
+      pendientes: db.solicitudes.filter(x => x.estado === 'pendiente').map(x => ({
+        ...x, tipoTxt: tipoTxt[x.tipo],
+        onSi: async () => { await this.llamar('decidir', { id: x.id, si: true }); this.avisar('Hecho. Julio lo verá en Bro.'); },
+        onNo: async () => { await this.llamar('decidir', { id: x.id, si: false }); this.avisar('Se lo dirá Bro. Mejor hablarlo en persona.'); }
+      })),
+      sinPendientes: !db.solicitudes.some(x => x.estado === 'pendiente'),
+      resueltas: db.solicitudes.filter(x => x.estado !== 'pendiente').map(x => ({ titulo: x.titulo, res: x.estado === 'si' ? 'Sí' : 'No', color: x.estado === 'si' ? '#a8d17a' : '#f0a58c' })),
+      hayResueltas: db.solicitudes.some(x => x.estado !== 'pendiente'),
+      colegio: db.colegio.map(c => ({ ...c, pendiente: !c.hecho, onHacer: async () => { await this.llamar('marcarColegio', { id: c.id }); this.avisar(c.id === 'excursion' ? 'Firmado y pagado.' : 'Julio lo verá en su inicio.'); } })),
+      acTitulo: s.acTitulo, acMeta: s.acMeta, acPremio: s.acPremio,
+      onAcTitulo: e => this.setState({ acTitulo: e.target.value }),
+      onAcMeta: e => this.setState({ acMeta: e.target.value }),
+      onAcPremio: e => this.setState({ acPremio: e.target.value }),
+      crearAcuerdo: async () => {
+        if (!s.acTitulo.trim()) return this.avisar('Escribe primero el acuerdo.');
+        await this.llamar('crearAcuerdo', { titulo: s.acTitulo.trim(), meta: s.acMeta, premio: s.acPremio.trim() });
+        this.setState({ acTitulo: '', acPremio: '', acMeta: '3' }); this.avisar('Acuerdo creado. Julio lo verá en su inicio.');
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
