@@ -174,7 +174,18 @@ function puntuar(lista, texto) {
   return mejor;
 }
 
+// ---------- Controles de la demo (por voz, para Julio y Laura) ----------
+const INTENCIONES_DEMO = [
+  { palabras: ['cambia a laura', 'pasa a laura', 've a laura', 'vete a laura', 'modo laura', 'vista de laura', 'soy laura', 'modo mama', 'modo madre', 'modo padres', 'cambia a mama', 'pasa a mama', 'bro parent', 'cambia de usuario a laura'], accion: { demo: 'padre' }, di: 'Cambio a Laura.' },
+  { palabras: ['cambia a julio', 'pasa a julio', 've a julio', 'vete a julio', 'modo julio', 'vista de julio', 'soy julio', 'modo nino', 'modo hijo', 'vuelve a julio'], accion: { demo: 'nino' }, di: 'Cambio a Julio.' },
+  { palabras: ['reinicia', 'reiniciar', 'resetea', 'resetear', 'empezar de cero', 'empieza de cero', 'borra todo', 'desde el principio'], accion: { demo: 'reiniciar' }, di: 'Reinicio la demo.' },
+  { palabras: ['flujos', 'ver los flujos', 'ensename los flujos', 'documento de flujos'], accion: { demo: 'flujos' }, di: 'Te enseño los flujos.' },
+  { palabras: ['bloquea', 'bloquear', 'bloquealo', 'pantalla de bloqueo', 'apaga la pantalla'], accion: { demo: 'bloquear' }, di: 'Bloqueo el móvil.' }
+];
+
 function interpretar(db, { texto, quien = 'nino' }) {
+  const d = puntuar(INTENCIONES_DEMO, texto);
+  if (d) return { accion: d.accion, di: d.di };
   if (quien === 'padre') {
     const hit = puntuar(INTENCIONES_PADRE, texto);
     return hit ? { accion: hit.accion, di: hit.di } : { accion: null, di: null };
