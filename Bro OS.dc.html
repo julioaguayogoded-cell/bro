@@ -36,7 +36,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
   <div style="width:100%;max-width:400px;height:min(860px,calc(100vh - 86px));min-height:620px;border-radius:40px;border:8px solid #111;overflow:hidden;position:relative;display:flex;flex-direction:column;background:#F5F6F9;box-shadow:0 30px 60px rgba(17,17,17,.18)">
 
   <sc-if value="{{ cargando }}" hint-placeholder-val="{{ false }}">
-    <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="assets/logo.png" alt="Bro" style="width:84px;height:84px"></div>
+    <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="logo.png" alt="Bro" style="width:84px;height:84px"></div>
   </sc-if>
 
   <!-- ===================== JULIO · BRO OS ===================== -->
@@ -47,7 +47,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
         <sc-if value="{{ puedeVolver }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ volver }}" aria-label="Volver" style="width:34px;height:34px;border-radius:50%;background:#F5F6F9;display:grid;place-items:center;font-size:20px;flex:none">‹</button>
         </sc-if>
-        <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none">
+        <img src="logo.png" alt="" style="width:30px;height:30px;flex:none">
         <div style="min-width:0">
           <div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">{{ titulo }}</div>
           <div style="font-size:12px;color:#6B7280">{{ subtitulo }}</div>
@@ -77,7 +77,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
           <button onClick="{{ escuchar }}" style="margin:16px 16px 0;width:calc(100% - 32px);display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 18px 20px;border-radius:24px;background:linear-gradient(150deg,#3068ED,#6f49d8);color:#fff;text-align:center;box-shadow:0 12px 28px rgba(48,104,237,.28)">
             <div style="width:88px;height:88px;border-radius:50%;padding:4px;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
               <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#2a5ad6,#5a39c4);display:grid;place-items:center">
-                <img src="assets/facew.png" alt="" style="width:62%;height:62%">
+                <img src="facew.png" alt="" style="width:62%;height:62%">
               </div>
             </div>
             <div>
@@ -147,7 +147,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
           </div>
           <sc-for list="{{ flujo.respuestas }}" as="r" hint-placeholder-count="0">
             <div style="margin:14px 16px 8px;display:flex;gap:10px;align-items:flex-start">
-              <img src="assets/logo.png" alt="" style="width:26px;height:26px;flex:none">
+              <img src="logo.png" alt="" style="width:26px;height:26px;flex:none">
               <div style="font-size:14px;color:#6B7280;padding-top:3px">{{ r.p }}</div>
             </div>
             <div style="margin:0 16px;display:flex;justify-content:flex-end">
@@ -412,7 +412,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
       <!-- Respuesta de Bro -->
       <sc-if value="{{ hayBro }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;left:12px;right:12px;bottom:84px;z-index:20;background:#111;color:#fff;border-radius:20px;padding:13px 14px;box-shadow:0 14px 30px rgba(17,17,17,.3);animation:sube .25s ease-out;display:flex;gap:11px;align-items:flex-start">
-          <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:50%;padding:2px">
+          <img src="logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:50%;padding:2px">
           <div style="flex:1;min-width:0">
             <sc-if value="{{ bro.hayOye }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#9AA1AE;margin-bottom:3px">«{{ bro.oye }}»</div></sc-if>
             <sc-if value="{{ bro.pensando }}" hint-placeholder-val="{{ false }}"><div style="font-size:18px;letter-spacing:3px;animation:puntos 1s infinite">•••</div></sc-if>
@@ -431,7 +431,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
         <button onClick="{{ micOEnviar }}" aria-label="Hablar con Bro" style="width:50px;height:50px;border-radius:50%;padding:3px;flex:none;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
           <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center;color:#fff;font-size:18px">
             <sc-if value="{{ hayTexto }}" hint-placeholder-val="{{ false }}"><span>↑</span></sc-if>
-            <sc-if value="{{ sinTexto }}" hint-placeholder-val="{{ true }}"><img src="assets/facew.png" alt="" style="width:62%;height:62%"></sc-if>
+            <sc-if value="{{ sinTexto }}" hint-placeholder-val="{{ true }}"><img src="facew.png" alt="" style="width:62%;height:62%"></sc-if>
           </div>
         </button>
       </div>
@@ -442,7 +442,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
   <sc-if value="{{ esPadre }}" hint-placeholder-val="{{ false }}">
     <div style="flex:1;display:flex;flex-direction:column;min-height:0;background:#0E1526;color:#F2F5FB">
       <div style="display:flex;align-items:center;gap:11px;padding:14px 16px 12px;border-bottom:1px solid #26314F">
-        <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:2px">
+        <img src="logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:2px">
         <div><div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">Bro Parent</div><div style="font-size:12px;color:#97A2BC">Laura · familia de Julio</div></div>
         <div style="margin-left:auto;width:36px;height:36px;border-radius:50%;background:#E56648;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700">L</div>
       </div>
@@ -550,7 +550,7 @@ class Component extends DCLogic {
   EJEMPLOS = ['Quiero ir al skate el sábado', '¿Cuánto he dormido?', 'Escribe a Hugo', 'Quiero montar un proyecto nuevo', 'Abre Spotify', 'Llama a mamá'];
 
   async componentDidMount() {
-    this.api = await import('./backend/api.js');
+    this.api = await import('./api.js');
     this.llamar('estado');
     this.reloj = setInterval(() => this.setState({ ahora: new Date() }), 30000);
   }

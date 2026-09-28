@@ -1,9 +1,8 @@
 // ============================================================
 // SERVIDOR REAL (opcional). Sin dependencias: solo Node 18+.
-//   cd backend
-//   node server.js
+//   //   node server.js
 // Luego en api.js pon MODO = 'real'.
-// Los datos se guardan en backend/db.json
+// Los datos se guardan en db.json
 // ============================================================
 import http from 'node:http';
 import fs from 'node:fs';

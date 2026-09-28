@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#111111">
-<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -42,7 +42,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
   <div style="width:100%;max-width:{{ marco.ancho }};height:{{ marco.alto }};min-height:{{ marco.minAlto }};border-radius:{{ marco.radio }};border:{{ marco.borde }};overflow:hidden;position:relative;display:flex;flex-direction:column;background:{{ t.bg }};color:{{ t.txt }};box-shadow:{{ marco.sombra }}">
 
     <sc-if value="{{ cargando }}" hint-placeholder-val="{{ false }}">
-      <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="assets/logo.png" alt="Bro" style="width:84px;height:84px"></div>
+      <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="logo.png" alt="Bro" style="width:84px;height:84px"></div>
     </sc-if>
 
     <sc-if value="{{ listo }}" hint-placeholder-val="{{ true }}">
@@ -51,7 +51,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
         <sc-if value="{{ puedeVolver }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ volver }}" aria-label="Volver a Bro" style="width:34px;height:34px;border-radius:50%;background:{{ t.soft }};display:grid;place-items:center;font-size:20px;flex:none">‹</button>
         </sc-if>
-        <img src="assets/logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:1px">
+        <img src="logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:1px">
         <div style="min-width:0;flex:1">
           <div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">{{ titulo }}</div>
           <div style="font-size:12px;color:{{ t.muted }}">{{ subtitulo }}</div>
@@ -76,7 +76,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
 
               <button onClick="{{ escuchar }}" aria-label="Hablar con Bro" style="width:140px;height:140px;border-radius:50%;padding:6px;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }};box-shadow:0 16px 36px rgba(48,104,237,.28)">
                 <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center">
-                  <img src="assets/facew.png" alt="" style="width:60%;height:60%">
+                  <img src="facew.png" alt="" style="width:60%;height:60%">
                 </div>
               </button>
               <div>
@@ -94,7 +94,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
           <sc-if value="{{ convActiva }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid {{ t.line }}">
               <button onClick="{{ escuchar }}" aria-label="Hablar con Bro" style="width:40px;height:40px;border-radius:50%;padding:3px;flex:none;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
-                <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center"><img src="assets/facew.png" alt="" style="width:60%;height:60%"></div>
+                <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center"><img src="facew.png" alt="" style="width:60%;height:60%"></div>
               </button>
               <div style="flex:1;min-width:0"><div style="font-size:11px;font-weight:700;color:#3068ED;letter-spacing:.03em">BRO AI</div><div style="font-family:Outfit;font-weight:700;font-size:15px">{{ flujoTitulo }}</div></div>
               <button onClick="{{ terminar }}" style="flex:none;font-size:12.5px;font-weight:600;color:{{ t.muted }};padding:7px 11px;border:1px solid {{ t.line }};border-radius:999px">Terminar</button>
@@ -110,7 +110,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
                 </sc-if>
                 <sc-if value="{{ m.esBro }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;gap:8px;align-items:flex-end;max-width:92%;animation:sube .25s ease-out">
-                    <img src="assets/logo.png" alt="" style="width:24px;height:24px;flex:none;background:#fff;border-radius:50%;padding:1px">
+                    <img src="logo.png" alt="" style="width:24px;height:24px;flex:none;background:#fff;border-radius:50%;padding:1px">
                     <div style="padding:10px 13px;border-radius:17px;border-bottom-left-radius:5px;background:{{ t.card }};border:1px solid {{ t.line }};font-size:14.5px;text-wrap:pretty">{{ m.txt }}</div>
                   </div>
                 </sc-if>
@@ -254,7 +254,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
                   </div>
                 </div>
                 <sc-if value="{{ st.hayConsejo }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:10px;display:flex;gap:8px;align-items:flex-start;background:#F5F6F9;border-radius:12px;padding:10px 12px;font-size:13px"><img src="assets/logo.png" alt="" style="width:20px;height:20px;flex:none"><span>{{ st.consejo }}</span></div>
+                  <div style="margin-top:10px;display:flex;gap:8px;align-items:flex-start;background:#F5F6F9;border-radius:12px;padding:10px 12px;font-size:13px"><img src="logo.png" alt="" style="width:20px;height:20px;flex:none"><span>{{ st.consejo }}</span></div>
                 </sc-if>
 
                 <sc-if value="{{ st.esVideos }}" hint-placeholder-val="{{ false }}">
@@ -401,7 +401,7 @@ class Component extends DCLogic {
     this.alRedimensionar = () => this.setState({ movil: window.innerWidth < 520 });
     window.addEventListener('resize', this.alRedimensionar);
     this.alRedimensionar();
-    this.api = await import('./backend/api.js');
+    this.api = await import('./api.js');
     this.llamar('estado');
     if (window.speechSynthesis) speechSynthesis.getVoices();
   }
