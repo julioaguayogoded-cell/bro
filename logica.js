@@ -73,17 +73,39 @@ export function datosIniciales() {
       { id: 'spotify', nombre: 'Spotify', ic: '🎵', color: '#1DB954', estado: 'instalada', que: 'Música y podcasts' },
       { id: 'duolingo', nombre: 'Duolingo', ic: '🦉', color: '#58CC02', estado: 'instalada', que: 'Idiomas, 15 min al día' },
       { id: 'minecraft', nombre: 'Minecraft', ic: '⛏️', color: '#6B8E23', estado: 'instalada', que: 'Solo servidores de amigos' },
+      { id: 'matchapp', nombre: 'Matchapp', ic: '🏅', color: '#3068ED', estado: 'instalada', que: 'Partidos y resultados', tiempo: '30 min al día' },
+      { id: 'brownie', nombre: 'Brownie', ic: '🛍️', color: '#8B5E3C', estado: 'instalada', que: 'Tienda de ropa', tiempo: '15 min al día' },
+      { id: 'subway', nombre: 'Subway Surfers', ic: '🏄', color: '#F2A900', estado: 'instalada', que: 'Juego', tiempo: '30 min al día' },
       { id: 'canva', nombre: 'Canva', ic: '🎨', color: '#7D2AE8', estado: 'pendiente', que: 'Diseño para proyectos' },
       { id: 'madfutbol', nombre: 'MadFútbol', ic: '⚽', color: '#0B7A3E', estado: 'disponible', que: 'Resultados y partidos de fútbol base en Madrid' },
       { id: 'strava', nombre: 'Strava', ic: '🏃', color: '#FC4C02', estado: 'disponible', que: 'Registrar rutas en bici o a pie' },
-      { id: 'tiktok', nombre: 'TikTok', ic: '📱', color: '#111111', estado: 'noApta', que: 'No está aprobada para perfil 13' },
-      { id: 'roblox', nombre: 'Roblox', ic: '🧱', color: '#E2231A', estado: 'denegada', que: 'Juegos creados por la comunidad', motivo: 'Ya tiene bastante pantalla' }
+      // Bloqueadas por edad: Bro las bloquea solo, según el perfil 13
+      { id: 'tiktok', nombre: 'TikTok', ic: '📱', color: '#111111', estado: 'noApta', que: 'Vídeos cortos', motivo: 'Es para mayores de 16 y muestra vídeos de desconocidos' },
+      { id: 'instagram', nombre: 'Instagram', ic: '📷', color: '#C13584', estado: 'noApta', que: 'Red social', motivo: 'Perfiles públicos y mensajes de desconocidos' },
+      { id: 'gta', nombre: 'GTA', ic: '🚗', color: '#2b3550', estado: 'noApta', que: 'Videojuego', motivo: 'Clasificado PEGI 18 por violencia' },
+      // Bloqueadas por mamá: decisión de Laura, con su porqué
+      { id: 'roblox', nombre: 'Roblox', ic: '🧱', color: '#E2231A', estado: 'denegada', que: 'Juegos creados por la comunidad', motivo: 'Ya tiene bastante pantalla entre semana' },
+      { id: 'fortnite', nombre: 'Fortnite', ic: '🎯', color: '#6f49d8', estado: 'denegada', que: 'Videojuego online', motivo: 'Tiene compras dentro del juego y chat de voz con desconocidos' },
+      { id: 'brawl', nombre: 'Brawl Stars', ic: '⭐', color: '#F2B705', estado: 'denegada', que: 'Videojuego', motivo: 'Lo hablamos cuando acabe los exámenes' }
     ],
 
     // Lo que Julio pide y Laura decide. estado: pendiente | si | no | persona
     solicitudes: [
       { id: 's1', tipo: 'app', ref: 'canva', titulo: 'Canva', detalle: 'Julio la quiere. Tú decides el tiempo de uso.', estado: 'pendiente' },
       { id: 's2', tipo: 'comunidad', ref: 'skate', titulo: 'Skate Madrid Río', detalle: 'Quedadas los sábados con Hugo y Mateo.', estado: 'pendiente' }
+    ],
+
+    // Contenido revisado para perfil 13
+    contenido: [
+      { id: 'c1', tema: 'Proyectos', t: 'Cómo hacer un avión de papel que vuele lejos', de: 'Ciencia en Casa', dur: '4 min', color: '#3068ED' },
+      { id: 'c2', tema: 'Deporte', t: 'Tres trucos de skate para empezar', de: 'Skate Madrid Río', dur: '6 min', color: '#E56648' },
+      { id: 'c3', tema: 'Ciencia', t: 'Por qué vuelan los aviones', de: 'Ciencia en Casa', dur: '5 min', color: '#6f49d8' },
+      { id: 'c4', tema: 'Fútbol', t: 'Resumen de la jornada de fútbol base', de: 'MadFútbol', dur: '3 min', color: '#82B94F' }
+    ],
+
+    // Recordatorios de Julio (aparecen en «My today stuff»)
+    recordatorios: [
+      { id: 'mates', k: 'Mañana', titulo: 'Examen de Mates', detalle: 'Temas 3 y 4: fracciones y ecuaciones. Repasa los ejercicios de la página 58.' }
     ],
 
     // Avisos rápidos de Julio a Laura (flujo J4)
@@ -107,50 +129,120 @@ const TIPO = { plan: 'Plan físico', app: 'App nueva', monedero: 'Monedero', com
 
 // ---------- Bro AI: qué quiere hacer cada persona ----------
 // Cada intención: palabras que la activan → qué hace y qué dice Bro.
-// Orden importante: de más concreta a más general.
+// Bro puntúa todas y elige la que más coincide (así entiende frases largas por voz).
+// «peso» sube la prioridad de las intenciones importantes.
 const INTENCIONES_NINO = [
-  { palabras: ['ven mis padres', 've mi madre', 've laura', 'privacidad'], accion: { pantalla: 'privacidad' }, di: 'Esto es lo que ve Laura, y lo que no.' },
-  { palabras: ['triste', 'agobiad', 'me siento mal', 'estoy mal', 'me han dicho', 'me han hecho', 'no me encuentro', 'necesito hablar', 'me duele', 'estoy rayado'], accion: { responder: true }, di: 'Eso debes hablarlo con tu entorno más cercano.' },
-  { palabras: ['hugo'], accion: { pantalla: 'chat', id: 'Hugo' }, di: 'Abro tu chat con Hugo.' },
-  { palabras: ['lucia'], accion: { pantalla: 'chat', id: 'Lucía' }, di: 'Abro tu chat con Lucía.' },
-  { palabras: ['mateo'], accion: { pantalla: 'chat', id: 'Mateo' }, di: 'Abro tu chat con Mateo.' },
-  { palabras: ['mama', 'madre'], accion: { flujo: 'mama' }, di: 'Vale, mamá.' },
-  { palabras: ['papa'], accion: { llamar: 'Papá' }, di: 'Llamo a papá.' },
-  { palabras: ['emergencia', '112'], accion: { llamar: 'Emergencias' }, di: 'Llamo al 112.' },
-  { palabras: ['pedir permiso', 'permiso'], accion: { flujo: 'permiso', id: 'skate' }, di: 'Preparamos juntos lo que le vas a pedir a Laura.' },
-  { palabras: ['skate', 'sabado', 'quedada', 'plan'], accion: { pantalla: 'plan', id: 'skate' }, di: 'Abro el plan del sábado.' },
-  { palabras: ['avion', 'nuevo proyecto', 'crear un proyecto', 'hacer un proyecto', 'empezar un proyecto', 'montar', 'tengo una idea', 'periodico'], accion: { flujo: 'proyecto' }, di: 'Vamos a pensarlo juntos. Pregunto yo, decides tú.' },
-  { palabras: ['proyecto', 'rampa'], accion: { pantalla: 'proyectos' }, di: 'Aquí están tus proyectos.' },
-  { palabras: ['instalar', 'descargar', 'app nueva', 'una app', 'pedir una app', 'tienda', 'store'], accion: { flujo: 'app' }, di: 'Vamos a ello.' },
-  { palabras: ['mis apps', 'apps', 'aplicaciones'], accion: { pantalla: 'apps' }, di: 'Aquí están tus apps.' },
-  { palabras: ['comunidad', 'grupo', 'futbol', 'robotica', 'mensaje', 'chat', 'que hay nuevo', 'bros'], accion: { pantalla: 'comunidades' }, di: 'Te llevo a tus comunidades.' },
-  { palabras: ['dormido', 'sueno', 'dormir', 'aura', 'pulsera', 'pasos', 'movido', 'descanso', 'equilibrio'], accion: { pantalla: 'aura' }, di: 'Abro Aura.' },
-  { palabras: ['dinero', 'monedero', 'wallet', 'paga', 'saldo', 'pagar'], accion: { pantalla: 'monedero' }, di: 'Abro tu monedero.' },
-  { palabras: ['logro', 'premio', 'reto', 'acuerdo'], accion: { pantalla: 'logros' }, di: 'Aquí está tu camino.' },
-  { palabras: ['hoy', 'pendiente', 'que tengo', 'inicio'], accion: { pantalla: 'inicio' }, di: 'Esto es lo que tienes hoy.' }
+  { peso: 3, palabras: ['triste', 'agobiad', 'me siento mal', 'me siento fatal', 'estoy mal', 'estoy fatal', 'me han dicho', 'me han hecho', 'me han pegado', 'me insultan', 'se meten conmigo', 'no me encuentro', 'necesito hablar', 'me duele', 'estoy rayado', 'lloro', 'llorando', 'miedo', 'solo en el recreo', 'nadie me habla', 'deprimid', 'ansiedad', 'nervios'], accion: { responder: true }, di: 'Eso debes hablarlo con tu entorno más cercano.' },
+  { peso: 2, palabras: ['que tiempo', 'tiempo hace', 'va a llover', 'llueve', 'hace frio', 'hace calor', 'temperatura', 'paraguas', 'abrigo'], accion: { responder: true }, di: 'Hoy en Madrid hace 26° y está parcialmente nublado. No hace falta paraguas.' },
+  { peso: 2, palabras: ['qr', 'mi codigo', 'codigo bro', 'conectar con', 'nuevo bro', 'anadir a', 'agregar a', 'escanear'], accion: { pantalla: 'qr' }, di: 'Aquí tienes tu código Bro.' },
+  { peso: 2, palabras: ['ven mis padres', 've mi madre', 've mama', 've laura', 'privacidad', 'que sabe mi madre', 'que sabe mama'], accion: { pantalla: 'privacidad' }, di: 'Esto es lo que ve Laura, y lo que no.' },
+  { peso: 2, palabras: ['emergencia', '112', 'socorro', 'ayuda urgente'], accion: { llamar: 'Emergencias' }, di: 'Llamo al 112.' },
+  { peso: 2, palabras: ['mama', 'madre', 'mami', 'laura'], accion: { flujo: 'mama' }, di: '' },
+  { peso: 2, palabras: ['papa', 'papi', 'mi padre'], accion: { llamar: 'Papá' }, di: 'Llamo a papá.' },
+  { peso: 1, palabras: ['hugo'], accion: { pantalla: 'chat', id: 'Hugo' }, di: 'Abro tu chat con Hugo.' },
+  { peso: 1, palabras: ['lucia'], accion: { pantalla: 'chat', id: 'Lucía' }, di: 'Abro tu chat con Lucía.' },
+  { peso: 1, palabras: ['mateo'], accion: { pantalla: 'chat', id: 'Mateo' }, di: 'Abro tu chat con Mateo.' },
+  { peso: 2, palabras: ['proyecto', 'avion', 'tengo una idea', 'se me ha ocurrido', 'quiero hacer algo', 'quiero construir', 'quiero montar', 'quiero crear', 'quiero fabricar', 'manualidad', 'experimento', 'periodico', 'robot'], accion: { flujo: 'proyecto' }, di: '' },
+  { peso: 1, palabras: ['mis proyectos', 'ver proyectos', 'como va mi proyecto', 'rampa'], accion: { pantalla: 'proyectos' }, di: 'Aquí están tus proyectos.' },
+  { peso: 2, palabras: ['descarga', 'descargar', 'descargame', 'instala', 'instalar', 'instalame', 'bajame', 'bajar', 'app nueva', 'una app', 'nueva app', 'aplicacion nueva', 'quiero la app', 'quiero una aplicacion', 'pedir una app', 'tienda', 'store'], accion: { flujo: 'app' }, di: '' },
+  { peso: 1, palabras: ['mis apps', 'mis aplicaciones', 'que apps tengo', 'aplicaciones', 'apps'], accion: { pantalla: 'apps' }, di: 'Aquí están tus apps.' },
+  { peso: 1, palabras: ['comunidad', 'comunidades', 'grupo', 'grupos', 'equipo', 'futbol', 'robotica', 'mensaje', 'mensajes', 'chat', 'chats', 'que hay nuevo', 'novedades', 'bros', 'amigos', 'me han escrito', 'escribir a'], accion: { pantalla: 'comunidades' }, di: 'Te llevo a tus comunidades.' },
+  { peso: 1, palabras: ['permiso', 'puedo ir', 'me dejas ir'], accion: { flujo: 'permiso', id: 'skate' }, di: 'Preparamos juntos lo que le vas a pedir a Laura.' },
+  { peso: 1, palabras: ['skate', 'sabado', 'quedada', 'plan'], accion: { pantalla: 'plan', id: 'skate' }, di: 'Abro el plan del sábado.' },
+  { peso: 1, palabras: ['dormido', 'sueno', 'dormir', 'aura', 'pulsera', 'pasos', 'movido', 'descanso', 'equilibrio'], accion: { pantalla: 'aura' }, di: 'Abro Aura.' },
+  { peso: 1, palabras: ['dinero', 'monedero', 'wallet', 'paga', 'saldo', 'pagar'], accion: { pantalla: 'monedero' }, di: 'Abro tu monedero.' },
+  { peso: 1, palabras: ['logro', 'logros', 'premio', 'premios', 'reto', 'acuerdo', 'rewards', 'recompensa'], accion: { pantalla: 'logros' }, di: 'Aquí están tus logros.' },
+  { peso: 1, palabras: ['contenido', 'video', 'videos', 'ver algo', 'content', 'aprender'], accion: { pantalla: 'contenido' }, di: 'Te llevo a Contenido.' }
 ];
 
 const INTENCIONES_PADRE = [
-  { palabras: ['comunidad', 'grupo', 'unirse', 'unirme', 'skate', 'club'], accion: { flujo: 'comunidad' }, di: 'Vamos a verla.' },
-  { palabras: ['pendiente', 'pide', 'peticion', 'decidir', 'solicitud', 'quiere'], accion: { flujo: 'decidir' }, di: 'Vamos una a una.' },
-  { palabras: ['cole', 'instituto', 'correo', 'excursion', 'examen', 'buzon'], accion: { flujo: 'colegio' }, di: 'Reviso el buzón del cole.' },
-  { palabras: ['como esta', 'dormid', 'aura', 'pantalla', 'semana', 'sueno', 'hablar de algo'], accion: { flujo: 'aura' }, di: 'Miro la tendencia de Julio.' }
+  { peso: 2, palabras: ['comunidad', 'grupo', 'unirse', 'unirme', 'apuntarse', 'apuntar', 'skate', 'club', 'madrid rio', 'resenas', 'reviews', 'opiniones'], accion: { flujo: 'comunidad' }, di: '' },
+  { peso: 2, palabras: ['pendiente', 'pendientes', 'pide', 'pedido', 'peticion', 'peticiones', 'decidir', 'decision', 'solicitud', 'aprobar', 'aprobacion', 'que quiere', 'que me pide', 'que tengo', 'app', 'aplicacion', 'descargar', 'canva', 'madfutbol', 'mad futbol'], accion: { flujo: 'decidir' }, di: '' },
+  { peso: 2, palabras: ['cole', 'colegio', 'instituto', 'insti', 'correo', 'correos', 'email', 'mail', 'excursion', 'examen', 'buzon', 'profe', 'tutor', 'tutoria', 'circular', 'autorizacion'], accion: { flujo: 'colegio' }, di: '' },
+  { peso: 2, palabras: ['como esta', 'que tal esta', 'que tal julio', 'dormid', 'duerme', 'aura', 'pantalla', 'semana', 'sueno', 'hablar de algo', 'tendencia', 'movimiento', 'descanso', 'salud', 'bien julio'], accion: { flujo: 'aura' }, di: '' }
 ];
 
+function puntuar(lista, texto) {
+  const t = ' ' + limpiar(texto).replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ') + ' ';
+  let mejor = null, max = 0;
+  for (const i of lista) {
+    let p = 0;
+    for (const w of i.palabras) if (t.includes(w.length <= 4 ? ' ' + w : w)) p += w.split(' ').length;
+    if (p) p += i.peso || 0;
+    if (p > max) { max = p; mejor = i; }
+  }
+  return mejor;
+}
+
 function interpretar(db, { texto, quien = 'nino' }) {
-  const t = limpiar(texto);
   if (quien === 'padre') {
-    const hit = INTENCIONES_PADRE.find(i => i.palabras.some(p => t.includes(p)));
+    const hit = puntuar(INTENCIONES_PADRE, texto);
     return hit ? { accion: hit.accion, di: hit.di } : { accion: null, di: null };
   }
+  const hit = puntuar(INTENCIONES_NINO, texto);
+  if (hit && hit.accion.flujo === 'mama' && /\b(llama|llamar|llamame|llamala)\b/.test(limpiar(texto))) return { accion: { llamar: 'Mamá' }, di: 'Llamo a mamá.' };
+  if (hit && hit.accion.responder) return { accion: hit.accion, di: hit.di }; // lo emocional va primero
   for (const app of db.apps) {
     if (junto(texto).includes(junto(app.nombre))) {
       if (app.estado === 'instalada') return { accion: { pantalla: 'apps', id: app.id, abrir: true }, di: `Abro ${app.nombre}.` };
-      return { accion: { flujo: 'app', id: app.id }, di: `Vale, ${app.nombre}.` };
+      return { accion: { flujo: 'app', id: app.id }, di: '' };
     }
   }
-  const hit = INTENCIONES_NINO.find(i => i.palabras.some(p => t.includes(p)));
   return hit ? { accion: hit.accion, di: hit.di } : { accion: null, di: null };
+}
+
+// ---------- Entender la respuesta dentro de un flujo (voz o texto) ----------
+// Devuelve la opción que la persona ha querido decir, o null.
+const SINONIMOS = [
+  [/\b(si|vale|ok|okay|claro|venga|de acuerdo|perfecto|adelante|dale|hazlo|correcto)\b/, ['Sí', 'Vale', 'Enviar', 'Aprobar', 'Seguir', 'Siguiente']],
+  [/\b(no|nop|nada|ninguno|mejor no|para nada)\b/, ['No', 'Rechazar', 'Nada']],
+  [/\b(envia|enviar|envialo|mandalo|manda|mandar)\b/, ['Enviar']],
+  [/\b(cambia|cambiar|otra vez|de nuevo|repite)\b/, ['Cambiar']],
+  [/\b(aprueba|apruebalo|aprobar|acepta|aceptar|dejale|que entre)\b/, ['Aprobar', 'Sí']],
+  [/\b(rechaza|rechazar|deniega|no le dejo)\b/, ['Rechazar', 'No']],
+  [/\b(llama|llamar|llamala|llamada)\b/, ['Llamar']],
+  [/\b(aviso|avisa|avisale|mensaje|escribele|dile)\b/, ['Mandar un aviso']],
+  [/\b(en persona|hablarlo|hablamos|lo hablamos|cara a cara)\b/, ['Hablarlo en persona']],
+  [/\b(quince|15)\b/, ['15 min']], [/\b(treinta|30|media hora)\b/, ['30 min']], [/\b(una hora|1 hora|sesenta|60)\b/, ['1 hora']],
+  [/\b(sin limite|lo que quiera|ilimitado)\b/, ['Sin límite']],
+  [/\b(ficha|mas info|mas informacion|detalles)\b/, ['Ver ficha completa']],
+  [/\b(resenas|reviews|opiniones|otras familias|que dicen)\b/, ['Ver reviews de familias', 'Ver más reviews']],
+  [/\b(mas detalle|detalle|explicame|cuentame mas)\b/, ['Más detalle']],
+  [/\b(firma|firmar|paga|pagar|pagalo)\b/, ['Firmar y pagar 12 €']],
+  [/\b(recuerdaselo|recordar|recordatorio|avisale a julio)\b/, ['Recordárselo a Julio', 'Pedírselo a Julio']],
+  [/\b(calendario|agenda)\b/, ['Añadir al calendario']],
+  [/\b(luego|mas tarde|despues|otro dia)\b/, ['Más tarde']],
+  [/\b(yo solo|solo yo|solo|nadie)\b/, ['Yo solo']],
+  [/\b(hoy|ahora)\b/, ['Hoy']], [/\b(semana)\b/, ['Esta semana']], [/\b(mes)\b/, ['Este mes']],
+  [/\b(domingo)\b/, ['Recordármelo el domingo']], [/\b(acuerdo|reto)\b/, ['Crear un acuerdo']]
+];
+const ORDINALES = ['primer', 'segund', 'tercer', 'cuart', 'quint'];
+const VACIAS = new Set(['ver', 'quiero', 'hora', 'un', 'una', 'el', 'la', 'los', 'las', 'de', 'del', 'con', 'que', 'y', 'a', 'al', 'en', 'lo', 'le', 'me', 'mi', 'por', 'para', 'es', 'yo']);
+
+function elegirOpcion(db, { texto, opciones = [] }) {
+  const ops = opciones.filter(o => !/^Lo (digo|pienso) yo$/.test(o));
+  const n = limpiar(texto).replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!n) return { opcion: null };
+  // 1. Igual o contenida
+  let m = ops.find(o => limpiar(o) === n) || ops.find(o => n.includes(limpiar(o).replace(/[^a-z0-9 ]/g, ' ').trim()));
+  // 2. Por posición: «la primera», «la segunda»…
+  if (!m) ORDINALES.forEach((w, i) => { if (!m && n.includes(w) && ops[i]) m = ops[i]; });
+  // 3. Sinónimos concretos (media hora, envíalo, reseñas…). Los genéricos sí/no van al final.
+  const concretos = SINONIMOS.slice(2), generales = SINONIMOS.slice(0, 2);
+  if (!m) for (const [re, cand] of concretos) { if (re.test(n)) { m = cand.find(c => ops.includes(c)); if (m) break; } }
+  // 4. Por palabras en común («con hugo» → «Con Hugo», «planeador» → «Planeador: vuela lejos»)
+  if (!m) {
+    let max = 0;
+    const pal = n.split(' ').filter(w => w.length > 2 && !VACIAS.has(w));
+    for (const o of ops) {
+      const po = limpiar(o).replace(/[^a-z0-9 ]/g, ' ').split(' ').filter(w => w.length > 2 && !VACIAS.has(w));
+      const c = pal.filter(w => po.some(x => x === w || (w.length > 4 && x.startsWith(w.slice(0, 5))))).length;
+      if (c > max) { max = c; m = o; }
+    }
+  }
+  // 5. Sí / no genéricos
+  if (!m) for (const [re, cand] of generales) { if (re.test(n)) { m = cand.find(c => ops.includes(c)); if (m) break; } }
+  return { opcion: m || null };
 }
 
 // ============================================================
@@ -419,6 +511,7 @@ function sugerenciasPadre(db) {
 // ---------- «Ahora mismo» de Julio (usado por la versión v3) ----------
 function ahoraMismo(db) {
   const items = [];
+  (db.recordatorios || []).forEach(r => items.push({ k: r.k, titulo: r.titulo, texto: r.detalle, urgente: true, accion: { aviso: `${r.titulo}, ${r.k.toLowerCase()}. ${r.detalle}` } }));
   const chatNuevo = Object.entries(db.chats).find(([, c]) => c.sinLeer);
   if (chatNuevo) items.push({ k: 'Te han escrito', titulo: `${chatNuevo[0]}: «${chatNuevo[1].mensajes.at(-1).txt}»`, texto: 'Toca para responder.', accion: { pantalla: 'chat', id: chatNuevo[0] } });
   for (const p of db.planes) {
@@ -438,6 +531,9 @@ function ahoraMismo(db) {
     items.push({ k: 'Del cole', titulo: c.asunto, texto: 'Lo ha puesto Laura. Bro te lo recuerda.', accion: { pantalla: 'inicio' } }));
   const pr = db.proyectos[0];
   if (pr) items.push({ k: 'Sigue en marcha', titulo: `Proyecto: ${pr.titulo}`, texto: `Te toca: ${pr.siguiente.toLowerCase()}.`, accion: { pantalla: 'proyectos' } });
+  // Orden: 1) lo urgente (examen), 2) lo que depende de Julio (proyecto), 3) el resto, 4) lo que depende de mamá
+  const orden = it => it.urgente ? 0 : /proyecto/i.test(it.titulo) ? 1 : /Esperando|Laura|mam/i.test(it.k + ' ' + it.titulo) ? 3 : 2;
+  items.sort((a, b) => orden(a) - orden(b));
   return items;
 }
 
@@ -554,9 +650,11 @@ function marcarColegio(db, { id }) { const c = db.colegio.find(x => x.id === id)
 function leerAvisos(db) { db.avisos.forEach(a => (a.leido = true)); return {}; }
 
 // ---------- Puerta de entrada: el front llama por nombre ----------
-const RUTAS = { estado: () => ({}), interpretar, verVideo, avanzarProyecto, flujo, enviarMensaje, leerChat, pedirApp, pedirMonedero, decidir, sumarLogro, crearAcuerdo, marcarColegio, leerAvisos };
+const RUTAS = { estado: () => ({}), interpretar, elegirOpcion, verVideo, avanzarProyecto, flujo, enviarMensaje, leerChat, pedirApp, pedirMonedero, decidir, sumarLogro, crearAcuerdo, marcarColegio, leerAvisos };
 
 export function ejecutar(db, ruta, datos = {}) {
+  const base = datosIniciales();
+  for (const k in base) if (!(k in db)) db[k] = base[k]; // datos nuevos para demos ya guardadas
   const fn = RUTAS[ruta];
   if (!fn) return { error: 'Ruta desconocida: ' + ruta };
   const res = fn(db, datos) || {};

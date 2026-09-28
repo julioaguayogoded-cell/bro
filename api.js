@@ -10,7 +10,7 @@ import { datosIniciales, ejecutar } from './logica.js';
 export const MODO = 'simulado'; // cambia a 'real' cuando arranques el servidor
 export const API_URL = 'http://localhost:3000';
 
-const CLAVE = 'bro-os-db-v4';
+const CLAVE = 'bro-os-db-v6';
 
 function leer() {
   try { return JSON.parse(localStorage.getItem(CLAVE)) || datosIniciales(); }
