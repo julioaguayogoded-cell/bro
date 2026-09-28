@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Bro OS</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#111111">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#E6E9F0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
+input{font:inherit}
+a{color:#3068ED}a:hover{color:#1f4fc4}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(48,104,237,.55)}70%{box-shadow:0 0 0 22px rgba(48,104,237,0)}100%{box-shadow:0 0 0 0 rgba(48,104,237,0)}}
+@keyframes habla{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes barra{from{width:0}to{width:100%}}
+@keyframes sube{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:{{ marco.gap }};padding:{{ marco.pad }};font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.45;color:#111">
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center">
+    <div style="display:flex;gap:3px;padding:4px;border-radius:999px;background:#111">
+      <button onClick="{{ verNino }}" style="padding:8px 16px;border-radius:999px;font-family:Outfit;font-weight:700;font-size:13px;background:{{ swNinoBg }};color:{{ swNinoTx }}">Julio</button>
+      <button onClick="{{ verPadre }}" style="padding:8px 16px;border-radius:999px;font-family:Outfit;font-weight:700;font-size:13px;background:{{ swPadreBg }};color:{{ swPadreTx }}">Laura</button>
+    </div>
+    <button onClick="{{ reiniciar }}" style="font-size:12.5px;color:#6B7280;padding:8px 10px">Reiniciar demo</button>
+    <a href="Flujos Bro AI.dc.html" style="font-size:12.5px;padding:8px 4px">Ver los flujos</a>
+    <span style="font-size:11px;color:#9AA1AE">v4.3 · entiende la voz</span>
+  </div>
+
+  <div style="width:100%;max-width:{{ marco.ancho }};height:{{ marco.alto }};min-height:{{ marco.minAlto }};border-radius:{{ marco.radio }};border:{{ marco.borde }};overflow:hidden;position:relative;display:flex;flex-direction:column;background:{{ t.bg }};color:{{ t.txt }};box-shadow:{{ marco.sombra }}">
+
+    <sc-if value="{{ cargando }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:grid;place-items:center;background:#fff"><img src="logo.png" alt="Bro" style="width:84px;height:84px"></div>
+    </sc-if>
+
+    <sc-if value="{{ listo }}" hint-placeholder-val="{{ true }}">
+      <!-- Cabecera -->
+      <div style="display:flex;align-items:center;gap:11px;padding:14px 16px 12px;background:{{ t.head }};border-bottom:1px solid {{ t.line }}">
+        <sc-if value="{{ puedeVolver }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ volver }}" aria-label="Volver a Bro" style="width:34px;height:34px;border-radius:50%;background:{{ t.soft }};display:grid;place-items:center;font-size:20px;flex:none">‹</button>
+        </sc-if>
+        <img src="logo.png" alt="" style="width:30px;height:30px;flex:none;background:#fff;border-radius:9px;padding:1px">
+        <div style="min-width:0;flex:1">
+          <div style="font-family:Outfit;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15">{{ titulo }}</div>
+          <div style="font-size:12px;color:{{ t.muted }}">{{ subtitulo }}</div>
+        </div>
+        <div style="width:36px;height:36px;border-radius:50%;background:{{ avatarColor }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700;flex:none">{{ avatar }}</div>
+      </div>
+
+      <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:100px;display:flex;flex-direction:column">
+
+        <!-- ===== BRO (pantalla principal) ===== -->
+        <sc-if value="{{ enBro }}" hint-placeholder-val="{{ true }}">
+
+          <sc-if value="{{ convVacia }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px 20px;text-align:center">
+              <sc-for list="{{ avisos }}" as="av" hint-placeholder-count="0">
+                <div style="width:100%;display:flex;gap:11px;align-items:center;text-align:left;background:rgba(48,104,237,.16);border:1px solid rgba(48,104,237,.4);border-radius:16px;padding:12px 14px;animation:sube .3s ease-out">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#3068ED;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700;flex:none">J</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:11px;color:{{ t.muted }}">Aviso de Julio · {{ av.hora }}</div><div style="font-family:Outfit;font-weight:600;font-size:15px">«{{ av.txt }}»</div></div>
+                  <button onClick="{{ leerAvisos }}" style="flex:none;font-size:12.5px;font-weight:700;color:#7fa4ff">Visto</button>
+                </div>
+              </sc-for>
+
+              <button onClick="{{ escuchar }}" aria-label="Hablar con Bro" style="width:140px;height:140px;border-radius:50%;padding:6px;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }};box-shadow:0 16px 36px rgba(48,104,237,.28)">
+                <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center">
+                  <img src="facew.png" alt="" style="width:60%;height:60%">
+                </div>
+              </button>
+              <div>
+                <div style="font-family:Outfit;font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1.1">{{ saludo }}</div>
+                <div style="font-size:13.5px;color:{{ t.muted }};margin-top:6px;text-wrap:pretty">{{ saludoSub }}</div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:340px">
+                <sc-for list="{{ sugerencias }}" as="s" hint-placeholder-count="4">
+                  <button onClick="{{ s.onClick }}" style="background:{{ t.card }};border:1px solid {{ s.borde }};border-radius:999px;padding:8px 13px;font-size:12.5px;font-weight:600">{{ s.txt }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ convActiva }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid {{ t.line }}">
+              <button onClick="{{ escuchar }}" aria-label="Hablar con Bro" style="width:40px;height:40px;border-radius:50%;padding:3px;flex:none;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
+                <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center"><img src="facew.png" alt="" style="width:60%;height:60%"></div>
+              </button>
+              <div style="flex:1;min-width:0"><div style="font-size:11px;font-weight:700;color:#3068ED;letter-spacing:.03em">BRO AI</div><div style="font-family:Outfit;font-weight:700;font-size:15px">{{ flujoTitulo }}</div></div>
+              <button onClick="{{ terminar }}" style="flex:none;font-size:12.5px;font-weight:600;color:{{ t.muted }};padding:7px 11px;border:1px solid {{ t.line }};border-radius:999px">Terminar</button>
+            </div>
+
+            <div style="padding:14px 14px 4px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ conv }}" as="m" hint-placeholder-count="0">
+                <sc-if value="{{ m.esSys }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:center;background:{{ t.soft }};color:{{ t.muted }};font-size:12px;padding:7px 12px;border-radius:12px">🔒 {{ m.txt }}</div>
+                </sc-if>
+                <sc-if value="{{ m.esYo }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:flex-end;max-width:82%;padding:10px 13px;border-radius:17px;border-bottom-right-radius:5px;background:#3068ED;color:#fff;font-size:14.5px;animation:sube .2s ease-out">{{ m.txt }}</div>
+                </sc-if>
+                <sc-if value="{{ m.esBro }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:8px;align-items:flex-end;max-width:92%;animation:sube .25s ease-out">
+                    <img src="logo.png" alt="" style="width:24px;height:24px;flex:none;background:#fff;border-radius:50%;padding:1px">
+                    <div style="padding:10px 13px;border-radius:17px;border-bottom-left-radius:5px;background:{{ t.card }};border:1px solid {{ t.line }};font-size:14.5px;text-wrap:pretty">{{ m.txt }}</div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ m.tApp }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;display:flex;gap:12px;align-items:center;background:{{ t.card }};border:1px solid {{ t.line }};border-radius:16px;padding:12px">
+                    <div style="width:44px;height:44px;border-radius:13px;background:{{ m.c.color }};display:grid;place-items:center;font-size:21px;flex:none">{{ m.c.ic }}</div>
+                    <div style="min-width:0"><b style="font-family:Outfit;font-size:15px;display:block">{{ m.c.nombre }}</b><span style="font-size:12px;color:{{ t.muted }}">{{ m.c.que }} · Revisada para perfil 13</span></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.tSol }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;border-radius:16px;padding:13px 14px;background:rgba(229,102,72,.13);border:1px solid rgba(229,102,72,.38)">
+                    <div style="font-size:10.5px;font-weight:700;color:#f0a58c;letter-spacing:.03em">{{ m.c.etiqueta }}</div>
+                    <div style="font-family:Outfit;font-size:16px;font-weight:700;margin-top:2px">{{ m.c.titulo }}</div>
+                    <div style="font-size:13px;color:#eec4b5;margin-top:3px">{{ m.c.detalle }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.tCorreo }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;background:{{ t.card }};border:1px solid {{ t.line }};border-radius:16px;padding:13px 14px">
+                    <div style="font-size:11.5px;color:{{ t.muted }}">✉ {{ m.c.de }}</div>
+                    <div style="font-family:Outfit;font-size:15px;font-weight:700;margin:3px 0 3px">{{ m.c.asunto }}</div>
+                    <div style="font-size:12.5px;color:{{ t.muted }}">{{ m.c.resumen }}</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.tTend }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;background:{{ t.card }};border:1px solid {{ t.line }};border-radius:16px;padding:13px 14px">
+                    <div style="display:flex;justify-content:space-between;font-size:11.5px;color:{{ t.muted }}"><span>Últimos 7 días</span><span style="display:flex;gap:10px"><span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#6B7A99"></i>Pantalla</span><span style="display:flex;gap:4px;align-items:center"><i style="width:8px;height:8px;border-radius:2px;background:#82B94F"></i>Movimiento</span></span></div>
+                    <div style="display:flex;align-items:flex-end;gap:6px;height:108px;margin-top:10px">
+                      <sc-for list="{{ m.c.dias }}" as="d" hint-placeholder-count="7">
+                        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;align-items:stretch">
+                          <div style="font-size:9.5px;color:{{ t.muted }};text-align:center">{{ d.sueno }}h</div>
+                          <div style="height:{{ d.hp }};background:#6B7A99;border-radius:3px"></div>
+                          <div style="height:{{ d.hm }};background:#82B94F;border-radius:3px"></div>
+                          <div style="font-size:9.5px;color:{{ t.muted }};text-align:center;font-weight:{{ d.peso }}">{{ d.d }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="font-size:11px;color:{{ t.muted }};margin-top:8px">Arriba, horas de sueño. Nunca mensajes ni búsquedas.</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.tFicha }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;background:{{ t.card }};border:1px solid {{ t.line }};border-radius:16px;padding:13px 14px">
+                    <div style="display:flex;gap:10px;align-items:center"><span style="font-size:22px">{{ m.c.ic }}</span><b style="font-family:Outfit;font-size:16px">{{ m.c.nombre }}</b></div>
+                    <sc-for list="{{ m.c.filas }}" as="f" hint-placeholder-count="3">
+                      <div style="display:flex;gap:10px;padding:8px 0;border-top:1px solid {{ t.line }};font-size:13px;margin-top:4px"><span style="color:{{ t.muted }};width:88px;flex:none;font-size:12px">{{ f.k }}</span><div>{{ f.v }}</div></div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.tReview }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px;background:rgba(130,185,79,.14);border:1px solid rgba(130,185,79,.4);border-radius:16px;padding:13px 14px">
+                    <div style="font-size:13px;color:#a8d17a;letter-spacing:1px">★★★★★</div>
+                    <div style="font-size:14px;margin-top:5px;text-wrap:pretty">«{{ m.c.txt }}»</div>
+                    <div style="font-size:12px;color:{{ t.muted }};margin-top:6px">{{ m.c.de }} · familia verificada de la comunidad</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.hayBoton }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-left:32px"><button onClick="{{ m.onBoton }}" style="padding:11px 16px;border-radius:14px;background:#82B94F;color:#fff;font-weight:700;font-family:Outfit;font-size:14.5px">{{ m.boton }} →</button></div>
+                </sc-if>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ hayOpciones }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:8px 14px 0 46px;display:flex;flex-wrap:wrap;gap:7px;animation:sube .3s ease-out">
+                <sc-for list="{{ opciones }}" as="o" hint-placeholder-count="3">
+                  <button onClick="{{ o.onClick }}" style="padding:9px 14px;border-radius:999px;font-size:13.5px;font-weight:600;background:{{ o.bg }};border:1px {{ o.estilo }} {{ o.borde }};color:{{ o.color }}">{{ o.txt }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </sc-if>
+
+        <!-- ===== Destinos de Julio (Bro navega aquí) ===== -->
+        <sc-if value="{{ p.comunidades }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:16px 16px 9px">Tus comunidades</div>
+          <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ comunidades }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E4E7EE">
+                <div style="width:42px;height:42px;border-radius:13px;background:#F5F6F9;display:grid;place-items:center;font-size:19px;flex:none">{{ c.ic }}</div>
+                <div style="flex:1;min-width:0"><b style="display:block;font-size:14.5px;font-weight:600">{{ c.nombre }}</b><span style="font-size:12.5px;color:#6B7280">{{ c.para }} · {{ c.dirige }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-family:Outfit;font-size:16.5px;font-weight:700;margin:22px 16px 9px">Mensajes</div>
+          <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ bros }}" as="b" hint-placeholder-count="3">
+              <button onClick="{{ b.onClick }}" style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #E4E7EE;width:100%">
+                <div style="width:42px;height:42px;border-radius:50%;background:{{ b.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:700;flex:none">{{ b.ini }}</div>
+                <div style="flex:1;min-width:0"><b style="display:block;font-size:14.5px;font-weight:600">{{ b.nombre }} {{ b.apellido }}</b><span style="font-size:12.5px;color:#6B7280;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.ultimo }}</span></div>
+                <sc-if value="{{ b.sinLeer }}" hint-placeholder-val="{{ false }}"><span style="background:#E56648;color:#fff;border-radius:999px;font-size:10.5px;font-weight:700;padding:2px 7px">1</span></sc-if>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ p.chat }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 14px 4px;display:flex;flex-direction:column;gap:9px">
+            <div style="align-self:center;background:#EEF1F6;color:#4b5563;font-size:12px;padding:8px 12px;border-radius:12px">Solo tú y {{ chatCon }}. Laura no lee esto.</div>
+            <sc-for list="{{ mensajes }}" as="m" hint-placeholder-count="2">
+              <sc-if value="{{ m.mio }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self:flex-end;max-width:84%;padding:10px 13px;border-radius:17px;border-bottom-right-radius:5px;background:#3068ED;color:#fff;font-size:14.5px">{{ m.txt }}</div>
+              </sc-if>
+              <sc-if value="{{ m.suyo }}" hint-placeholder-val="{{ true }}">
+                <div style="align-self:flex-start;max-width:84%;padding:10px 13px;border-radius:17px;border-bottom-left-radius:5px;background:#fff;border:1px solid #E4E7EE;font-size:14.5px">{{ m.txt }}</div>
+              </sc-if>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;padding:10px 14px">
+            <input value="{{ chatTxt }}" onChange="{{ onChatTxt }}" onKeyDown="{{ onChatKey }}" placeholder="Mensaje a {{ chatCon }}" style="flex:1;min-width:0;border:1px solid #E4E7EE;background:#fff;border-radius:999px;padding:11px 15px;font-size:14.5px;outline:none">
+            <button onClick="{{ enviarChat }}" aria-label="Enviar" style="width:44px;height:44px;border-radius:50%;background:#3068ED;color:#fff;font-size:17px;flex:none;display:grid;place-items:center">↑</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ p.proyectos }}" hint-placeholder-val="{{ false }}">
+          <div style="height:14px"></div>
+          <sc-for list="{{ proyectos }}" as="pr" hint-placeholder-count="1">
+            <button onClick="{{ pr.onClick }}" style="display:block;margin:0 16px 11px;width:calc(100% - 32px);background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:15px">
+              <div style="font-size:10.5px;font-weight:700;color:#3068ED">{{ pr.pasoTxt }} · {{ pr.con }}</div>
+              <div style="font-family:Outfit;font-size:17px;font-weight:700;margin-top:3px">{{ pr.titulo }}</div>
+              <div style="font-size:13px;color:#6B7280;margin-top:3px">Siguiente: {{ pr.siguiente }}</div>
+              <div style="height:6px;border-radius:99px;background:#F0F2F6;margin-top:11px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#82B94F;width:{{ pr.pct }}"></div></div>
+            </button>
+          </sc-for>
+        </sc-if>
+
+        <!-- PROYECTO INTERACTIVO -->
+        <sc-if value="{{ p.proyecto }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:16px 16px 4px">
+            <div style="font-size:10.5px;font-weight:700;color:#3068ED;letter-spacing:.03em">{{ proy.cabecera }}</div>
+            <div style="font-family:Outfit;font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:4px">{{ proy.titulo }}</div>
+            <div style="height:6px;border-radius:99px;background:#E4E7EE;margin-top:12px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#82B94F;width:{{ proy.pct }};transition:width .4s"></div></div>
+          </div>
+
+          <div style="padding:10px 16px 0;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ proy.pasos }}" as="st" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid {{ st.borde }};border-radius:18px;padding:14px;opacity:{{ st.opacidad }}">
+                <div style="display:flex;gap:11px;align-items:center">
+                  <div style="width:28px;height:28px;border-radius:50%;background:{{ st.numBg }};color:{{ st.numTx }};display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:13px;flex:none">{{ st.num }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:Outfit;font-size:15.5px;font-weight:700">{{ st.t }}</div>
+                    <sc-if value="{{ st.hayDato }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#6B7280">{{ st.dato }}</div></sc-if>
+                  </div>
+                </div>
+                <sc-if value="{{ st.hayConsejo }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px;display:flex;gap:8px;align-items:flex-start;background:#F5F6F9;border-radius:12px;padding:10px 12px;font-size:13px"><img src="logo.png" alt="" style="width:20px;height:20px;flex:none"><span>{{ st.consejo }}</span></div>
+                </sc-if>
+
+                <sc-if value="{{ st.esVideos }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:13px;color:#6B7280;margin:10px 0 10px">Tres vídeos revisados para perfil 13. Mira el que quieras.</div>
+                  <div style="display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ proy.videos }}" as="v" hint-placeholder-count="3">
+                      <button onClick="{{ v.onClick }}" style="display:flex;gap:11px;align-items:center;width:100%;border:1px solid #E4E7EE;border-radius:14px;padding:8px;background:#fff">
+                        <div style="width:104px;height:62px;border-radius:10px;flex:none;position:relative;overflow:hidden;background:{{ v.fondo }};display:grid;place-items:center;color:#fff">
+                          <span style="font-size:24px">✈️</span>
+                          <span style="position:absolute;right:5px;bottom:4px;font-size:10px;font-weight:700;background:rgba(0,0,0,.55);padding:1px 5px;border-radius:5px">{{ v.dur }}</span>
+                          <sc-if value="{{ v.reproduciendo }}" hint-placeholder-val="{{ false }}">
+                            <div style="position:absolute;inset:0;background:rgba(17,17,17,.75);display:flex;flex-direction:column;justify-content:flex-end">
+                              <div style="font-size:10px;font-weight:700;text-align:center;margin-bottom:auto;padding-top:20px">Reproduciendo…</div>
+                              <div style="height:4px;background:rgba(255,255,255,.25)"><div style="height:100%;background:#E56648;animation:barra 3s linear forwards"></div></div>
+                            </div>
+                          </sc-if>
+                        </div>
+                        <div style="flex:1;min-width:0">
+                          <div style="font-size:13.5px;font-weight:600;line-height:1.3">{{ v.t }}</div>
+                          <sc-if value="{{ v.visto }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;margin-top:5px;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:700;background:rgba(130,185,79,.16);color:#54812b">Visto ✓</span></sc-if>
+                          <sc-if value="{{ v.noVisto }}" hint-placeholder-val="{{ true }}"><span style="display:inline-block;margin-top:5px;font-size:11.5px;color:#3068ED;font-weight:600">▶ Ver</span></sc-if>
+                        </div>
+                      </button>
+                    </sc-for>
+                  </div>
+                  <button onClick="{{ proy.onVideos }}" style="margin-top:12px;width:100%;padding:13px;border-radius:14px;background:#3068ED;color:#fff;font-family:Outfit;font-weight:700;font-size:15px;text-align:center;opacity:{{ proy.videosOpacidad }}">Ya sé cómo se hace</button>
+                </sc-if>
+
+                <sc-if value="{{ st.esNormal }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ proy.onHecho }}" style="margin-top:12px;width:100%;padding:13px;border-radius:14px;background:#3068ED;color:#fff;font-family:Outfit;font-weight:700;font-size:15px;text-align:center">Hecho</button>
+                </sc-if>
+                <sc-if value="{{ st.esPrueba }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:13px;color:#6B7280;margin:10px 0 12px">Dóblalo como en el vídeo y lánzalo tres veces en un sitio amplio.</div>
+                  <button onClick="{{ proy.onProbado }}" style="width:100%;padding:13px;border-radius:14px;background:#3068ED;color:#fff;font-family:Outfit;font-weight:700;font-size:15px;text-align:center">Ya lo he probado</button>
+                </sc-if>
+
+                <sc-if value="{{ st.esMejora }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:13px;color:#6B7280;margin:10px 0 10px">¿Cómo ha volado?</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <sc-for list="{{ proy.mejoras }}" as="o" hint-placeholder-count="3">
+                      <button onClick="{{ o.onClick }}" style="padding:9px 14px;border-radius:999px;font-size:13.5px;font-weight:600;background:rgba(48,104,237,.07);border:1px solid #3068ED;color:#1f4fc4">{{ o.txt }}</button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ proy.terminado }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:14px 16px 0;border-radius:22px;background:#82B94F;color:#fff;padding:24px 20px;text-align:center;animation:sube .3s ease-out">
+              <div style="font-family:Outfit;font-size:26px;font-weight:800;letter-spacing:-.03em">Proyecto terminado</div>
+              <div style="margin-top:6px;font-size:14px">Lo has hecho tú. ¿A cuántos metros llega?</div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ p.apps }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ gruposApps }}" as="g" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:8px;margin:20px 16px 9px">
+              <i style="width:9px;height:9px;border-radius:50%;background:{{ g.color }};flex:none"></i>
+              <div style="font-family:Outfit;font-size:16px;font-weight:700">{{ g.titulo }}</div>
+              <span style="font-size:12px;color:#6B7280">{{ g.n }}</span>
+            </div>
+            <div style="margin:0 16px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+              <sc-for list="{{ g.apps }}" as="a" hint-placeholder-count="2">
+                <div style="display:flex;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid #E4E7EE;box-shadow:{{ a.sombra }}">
+                  <div style="width:44px;height:44px;border-radius:13px;background:{{ a.color }};display:grid;place-items:center;font-size:21px;flex:none">{{ a.ic }}</div>
+                  <div style="flex:1;min-width:0"><b style="display:block;font-family:Outfit;font-size:15px">{{ a.nombre }}</b><span style="font-size:12.5px;color:{{ a.notaColor }}">{{ a.nota }}</span></div>
+                  <sc-if value="{{ a.puedeAbrir }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ a.onAbrir }}" style="flex:none;padding:7px 12px;border-radius:999px;background:#F5F6F9;font-size:12.5px;font-weight:700">Abrir</button>
+                  </sc-if>
+                  <sc-if value="{{ a.puedePedir }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ a.onPedir }}" style="flex:none;padding:7px 12px;border-radius:999px;background:#3068ED;color:#fff;font-size:12.5px;font-weight:700">Pedir</button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </sc-if>
+
+        <sc-if value="{{ p.otra }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:24px 16px;padding:24px 20px;border:1px dashed #E4E7EE;border-radius:18px;background:#fff;text-align:center;color:#6B7280;font-size:13.5px">Esta pantalla no forma parte de esta exploración.<br>Está en la <a href="Bro OS.dc.html">versión v3</a>.</div>
+        </sc-if>
+      </div>
+
+      <!-- Escuchando -->
+      <sc-if value="{{ escuchando }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:12px;right:12px;bottom:84px;z-index:20;background:#111;color:#fff;border-radius:18px;padding:12px 15px;display:flex;gap:10px;align-items:center;animation:sube .2s ease-out">
+          <span style="width:10px;height:10px;border-radius:50%;background:#E56648;flex:none;animation:pulso 1.2s infinite"></span>
+          <div style="font-size:14px;min-width:0">{{ oidoTxt }}</div>
+        </div>
+      </sc-if>
+
+      <!-- Dock: voz o chat -->
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:15;display:flex;gap:8px;align-items:center;padding:10px 12px 14px;background:{{ t.head }};border-top:1px solid {{ t.line }}">
+        <input ref="{{ inputRef }}" value="{{ texto }}" onChange="{{ onTexto }}" onKeyDown="{{ onTextoKey }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:1px solid {{ t.line }};background:{{ t.soft }};color:{{ t.txt }};border-radius:999px;padding:13px 16px;font-size:14.5px;outline:none">
+        <button onClick="{{ micOEnviar }}" aria-label="Hablar o enviar" style="width:52px;height:52px;border-radius:50%;padding:3px;flex:none;background:conic-gradient(from 140deg,#3068ED 0 25%,#E56648 0 50%,#82B94F 0 75%,#111 0);animation:{{ orbAnim }}">
+          <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3068ED,#6f49d8);display:grid;place-items:center;color:#fff;font-size:20px">{{ micIc }}</div>
+        </button>
+      </div>
+    </sc-if>
+
+    <!-- Llamada -->
+    <sc-if value="{{ hayLlamada }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;z-index:40;background:linear-gradient(170deg,#1b2540,#0b1020);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:70px 24px 44px">
+        <div style="text-align:center">
+          <div style="width:104px;height:104px;border-radius:50%;display:grid;place-items:center;font-family:Outfit;font-weight:700;font-size:36px;margin:0 auto 18px;background:{{ llamada.color }}">{{ llamada.ini }}</div>
+          <div style="font-family:Outfit;font-size:27px;font-weight:700">{{ llamada.nombre }}</div>
+          <div style="margin-top:6px;opacity:.7;font-size:14px">{{ llamada.estado }}</div>
+        </div>
+        <div style="font-size:12px;opacity:.55;text-align:center;max-width:250px">{{ llamada.nota }}</div>
+        <button onClick="{{ colgar }}" aria-label="Colgar" style="width:70px;height:70px;border-radius:50%;background:#E5484D;color:#fff;font-size:26px;display:grid;place-items:center">✆</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hayAviso }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:16px;right:16px;top:74px;z-index:50;background:#111;color:#fff;padding:12px 15px;border-radius:14px;font-size:13.5px;animation:sube .2s ease-out">{{ aviso }}</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;modoInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;nino&quot;,&quot;padre&quot;],&quot;default&quot;:&quot;nino&quot;,&quot;tsType&quot;:&quot;'nino'|'padre'&quot;},&quot;vozActiva&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;vozSimulada&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;velocidadBro&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rapida&quot;,&quot;normal&quot;,&quot;lenta&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const LIBRE = /^Lo (digo|pienso) yo$/;
+const limpiar = t => (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[¿?¡!.,]/g, '').trim();
+const EJEMPLOS = {
+  nino: ['Quiero crear un proyecto', 'Descarga MadFútbol', 'Me siento mal', 'Avisa a mamá', 'Mis comunidades'],
+  padre: ['¿Qué me pide Julio?', '¿Algo del cole?', '¿Cómo está Julio?', 'Julio quiere unirse a un grupo']
+};
+const TEMA = {
+  nino: { bg: '#F5F6F9', head: '#fff', card: '#fff', line: '#E4E7EE', txt: '#111', muted: '#6B7280', soft: '#F5F6F9' },
+  padre: { bg: '#0E1526', head: '#0E1526', card: '#18213A', line: '#26314F', txt: '#F2F5FB', muted: '#97A2BC', soft: '#222d4c' }
+};
+const DESTINOS = ['comunidades', 'chat', 'proyectos', 'proyecto', 'apps'];
+const FONDOS_VIDEO = ['linear-gradient(135deg,#3068ED,#6f49d8)', 'linear-gradient(135deg,#82B94F,#3e8e6a)', 'linear-gradient(135deg,#E56648,#c2417a)'];
+
+class Component extends DCLogic {
+  state = { db: null, modo: null, pantalla: 'bro', id: null, texto: '', escuchando: false, oido: '', hablando: false, voz: null, llamada: null, chatTxt: '', aviso: null,
+    sesion: { nino: { conv: [], flujo: null }, padre: { conv: [], flujo: null } } };
+  scrollRef = React.createRef();
+  inputRef = React.createRef();
+  ej = { nino: 0, padre: 0 };
+
+  async componentDidMount() {
+    this.alRedimensionar = () => this.setState({ movil: window.innerWidth < 520 });
+    window.addEventListener('resize', this.alRedimensionar);
+    this.alRedimensionar();
+    this.api = await import('./api.js');
+    this.llamar('estado');
+    if (window.speechSynthesis) speechSynthesis.getVoices();
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.alRedimensionar); clearInterval(this.tCall); clearTimeout(this.tCall); if (window.speechSynthesis) speechSynthesis.cancel(); }
+  componentDidUpdate() {
+    const m = this.modo(), x = this.state.sesion[m];
+    const clave = m + '|' + x.conv.length + '|' + (x.flujo ? x.flujo.respuestas.length : '-');
+    if (clave === this._ultimaClave) return;
+    this._ultimaClave = clave;
+    requestAnimationFrame(() => { const el = this.scrollRef.current; if (el) el.scrollTop = el.scrollHeight; });
+  }
+
+  modo() { return this.state.modo || this.props.modoInicial || 'nino'; }
+  vozOn() { return this.state.voz ?? (this.props.vozActiva === true); }
+  retraso() { return { rapida: 350, normal: 800, lenta: 1500 }[this.props.velocidadBro || 'normal']; }
+  async llamar(ruta, datos) { const r = await this.api.llamar(ruta, datos); if (r.estado) this.setState({ db: r.estado }); return r; }
+  avisar(t) { this.setState({ aviso: t }); clearTimeout(this.tAviso); this.tAviso = setTimeout(() => this.setState({ aviso: null }), 2400); }
+
+  // ---------- Sesión de conversación (una por persona) ----------
+  ses() { return this.state.sesion[this.modo()]; }
+  setSes(fn) { const m = this.modo(); this.setState(s => ({ sesion: { ...s.sesion, [m]: { ...s.sesion[m], ...fn(s.sesion[m]) } } })); }
+  push(msg) { this.setSes(x => ({ conv: [...x.conv, { k: Math.random().toString(36).slice(2), ...msg }] })); }
+  decir(txt, extra = {}) { this.push({ de: 'bro', txt, ...extra }); this.hablar(txt); }
+
+  hablar(txt) {
+    if (!this.vozOn() || !window.speechSynthesis) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(txt.replace(/[«»]/g, ''));
+      u.lang = 'es-ES'; u.rate = 1.05;
+      const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.startsWith('es'));
+      if (v) u.voice = v;
+      u.onstart = () => this.setState({ hablando: true });
+      u.onend = u.onerror = () => this.setState({ hablando: false });
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+
+  // ---------- Entender lo que dice la persona ----------
+  casar(texto, ops) {
+    const n = limpiar(texto);
+    let m = ops.find(o => limpiar(o) === n) || ops.find(o => n.includes(limpiar(o))) || ops.find(o => n.length > 3 && limpiar(o).includes(n));
+    if (!m && /^(si|vale|ok|claro|venga)\b/.test(n)) m = ops.find(o => /^(Sí|Vale|Enviar|Aprobar|Seguir)$/.test(o));
+    if (!m && /^no\b/.test(n)) m = ops.find(o => /^(No|Rechazar|Nada)$/.test(o));
+    if (!m) ['primer', 'segund', 'tercer', 'cuart', 'quint'].forEach((w, i) => { if (!m && n.includes(w) && ops[i]) m = ops[i]; });
+    return m;
+  }
+
+  async pedir(texto) {
+    texto = (texto || '').trim(); if (!texto) return;
+    this.setState({ texto: '' });
+    if (this.state.pantalla !== 'bro') this.setState({ pantalla: 'bro', id: null });
+    const f = this.ses().flujo;
+    if (f && f.pregunta) {
+      const m = (await this.llamar('elegirOpcion', { texto, opciones: f.pregunta.opciones })).opcion;
+      if (m) return this.responder(m, texto);
+      if (f.libre) return this.responder(texto);
+      this.push({ de: 'yo', txt: texto });
+      return this.decir('No te he entendido. Elige una opción o dilo de otra forma.');
+    }
+    this.push({ de: 'yo', txt: texto });
+    const r = await this.llamar('interpretar', { texto, quien: this.modo() });
+    if (r.accion && r.accion.flujo) return this.ejecutar(r.accion);
+    if (r.accion && r.accion.responder) return this.decir(r.di);
+    if (r.accion) { if (r.di) this.decir(r.di); setTimeout(() => this.ejecutar(r.accion), r.di ? this.retraso() : 0); return; }
+    const quien = this.modo() === 'padre' ? 'Laura, madre de Julio (13 años)' : 'Julio (13 años, Madrid)';
+    let di = this.modo() === 'padre'
+      ? 'Eso aún no lo sé hacer. Prueba «¿qué me pide Julio?» o «¿algo del cole?».'
+      : 'Eso aún no lo sé hacer. Prueba «quiero crear un proyecto» o «avisa a mamá».';
+    try {
+      if (window.claude && window.claude.complete)
+        di = await window.claude.complete(`Eres Bro AI, el asistente del móvil de ${quien}. Responde en español en 1 o 2 frases cortas, cercano y claro, sin emojis. Haces pensar y das opciones, pero nunca decides por la persona. No eres un amigo ni entras en lo emocional: si el niño habla de cómo se siente, responde solo «Eso debes hablarlo con tu entorno más cercano.» Mensaje: ${texto}`);
+    } catch (e) {}
+    this.decir(di);
+  }
+
+  escuchar() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    const f = this.ses().flujo, m = this.modo();
+    const fin = q => { this.setState({ escuchando: false, oido: '' }); if (q) this.pedir(q); };
+    const simular = () => {
+      const q = f && f.pregunta
+        ? (f.ejemplo || f.pregunta.opciones.find(o => !LIBRE.test(o)))
+        : EJEMPLOS[m][this.ej[m]++ % EJEMPLOS[m].length];
+      setTimeout(() => this.setState({ oido: q }), 650);
+      setTimeout(() => fin(q), 1500);
+    };
+    // Tocar otra vez mientras escucha = parar y enviar lo oído
+    if (this.state.escuchando && this.rec) { try { this.rec.stop(); } catch (e) {} return; }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const demo = this.props.vozSimulada === true || /[?&]demo/.test(location.search);
+    this.setState({ escuchando: true, oido: '' });
+    if (demo) return simular();
+    if (!SR) {
+      this.setState({ escuchando: false });
+      this.avisar('Este navegador no permite el micrófono. Usa Chrome (Android) o Safari (iPhone), o escribe.');
+      if (this.inputRef.current) this.inputRef.current.focus();
+      return;
+    }
+    let oido = '', terminado = false;
+    const acabar = q => { if (terminado) return; terminado = true; this.rec = null; fin(q); };
+    try {
+      const r = this.rec = new SR();
+      r.lang = 'es-ES'; r.interimResults = true; r.continuous = false; r.maxAlternatives = 1;
+      r.onresult = e => { oido = Array.from(e.results).map(x => x[0].transcript).join(' ').trim(); this.setState({ oido }); };
+      r.onerror = e => {
+        terminado = true; this.rec = null; this.setState({ escuchando: false, oido: '' });
+        const msg = { 'not-allowed': 'Bro no tiene permiso para el micrófono. Actívalo en los ajustes del navegador.', 'service-not-allowed': 'Bro no tiene permiso para el micrófono. Actívalo en los ajustes del navegador.', 'no-speech': 'No te he oído. Toca y habla otra vez.', 'network': 'Sin conexión: el reconocimiento de voz necesita internet.' }[e.error];
+        if (e.error !== 'aborted') this.avisar(msg || `El micrófono ha fallado (${e.error}). Prueba otra vez o escribe.`);
+      };
+      r.onend = () => { if (!oido && !terminado) { terminado = true; this.rec = null; this.setState({ escuchando: false, oido: '' }); this.avisar('No te he oído. Toca y habla otra vez.'); return; } acabar(oido); };
+      r.start();
+    } catch (e) { this.rec = null; this.setState({ escuchando: false }); this.avisar('No he podido abrir el micrófono. Escribe tu mensaje.'); }
+  }
+
+  // ---------- Flujos ----------
+  async empezarFlujo(nombre, id) {
+    this.setState({ pantalla: 'bro', id: null });
+    const f = { nombre, id, respuestas: [] };
+    const r = await this.llamar('flujo', { flujo: nombre, id, respuestas: [] });
+    this.mostrarPaso(r, f);
+  }
+  async responder(op, mostrado) {
+    const f = this.ses().flujo; if (!f || !f.pregunta) return;
+    if (LIBRE.test(op)) { if (this.inputRef.current) this.inputRef.current.focus(); this.hablar('Dímelo.'); return; }
+    this.push({ de: 'yo', txt: mostrado || op });
+    const respuestas = op === 'Cambiar' ? [] : [...f.respuestas, op];
+    const r = await this.llamar('flujo', { flujo: f.nombre, id: f.id, respuestas });
+    this.mostrarPaso(r, { ...f, respuestas });
+  }
+  mostrarPaso(r, f) {
+    if (r.error) return this.decir('Algo ha fallado. Probemos otra vez.');
+    if (r.nota) this.push({ de: 'sys', txt: r.nota });
+    if (r.fin) {
+      this.setSes(() => ({ flujo: { ...f, titulo: r.titulo, pregunta: null, fin: r.fin } }));
+      this.decir(r.fin.di, { fin: r.fin.auto ? null : r.fin, tarjeta: r.fin.tarjeta });
+      if (r.fin.auto && r.fin.accion) setTimeout(() => this.ejecutar(r.fin.accion), this.retraso());
+      return;
+    }
+    this.setSes(() => ({ flujo: { ...f, titulo: r.titulo, pregunta: r.pregunta, libre: r.libre, ejemplo: r.ejemplo, fin: null } }));
+    this.decir(r.pregunta.p, { tarjeta: r.tarjeta });
+  }
+
+  ejecutar(a) {
+    if (!a || a.responder) return;
+    if (a.llamar) return this.llamarA(a.llamar);
+    if (a.flujo) return this.empezarFlujo(a.flujo, a.id);
+    if (this.modo() === 'padre') return;
+    if (a.pantalla === 'chat') this.llamar('leerChat', { con: a.id });
+    if (a.abrir) { const app = this.state.db.apps.find(x => x.id === a.id); if (app) this.avisar('Abriendo ' + app.nombre + '…'); }
+    this.setState({ pantalla: DESTINOS.includes(a.pantalla) ? a.pantalla : 'otra', id: a.id || null });
+  }
+
+  llamarA(nombre) {
+    const info = { 'Mamá': ['M', '#E56648'], 'Papá': ['P', '#3068ED'], 'Emergencias': ['112', '#E5484D'] }[nombre] || [nombre[0], '#3068ED'];
+    const nota = nombre === 'Emergencias' ? 'El 112 funciona siempre, aunque el móvil esté bloqueado o sin tiempo.' : 'Las llamadas a familia no gastan tiempo de pantalla ni se cortan de noche.';
+    this.setState({ llamada: { nombre, ini: info[0], color: info[1], estado: 'Llamando…', nota, seg: 0 } });
+    clearInterval(this.tCall); clearTimeout(this.tCall);
+    this.tCall = setTimeout(() => {
+      this.tCall = setInterval(() => this.setState(s => {
+        if (!s.llamada) return null;
+        const seg = s.llamada.seg + 1;
+        return { llamada: { ...s.llamada, seg, estado: `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}` } };
+      }), 1000);
+    }, 1800);
+  }
+
+  renderVals() {
+    const s = this.state, db = s.db, modo = this.modo(), padre = modo === 'padre';
+    const t = TEMA[modo];
+    // En el móvil: pantalla completa, sin marco de teléfono
+    const marco = s.movil
+      ? { gap: '6px', pad: '6px 0 0', ancho: 'none', alto: 'calc(100dvh - 50px)', minAlto: '0', radio: '0', borde: '0', sombra: 'none' }
+      : { gap: '12px', pad: '16px 10px', ancho: '400px', alto: 'min(860px,calc(100vh - 86px))', minAlto: '640px', radio: '40px', borde: '8px solid #111', sombra: '0 30px 60px rgba(17,17,17,.18)' };
+    const base = {
+      t, marco, cargando: !db, listo: !!db,
+      swNinoBg: !padre ? '#fff' : 'transparent', swNinoTx: !padre ? '#111' : 'rgba(255,255,255,.6)',
+      swPadreBg: padre ? '#fff' : 'transparent', swPadreTx: padre ? '#111' : 'rgba(255,255,255,.6)',
+      verNino: () => { if (window.speechSynthesis) speechSynthesis.cancel(); this.setState({ modo: 'nino' }); },
+      verPadre: () => { if (window.speechSynthesis) speechSynthesis.cancel(); this.setState({ modo: 'padre' }); },
+      reiniciar: async () => {
+        const r = await this.api.reiniciar();
+        this.setState({ db: r.estado, pantalla: 'bro', id: null, sesion: { nino: { conv: [], flujo: null }, padre: { conv: [], flujo: null } } });
+        this.avisar('Demo reiniciada.');
+      },
+      aviso: s.aviso, hayAviso: !!s.aviso
+    };
+    if (!db) return base;
+
+    const ses = s.sesion[modo], f = ses.flujo;
+    const pantalla = padre ? 'bro' : s.pantalla;
+    const p = { comunidades: pantalla === 'comunidades', chat: pantalla === 'chat', proyectos: pantalla === 'proyectos', proyecto: pantalla === 'proyecto', apps: pantalla === 'apps', otra: pantalla === 'otra' };
+    const titulos = { comunidades: ['Comunidades', 'Y tus mensajes'], chat: [s.id, 'Conexión mutua'], proyectos: ['Proyectos', 'Lo que estás construyendo'], proyecto: ['Proyecto', 'Paso a paso, decides tú'], apps: ['Apps', 'Lo que tienes y lo que puedes pedir'], otra: ['Bro', ''] };
+    const [titulo, subtitulo] = padre ? ['Bro Parent', 'Laura · familia de Julio'] : pantalla === 'bro' ? ['Bro', 'Julio · perfil 13'] : titulos[pantalla];
+    const hayTexto = !!s.texto.trim();
+    const maxSem = Math.max(...db.aura.semana.flat());
+
+    const tarjetaVista = c => {
+      if (!c) return {};
+      if (c.tipo === 'tendencia') {
+        const dif = c.semana.map(([a, b]) => a - b), peor = dif.indexOf(Math.max(...dif));
+        return { ...c, dias: c.semana.map(([pa, mo], i) => ({ d: 'LMXJVSD'[i], hp: Math.round(pa / maxSem * 58) + 'px', hm: Math.round(mo / maxSem * 58) + 'px', sueno: String(c.sueno[i]).replace('.', ','), peso: i === peor ? 800 : 500 })) };
+      }
+      if (c.tipo === 'ficha') return { ...c, filas: c.filas.map(([k, v]) => ({ k, v })) };
+      return c;
+    };
+
+    const enviarChat = async () => { const x = s.chatTxt.trim(); if (!x) return; this.setState({ chatTxt: '' }); await this.llamar('enviarMensaje', { con: s.id, txt: x }); };
+
+    return {
+      ...base,
+      titulo, subtitulo, p,
+      avatar: padre ? 'L' : 'J', avatarColor: padre ? '#E56648' : '#3068ED',
+      puedeVolver: !padre && pantalla !== 'bro',
+      volver: () => this.setState({ pantalla: 'bro', id: null }),
+      vozIc: this.vozOn() ? '🔊' : '🔇',
+      toggleVoz: () => { if (window.speechSynthesis) speechSynthesis.cancel(); this.setState({ voz: !this.vozOn() }); },
+      scrollRef: this.scrollRef, inputRef: this.inputRef,
+
+      enBro: pantalla === 'bro',
+      convVacia: ses.conv.length === 0, convActiva: ses.conv.length > 0,
+      orbAnim: s.escuchando ? 'pulso 1.3s ease-in-out infinite' : s.hablando ? 'habla 1s ease-in-out infinite' : 'none',
+      saludo: s.escuchando ? 'Te escucho…' : padre ? 'Hola, Laura' : '¿Qué hacemos, Julio?',
+      saludoSub: padre ? 'Dime qué necesitas. Te ayudo a decidir, pero decides tú.' : 'Toca y habla, o escríbeme. Te llevo o lo pensamos juntos.',
+      sugerencias: padre
+        ? db.sugerenciasPadre.map(x => ({ txt: x.txt, borde: x.urgente ? '#E56648' : t.line, onClick: () => { this.push({ de: 'yo', txt: x.txt }); this.empezarFlujo(x.flujo); } }))
+        : EJEMPLOS.nino.map(x => ({ txt: x, borde: t.line, onClick: () => this.pedir(x) })),
+      avisos: padre ? db.avisos.filter(a => !a.leido) : [],
+      leerAvisos: () => this.llamar('leerAvisos'),
+
+      flujoTitulo: f ? f.titulo : 'Conversación',
+      terminar: () => { if (window.speechSynthesis) speechSynthesis.cancel(); this.setSes(() => ({ conv: [], flujo: null })); },
+      conv: ses.conv.map(m => {
+        const c = tarjetaVista(m.tarjeta), tipo = m.tarjeta && m.tarjeta.tipo;
+        return {
+          txt: m.txt, esBro: m.de === 'bro', esYo: m.de === 'yo', esSys: m.de === 'sys', c,
+          tApp: tipo === 'app', tSol: tipo === 'solicitud', tCorreo: tipo === 'correo', tTend: tipo === 'tendencia', tFicha: tipo === 'ficha', tReview: tipo === 'review',
+          hayBoton: !!(m.fin && m.fin.accion && m.fin.boton), boton: m.fin && m.fin.boton,
+          onBoton: () => this.ejecutar(m.fin.accion)
+        };
+      }),
+      hayOpciones: !!(f && f.pregunta && pantalla === 'bro'),
+      opciones: f && f.pregunta ? f.pregunta.opciones.map(o => {
+        const libre = LIBRE.test(o);
+        return { txt: o, estilo: libre ? 'dashed' : 'solid', borde: libre ? t.muted : '#3068ED', bg: libre ? 'transparent' : padre ? 'rgba(48,104,237,.18)' : 'rgba(48,104,237,.07)', color: padre ? '#cfdcff' : '#1f4fc4', onClick: () => this.responder(o) };
+      }) : [],
+
+      escuchando: s.escuchando, oidoTxt: s.oido ? `«${s.oido}»` : 'Te escucho… (toca el micro otra vez para enviar)',
+      texto: s.texto, micIc: hayTexto ? '↑' : '🎙',
+      placeholder: f && f.pregunta ? (f.libre ? 'Responde con tu voz 🎙 o escribe' : 'Responde con tu voz 🎙 o toca una opción') : padre ? 'Pide a Bro' : 'Dile a Bro qué quieres hacer',
+      onTexto: e => this.setState({ texto: e.target.value }),
+      onTextoKey: e => { if (e.key === 'Enter') this.pedir(s.texto); },
+      micOEnviar: () => hayTexto ? this.pedir(s.texto) : this.escuchar(),
+      escuchar: () => this.escuchar(),
+
+      comunidades: db.comunidades,
+      bros: db.bros.map(b => { const ch = db.chats[b.nombre]; return { ...b, ini: b.nombre[0], sinLeer: ch && ch.sinLeer, ultimo: ch ? ch.mensajes[ch.mensajes.length - 1].txt : b.de, onClick: () => this.ejecutar({ pantalla: 'chat', id: b.nombre }) }; }),
+      chatCon: s.id, chatTxt: s.chatTxt,
+      mensajes: (db.chats[s.id] || { mensajes: [] }).mensajes.map(m => ({ txt: m.txt, mio: m.de === 'yo', suyo: m.de !== 'yo' })),
+      onChatTxt: e => this.setState({ chatTxt: e.target.value }),
+      onChatKey: e => { if (e.key === 'Enter') enviarChat(); },
+      enviarChat,
+      proyectos: db.proyectos.map(x => ({ ...x, pasoTxt: x.terminado ? 'TERMINADO' : `PASO ${x.paso} DE ${x.pasos}`, con: x.con.toUpperCase(), pct: Math.round((x.terminado ? x.pasos : x.paso) / x.pasos * 100) + '%', onClick: () => x.lista ? this.ejecutar({ pantalla: 'proyecto', id: x.id }) : this.avisar('Este proyecto aún no tiene pasos interactivos.') })),
+      proy: (() => {
+        const pr = db.proyectos.find(x => x.id === s.id && x.lista);
+        if (!pr) return { pasos: [], videos: [], mejoras: [] };
+        const avanzar = async dato => { await this.llamar('avanzarProyecto', { id: pr.id, dato }); };
+        const hechos = pr.lista.filter(x => x.hecho).length;
+        const vistos = pr.videos.filter(v => v.visto);
+        return {
+          titulo: pr.titulo, terminado: pr.terminado,
+          cabecera: `${pr.con.toUpperCase()} · PARA ${pr.para.toUpperCase()}`,
+          pct: Math.round(hechos / pr.lista.length * 100) + '%',
+          pasos: pr.lista.map((x, i) => {
+            const actual = !pr.terminado && i === pr.actual;
+            return {
+              num: x.hecho ? '✓' : i + 1, t: x.t, dato: x.dato, hayDato: !!x.dato, consejo: x.consejo, hayConsejo: !!x.consejo,
+              numBg: x.hecho ? '#82B94F' : actual ? '#3068ED' : '#E4E7EE', numTx: x.hecho || actual ? '#fff' : '#6B7280',
+              borde: actual ? '#3068ED' : '#E4E7EE', opacidad: !x.hecho && !actual ? .55 : 1,
+              esVideos: actual && x.tipo === 'videos', esNormal: actual && x.tipo === 'normal', esPrueba: actual && x.tipo === 'prueba', esMejora: actual && x.tipo === 'mejora'
+            };
+          }),
+          videos: pr.videos.map((v, i) => ({
+            ...v, fondo: FONDOS_VIDEO[i % 3], reproduciendo: s.video === v.id, noVisto: !v.visto,
+            onClick: () => {
+              if (s.video) return;
+              this.setState({ video: v.id });
+              setTimeout(async () => { await this.llamar('verVideo', { id: pr.id, video: v.id }); this.setState({ video: null }); }, 3000);
+            }
+          })),
+          videosOpacidad: vistos.length ? 1 : .4,
+          onVideos: () => vistos.length ? avanzar(`Has visto: ${vistos.map(v => v.t).join(' · ')}`) : this.avisar('Mira al menos un vídeo primero.'),
+          onProbado: () => avanzar('Lanzado tres veces'),
+          onHecho: () => avanzar('Hecho'),
+          mejoras: ['Vuela recto y lejos', 'Cae en picado', 'Gira hacia un lado'].map(txt => ({ txt, onClick: () => avanzar(txt) }))
+        };
+      })(),
+      gruposApps: [
+        ['Aceptadas', '#82B94F', ['instalada'], a => a.tiempo ? `Mamá dijo que sí · ${a.tiempo}` : a.que],
+        ['Esperando a mamá', '#3068ED', ['pendiente'], () => 'Se la has pedido. Decide ella.'],
+        ['Hablar con mamá', '#E56648', ['persona'], () => 'Mamá quiere hablarlo contigo en persona'],
+        ['No aceptadas', '#6B7280', ['denegada', 'noApta'], a => a.estado === 'noApta' ? 'No está disponible para tu edad' : `Mamá dijo que no: ${(a.motivo || 'sin motivo').toLowerCase()}`],
+        ['Puedes pedir', '#9AA1AE', ['disponible'], a => a.que]
+      ].map(([titulo, color, estados, nota]) => {
+        const apps = db.apps.filter(a => estados.includes(a.estado)).map(a => ({
+          ...a, nota: nota(a), notaColor: a.estado === 'denegada' || a.estado === 'persona' ? '#bf4527' : '#6B7280',
+          sombra: a.id === s.id ? 'inset 3px 0 0 #3068ED' : 'none',
+          puedeAbrir: a.estado === 'instalada', puedePedir: a.estado === 'disponible',
+          onAbrir: () => this.avisar('Abriendo ' + a.nombre + '…'),
+          onPedir: () => { this.push({ de: 'yo', txt: `Quiero ${a.nombre}` }); this.empezarFlujo('app', a.id); }
+        }));
+        return { titulo, color, n: apps.length, apps };
+      }).filter(g => g.apps.length),
+
+      hayLlamada: !!s.llamada, llamada: s.llamada || {},
+      colgar: () => { clearInterval(this.tCall); clearTimeout(this.tCall); this.setState({ llamada: null }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
