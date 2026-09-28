@@ -376,7 +376,7 @@ a{color:#3068ED}a:hover{color:#1f4fc4}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;modoInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;nino&quot;,&quot;padre&quot;],&quot;default&quot;:&quot;nino&quot;,&quot;tsType&quot;:&quot;'nino'|'padre'&quot;},&quot;vozActiva&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;vozSimulada&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;velocidadBro&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rapida&quot;,&quot;normal&quot;,&quot;lenta&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;modoInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;nino&quot;,&quot;padre&quot;],&quot;default&quot;:&quot;nino&quot;,&quot;tsType&quot;:&quot;'nino'|'padre'&quot;},&quot;vozActiva&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;vozSimulada&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;velocidadBro&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rapida&quot;,&quot;normal&quot;,&quot;lenta&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 const LIBRE = /^Lo (digo|pienso) yo$/;
 const limpiar = t => (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[¿?¡!.,]/g, '').trim();
 const EJEMPLOS = {
@@ -406,10 +406,12 @@ class Component extends DCLogic {
     if (window.speechSynthesis) speechSynthesis.getVoices();
   }
   componentWillUnmount() { window.removeEventListener('resize', this.alRedimensionar); clearInterval(this.tCall); clearTimeout(this.tCall); if (window.speechSynthesis) speechSynthesis.cancel(); }
-  componentDidUpdate(pp, ps) {
-    const m = this.modo();
-    if (ps.sesion[m].conv.length !== this.state.sesion[m].conv.length || ps.sesion[m].flujo !== this.state.sesion[m].flujo)
-      requestAnimationFrame(() => { const el = this.scrollRef.current; if (el) el.scrollTop = el.scrollHeight; });
+  componentDidUpdate() {
+    const m = this.modo(), x = this.state.sesion[m];
+    const clave = m + '|' + x.conv.length + '|' + (x.flujo ? x.flujo.respuestas.length : '-');
+    if (clave === this._ultimaClave) return;
+    this._ultimaClave = clave;
+    requestAnimationFrame(() => { const el = this.scrollRef.current; if (el) el.scrollTop = el.scrollHeight; });
   }
 
   modo() { return this.state.modo || this.props.modoInicial || 'nino'; }
@@ -486,19 +488,33 @@ class Component extends DCLogic {
       setTimeout(() => this.setState({ oido: q }), 650);
       setTimeout(() => fin(q), 1500);
     };
-    this.setState({ escuchando: true, oido: '' });
+    // Tocar otra vez mientras escucha = parar y enviar lo oído
+    if (this.state.escuchando && this.rec) { try { this.rec.stop(); } catch (e) {} return; }
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR || this.props.vozSimulada !== false) return simular();
-    let oido = '', empezo = false, r;
-    const guardia = setTimeout(() => { if (!empezo) { try { r.abort(); } catch (e) {} simular(); } }, 1500);
+    const demo = this.props.vozSimulada === true || /[?&]demo/.test(location.search);
+    this.setState({ escuchando: true, oido: '' });
+    if (demo) return simular();
+    if (!SR) {
+      this.setState({ escuchando: false });
+      this.avisar('Este navegador no permite el micrófono. Usa Chrome (Android) o Safari (iPhone), o escribe.');
+      if (this.inputRef.current) this.inputRef.current.focus();
+      return;
+    }
+    let oido = '', terminado = false;
+    const acabar = q => { if (terminado) return; terminado = true; this.rec = null; fin(q); };
     try {
-      r = new SR(); r.lang = 'es-ES'; r.interimResults = true;
-      r.onaudiostart = () => { empezo = true; clearTimeout(guardia); };
-      r.onresult = e => { oido = Array.from(e.results).map(x => x[0].transcript).join(' '); this.setState({ oido }); };
-      r.onerror = () => { clearTimeout(guardia); if (!empezo) simular(); };
-      r.onend = () => { if (empezo) fin(oido); };
+      const r = this.rec = new SR();
+      r.lang = 'es-ES'; r.interimResults = true; r.continuous = false; r.maxAlternatives = 1;
+      r.onresult = e => { oido = Array.from(e.results).map(x => x[0].transcript).join(' ').trim(); this.setState({ oido }); };
+      r.onerror = e => {
+        terminado = true; this.rec = null; this.setState({ escuchando: false, oido: '' });
+        const msg = { 'not-allowed': 'Bro no tiene permiso para el micrófono. Actívalo en los ajustes del navegador.', 'service-not-allowed': 'Bro no tiene permiso para el micrófono. Actívalo en los ajustes del navegador.', 'no-speech': 'No te he oído. Toca y habla otra vez.', 'network': 'Sin conexión: el reconocimiento de voz necesita internet.' }[e.error];
+        if (msg) this.avisar(msg);
+        else if (e.error !== 'aborted') simular();
+      };
+      r.onend = () => acabar(oido);
       r.start();
-    } catch (e) { clearTimeout(guardia); simular(); }
+    } catch (e) { this.rec = null; simular(); }
   }
 
   // ---------- Flujos ----------
@@ -633,7 +649,7 @@ class Component extends DCLogic {
         return { txt: o, estilo: libre ? 'dashed' : 'solid', borde: libre ? t.muted : '#3068ED', bg: libre ? 'transparent' : padre ? 'rgba(48,104,237,.18)' : 'rgba(48,104,237,.07)', color: padre ? '#cfdcff' : '#1f4fc4', onClick: () => this.responder(o) };
       }) : [],
 
-      escuchando: s.escuchando, oidoTxt: s.oido ? `«${s.oido}»` : 'Te escucho…',
+      escuchando: s.escuchando, oidoTxt: s.oido ? `«${s.oido}»` : 'Te escucho… (toca el micro otra vez para enviar)',
       texto: s.texto, micIc: hayTexto ? '↑' : '🎙',
       placeholder: f && f.pregunta ? (f.libre ? 'Responde con tu voz 🎙 o escribe' : 'Responde con tu voz 🎙 o toca una opción') : padre ? 'Pide a Bro' : 'Dile a Bro qué quieres hacer',
       onTexto: e => this.setState({ texto: e.target.value }),
