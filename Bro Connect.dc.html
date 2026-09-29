@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#F6F7FB;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-tap-highlight-color:transparent} button{font-family:inherit;border:0;cursor:pointer;color:inherit} input{font-family:inherit} a{color:#3068ED} a:hover{color:#1f4fc0} @keyframes sube{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}</style>
+</helmet>
+<div style="position:fixed;inset:0;display:flex;flex-direction:column;max-width:520px;margin:0 auto;background:#F6F7FB">
+  <div style="flex:none;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 14px) 18px 12px">
+    <img src="logo.png" alt="Bro" style="width:28px;height:28px">
+    <div style="font-family:Outfit;font-weight:800;font-size:19px;letter-spacing:-.02em;flex:1">Bro Connect</div>
+    <sc-if value="{{ esLocal }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:10.5px;font-weight:700;color:#E56648;background:#FDEDE8;padding:4px 9px;border-radius:999px">MODO LOCAL</span>
+    </sc-if>
+  </div>
+
+  <div style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 18px calc(env(safe-area-inset-bottom) + 24px)">
+
+    <sc-if value="{{ enAlta }}" hint-placeholder-val="{{ true }}">
+      <div style="animation:sube .25s ease-out">
+        <h1 style="font-family:Outfit;font-weight:800;font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 6px">Crea tu Bro</h1>
+        <p style="font-size:14.5px;color:#4B5563;margin:0 0 22px">30 segundos y tendrás tu QR para conectar con otros Bros.</p>
+
+        <div style="display:flex;justify-content:center;margin-bottom:22px">
+          <div style="width:96px;height:96px;border-radius:50%;background:{{ color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:42px">{{ inicial }}</div>
+        </div>
+
+        <div style="font-size:12px;font-weight:700;color:#6B7280;letter-spacing:.04em;margin-bottom:8px">TU NOMBRE</div>
+        <input value="{{ nombre }}" onChange="{{ onNombre }}" placeholder="Ej. Mateo" maxlength="20" style="width:100%;box-sizing:border-box;border:1px solid #E4E7EE;background:#fff;border-radius:16px;padding:15px 16px;font-size:17px;outline:none;margin-bottom:20px">
+
+        <div style="font-size:12px;font-weight:700;color:#6B7280;letter-spacing:.04em;margin-bottom:8px">TU COLOR</div>
+        <div style="display:flex;gap:12px;margin-bottom:22px">
+          <sc-for list="{{ colores }}" as="c" hint-placeholder-count="4">
+            <button onClick="{{ c.onClick }}" aria-label="Color" style="width:46px;height:46px;border-radius:50%;background:{{ c.v }};box-shadow:{{ c.anillo }}"></button>
+          </sc-for>
+        </div>
+
+        <div style="font-size:12px;font-weight:700;color:#6B7280;letter-spacing:.04em;margin-bottom:4px">PERFIL DE EDAD VERIFICADO</div>
+        <div style="font-size:12px;color:#6B7280;margin-bottom:10px">En Bro real viene verificado de antemano. En la demo, elígelo.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+          <sc-for list="{{ edades }}" as="e" hint-placeholder-count="7">
+            <button onClick="{{ e.onClick }}" style="min-width:48px;height:44px;padding:0 12px;border-radius:14px;font-weight:700;font-size:15px;background:{{ e.bg }};color:{{ e.tx }};border:1px solid {{ e.borde }}">{{ e.t }}</button>
+          </sc-for>
+        </div>
+
+        <button onClick="{{ crear }}" style="width:100%;height:56px;border-radius:18px;background:{{ botonBg }};color:#fff;font-family:Outfit;font-weight:700;font-size:17px">Crear mi QR</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ enYo }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ hayInvitado }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#111;color:#fff;border-radius:22px;padding:18px;margin:6px 0 16px;animation:sube .25s ease-out">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:52px;height:52px;border-radius:50%;background:{{ inv.color }};display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px;flex:none">{{ inv.inicial }}</div>
+            <div style="flex:1;min-width:0"><div style="font-family:Outfit;font-weight:700;font-size:18px">{{ inv.nombre }}</div><div style="font-size:12.5px;opacity:.7">Perfil verificado · {{ inv.edadTxt }}</div></div>
+          </div>
+          <sc-if value="{{ inv.puede }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button onClick="{{ enviar }}" style="flex:1;height:48px;border-radius:14px;background:#3068ED;color:#fff;font-weight:700;font-size:15px">Añadir como amigo</button>
+              <button onClick="{{ descartar }}" style="height:48px;padding:0 16px;border-radius:14px;background:rgba(255,255,255,.12);color:#fff;font-weight:600">Ahora no</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ inv.noPuede }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px;font-size:14px;line-height:1.45;background:rgba(255,255,255,.1);padding:12px;border-radius:12px">{{ inv.motivo }}</div>
+            <button onClick="{{ descartar }}" style="margin-top:10px;height:44px;width:100%;border-radius:14px;background:rgba(255,255,255,.12);color:#fff;font-weight:600">Cerrar</button>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hayAviso }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#EAF4E1;color:#2F5A12;font-size:13.5px;font-weight:600;padding:11px 14px;border-radius:14px;margin:6px 0 14px">{{ aviso }}</div>
+      </sc-if>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:26px;padding:22px 20px;text-align:center;margin-top:6px">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px">
+          <div style="width:40px;height:40px;border-radius:50%;background:{{ yo.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:18px">{{ yo.inicial }}</div>
+          <div style="text-align:left"><div style="font-family:Outfit;font-weight:700;font-size:18px">{{ yo.nombre }}</div><div style="font-size:12px;color:#6B7280">Perfil verificado · {{ yo.edadTxt }}</div></div>
+        </div>
+        <div style="width:220px;height:220px;margin:0 auto;padding:12px;border-radius:20px;border:3px solid {{ yo.color }};box-sizing:content-box;background:#fff">
+          <img src="{{ qr }}" alt="Mi QR" style="width:220px;height:220px;display:block">
+        </div>
+        <div style="font-size:13px;color:#4B5563;margin:14px 0 14px">Que lo escaneen con la cámara del móvil</div>
+        <button onClick="{{ compartir }}" style="height:46px;padding:0 20px;border-radius:14px;background:#F0F2F6;font-weight:700;font-size:14px">Compartir mi enlace</button>
+      </div>
+
+      <sc-if value="{{ hayPendientes }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:12px;font-weight:700;color:#E56648;letter-spacing:.04em;margin:24px 0 10px">QUIEREN SER TUS AMIGOS</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ pendientes }}" as="p" hint-placeholder-count="1">
+            <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:11px 12px;animation:sube .25s ease-out">
+              <div style="width:42px;height:42px;border-radius:50%;background:{{ p.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:18px;flex:none">{{ p.inicial }}</div>
+              <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15px">{{ p.nombre }}</div><div style="font-size:12px;color:#6B7280">{{ p.edadTxt }}</div></div>
+              <button onClick="{{ p.aceptar }}" style="height:40px;padding:0 14px;border-radius:12px;background:#82B94F;color:#fff;font-weight:700;font-size:13.5px">Aceptar</button>
+              <button onClick="{{ p.rechazar }}" aria-label="Rechazar" style="width:40px;height:40px;border-radius:12px;background:#F0F2F6;font-size:14px;color:#6B7280">✕</button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 10px">
+        <div style="font-size:12px;font-weight:700;color:#6B7280;letter-spacing:.04em">MIS AMIGOS</div>
+        <div style="font-family:Outfit;font-weight:700;font-size:15px;color:#3068ED">{{ numAmigos }}</div>
+      </div>
+      <sc-if value="{{ hayAmigos }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+          <sc-for list="{{ amigos }}" as="a" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              <div style="width:56px;height:56px;border-radius:50%;background:{{ a.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px">{{ a.inicial }}</div>
+              <div style="font-size:12.5px;font-weight:600;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">{{ a.nombre }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ sinAmigos }}" hint-placeholder-val="{{ true }}">
+        <div style="border:1px dashed #D5DAE3;border-radius:18px;padding:18px;text-align:center;font-size:13.5px;color:#6B7280">Aún no tienes amigos. Enseña tu QR a otro Bro.</div>
+      </sc-if>
+
+      <sc-if value="{{ hayEnviadas }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:12px;font-weight:700;color:#6B7280;letter-spacing:.04em;margin:24px 0 10px">ESPERANDO RESPUESTA</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <sc-for list="{{ enviadas }}" as="s" hint-placeholder-count="1">
+            <div style="display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #E4E7EE;border-radius:999px;padding:5px 12px 5px 5px">
+              <div style="width:26px;height:26px;border-radius:50%;background:{{ s.color }};color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px">{{ s.inicial }}</div>
+              <span style="font-size:13px;font-weight:600">{{ s.nombre }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <button onClick="{{ salir }}" style="display:block;margin:34px auto 0;background:transparent;font-size:12.5px;color:#9CA3AF">Cambiar de usuario</button>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { listo: false, yo: null, nombre: '', color: '#3068ED', edad: 13, invitado: null, fs: [], gente: {}, aviso: '' };
+
+  async componentDidMount() {
+    this.api = await import(new URL('conexion.js', location.href).href);
+    const yo = await this.api.usuario(localStorage.getItem('broConnect.yo')).catch(() => null);
+    const q = new URLSearchParams(location.search).get('amigo');
+    const invitado = q ? await this.api.usuario(q).catch(() => null) : null;
+    this.setState({ listo: true, yo, invitado: invitado && (!yo || invitado.id !== yo.id) ? invitado : null });
+    this.refrescar();
+    this.tick = setInterval(() => this.refrescar(), 3000);
+  }
+  componentWillUnmount() { clearInterval(this.tick); clearTimeout(this.tAviso); }
+
+  async refrescar() {
+    const yo = this.state.yo; if (!yo || !this.api) return;
+    try {
+      const fs = await this.api.amistades(yo.id);
+      const ids = [...new Set(fs.map(f => (f.de === yo.id ? f.a : f.de)))];
+      const us = await this.api.usuarios(ids);
+      this.setState({ fs, gente: Object.fromEntries(us.map(u => [u.id, u])) });
+    } catch (e) {}
+  }
+  avisar(t) { clearTimeout(this.tAviso); this.setState({ aviso: t }); this.tAviso = setTimeout(() => this.setState({ aviso: '' }), 3500); }
+  quitarParam() { history.replaceState(null, '', location.pathname); }
+
+  async crear() {
+    const s = this.state; if (!s.nombre.trim()) return;
+    const yo = await this.api.crearUsuario({ nombre: s.nombre, color: s.color, edad: s.edad });
+    localStorage.setItem('broConnect.yo', yo.id);
+    this.setState({ yo }, () => this.refrescar());
+  }
+  async enviar() {
+    const { yo, invitado } = this.state;
+    try { await this.api.pedirAmistad(yo, invitado); this.avisar(`Solicitud enviada a ${invitado.nombre}.`); } catch (e) { this.avisar('No se ha podido enviar.'); }
+    this.setState({ invitado: null }); this.quitarParam(); this.refrescar();
+  }
+  async responder(id, estado, nombre) {
+    await this.api.responderAmistad(id, estado);
+    if (estado === 'aceptada') this.avisar(`${nombre} y tú ya sois amigos.`);
+    this.refrescar();
+  }
+
+  renderVals() {
+    const s = this.state, yo = s.yo;
+    const ini = n => (n || '?').trim().charAt(0).toUpperCase() || '?';
+    const edadTxt = e => (Number(e) >= 18 ? 'Adulto' : e + ' años');
+    const vista = u => ({ ...u, inicial: ini(u.nombre), edadTxt: edadTxt(u.edad) });
+    const enlace = yo ? location.origin + location.pathname + '?amigo=' + yo.id : '';
+    const otro = f => s.gente[f.de === yo.id ? f.a : f.de];
+    const fs = yo ? s.fs.filter(f => otro(f)) : [];
+    const pendientes = fs.filter(f => f.estado === 'pendiente' && f.a === yo.id).map(f => { const u = vista(otro(f)); return { ...u, aceptar: () => this.responder(f.id, 'aceptada', u.nombre), rechazar: () => this.responder(f.id, 'rechazada') }; });
+    const amigos = fs.filter(f => f.estado === 'aceptada').map(f => vista(otro(f)));
+    const enviadas = fs.filter(f => f.estado === 'pendiente' && f.de === yo.id).map(f => vista(otro(f)));
+
+    let inv = {};
+    if (s.invitado && yo) {
+      const ya = s.fs.find(f => (f.de === s.invitado.id || f.a === s.invitado.id) && f.estado !== 'rechazada');
+      const edadOk = this.api.puedenSerAmigos(yo.edad, s.invitado.edad);
+      const motivo = ya ? (ya.estado === 'aceptada' ? `${s.invitado.nombre} y tú ya sois amigos.` : 'Ya hay una solicitud pendiente entre vosotros.')
+        : !edadOk ? 'No podéis conectar: la diferencia de edad es de más de 3 años.' : '';
+      inv = { ...vista(s.invitado), puede: !motivo, noPuede: !!motivo, motivo };
+    }
+
+    return {
+      esLocal: this.api ? this.api.modo() === 'local' : false,
+      enAlta: s.listo && !yo, enYo: !!yo,
+      nombre: s.nombre, inicial: ini(s.nombre), color: s.color,
+      onNombre: e => this.setState({ nombre: e.target.value }),
+      colores: ['#3068ED', '#E56648', '#82B94F', '#111111'].map(v => ({ v, anillo: v === s.color ? `0 0 0 3px #F6F7FB, 0 0 0 5px ${v}` : 'none', onClick: () => this.setState({ color: v }) })),
+      edades: [11, 12, 13, 14, 15, 16, 18].map(v => { const on = v === s.edad; return { t: v === 18 ? '18+' : String(v), bg: on ? '#111' : '#fff', tx: on ? '#fff' : '#111', borde: on ? '#111' : '#E4E7EE', onClick: () => this.setState({ edad: v }) }; }),
+      botonBg: s.nombre.trim() ? '#3068ED' : '#B9C6EA',
+      crear: () => this.crear(),
+
+      yo: yo ? vista(yo) : {},
+      qr: yo ? 'https://api.qrserver.com/v1/create-qr-code/?size=440x440&margin=0&color=17-17-17&data=' + encodeURIComponent(enlace) : '',
+      compartir: async () => {
+        try { if (navigator.share) await navigator.share({ title: 'Conecta conmigo en Bro', url: enlace }); else { await navigator.clipboard.writeText(enlace); this.avisar('Enlace copiado.'); } } catch (e) {}
+      },
+      hayInvitado: !!(s.invitado && yo), inv,
+      enviar: () => this.enviar(),
+      descartar: () => { this.setState({ invitado: null }); this.quitarParam(); },
+      hayAviso: !!s.aviso, aviso: s.aviso,
+      pendientes, hayPendientes: pendientes.length > 0,
+      amigos, hayAmigos: amigos.length > 0, sinAmigos: amigos.length === 0, numAmigos: amigos.length,
+      enviadas, hayEnviadas: enviadas.length > 0,
+      salir: () => { localStorage.removeItem('broConnect.yo'); this.setState({ yo: null, fs: [], gente: {}, nombre: '' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
