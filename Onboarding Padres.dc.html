@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;height:100%;background:#E9ECF2;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-tap-highlight-color:transparent} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit} input{font-family:inherit} @keyframes sube{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}</style>
+</helmet>
+<div style="min-height:100dvh;display:grid;place-items:center">
+<div data-screen-label="Onboarding padres" style="width:min(390px,100vw);height:min(844px,100dvh);background:#F4F5F9;border-radius:max(0px, min(44px, calc((100vw - 430px) * 999)));overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 30px 80px rgba(17,17,17,.18)">
+
+  <sc-if value="{{ conBarra }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:none;padding:18px 20px 12px;background:#fff;border-bottom:1px solid #E4E7EE">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onClick="{{ atras }}" aria-label="Atrás" style="width:36px;height:36px;border-radius:50%;background:#F0F2F6;display:grid;place-items:center;font-size:18px;flex:none">‹</button>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#6B7280">{{ barra.etiqueta }}</div>
+          <div style="font-family:Outfit;font-weight:700;font-size:16px">{{ barra.titulo }}</div>
+        </div>
+        <img src="logo.png" alt="Bro" style="width:26px;height:26px;flex:none">
+      </div>
+      <div style="display:flex;gap:4px;margin-top:12px">
+        <sc-for list="{{ barra.tramos }}" as="b" hint-placeholder-count="6">
+          <div style="flex:1;height:5px;border-radius:3px;background:{{ b.color }}"></div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch">
+
+    <!-- BIENVENIDA -->
+    <sc-if value="{{ p.bienvenida }}" hint-placeholder-val="{{ true }}">
+      <div style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:56px 24px 28px;background:#fff">
+        <img src="logo.png" alt="Bro" style="width:64px;height:64px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#3068ED;margin-top:26px">BRO PARA PADRES · GRATIS</div>
+        <div style="font-family:Outfit;font-weight:800;font-size:34px;line-height:1.05;letter-spacing:-.02em;margin-top:8px;text-wrap:pretty">Prepara el primer móvil de tu hijo, a tu manera.</div>
+        <div style="font-size:15px;line-height:1.5;color:#374151;margin-top:14px;text-wrap:pretty">Configura sus permisos, apps y horarios antes de tener el móvil. Cuando llegue su Bro, ya estará listo.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:26px">
+          <div style="display:flex;gap:12px;align-items:center"><span style="width:30px;height:30px;border-radius:10px;background:#EAF0FE;color:#3068ED;display:grid;place-items:center;font-weight:800;flex:none">1</span><span style="font-size:14px">Crea tu cuenta y la de tus hijos</span></div>
+          <div style="display:flex;gap:12px;align-items:center"><span style="width:30px;height:30px;border-radius:10px;background:#FDF0EC;color:#E56648;display:grid;place-items:center;font-weight:800;flex:none">2</span><span style="font-size:14px">Bro te propone una configuración por edad</span></div>
+          <div style="display:flex;gap:12px;align-items:center"><span style="width:30px;height:30px;border-radius:10px;background:#EFF6E8;color:#4E7D22;display:grid;place-items:center;font-weight:800;flex:none">3</span><span style="font-size:14px">Tú decides y das tu consentimiento</span></div>
+        </div>
+        <div style="flex:1;min-height:24px"></div>
+        <button onClick="{{ empezar }}" style="height:54px;border-radius:16px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">Empezar</button>
+        <button onClick="{{ yaTengo }}" style="height:46px;margin-top:8px;border-radius:14px;background:transparent;font-size:14px;font-weight:600;color:#3068ED">Ya tengo un Bro: vincularlo</button>
+      </div>
+    </sc-if>
+
+    <!-- 1 REGISTRO -->
+    <sc-if value="{{ p.registro }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:14px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Crea tu cuenta</div>
+        <div style="font-size:14px;color:#374151;line-height:1.5">Solo necesitas un email. Lo verificamos con un código.</div>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#374151">Email</span>
+          <input type="email" value="{{ f.email }}" onChange="{{ on.email }}" placeholder="laura@email.com" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none"></label>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#374151">Contraseña</span>
+          <input type="password" value="{{ f.pass }}" onChange="{{ on.pass }}" placeholder="Mínimo 8 caracteres" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none"></label>
+        <sc-if value="{{ codigoEnviado }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;animation:sube .25s ease-out">
+            <div style="font-size:13.5px;line-height:1.45">Te hemos enviado un código a <b>{{ f.email }}</b>. <span style="color:#6B7280">(Demo: 123456)</span></div>
+            <input inputmode="numeric" maxlength="6" value="{{ f.codigo }}" onChange="{{ on.codigo }}" placeholder="000000" style="height:52px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:22px;letter-spacing:.3em;text-align:center;font-family:ui-monospace,Menlo,monospace;outline:none">
+          </div>
+        </sc-if>
+        <div style="font-size:12px;color:#6B7280;line-height:1.5">Al continuar aceptas los <a href="#">términos</a> y la <a href="#">política de privacidad</a>.</div>
+      </div>
+    </sc-if>
+
+    <!-- 2 TUTOR -->
+    <sc-if value="{{ p.tutor }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:14px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Sobre ti</div>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#374151">Tu nombre</span>
+          <input value="{{ f.nombre }}" onChange="{{ on.nombre }}" placeholder="Laura" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none"></label>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#374151">Eres…</span>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+            <sc-for list="{{ relaciones }}" as="r" hint-placeholder-count="3">
+              <button onClick="{{ r.onClick }}" style="height:46px;border-radius:14px;font-size:14px;font-weight:600;background:{{ r.bg }};color:{{ r.tx }};border:1px solid {{ r.borde }}">{{ r.t }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:#6B7280;line-height:1.5;text-wrap:pretty">Como tutor legal, eres quien decide y da el consentimiento por tus hijos menores de 14 años.</div>
+      </div>
+    </sc-if>
+
+    <!-- 3 BROS -->
+    <sc-if value="{{ p.bros }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Tus Bros</div>
+        <div style="font-size:14px;color:#374151;line-height:1.5">Con la fecha de nacimiento, Bro ajusta la configuración y el perfil de edad de su QR de amigos.</div>
+        <sc-for list="{{ hijos }}" as="h" hint-placeholder-count="1">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:38px;height:38px;border-radius:50%;background:{{ h.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:16px;flex:none">{{ h.ini }}</div>
+              <div style="flex:1;font-family:Outfit;font-weight:700;font-size:15px">{{ h.cabecera }}</div>
+              <sc-if value="{{ h.puedeQuitar }}" hint-placeholder-val="{{ false }}"><button onClick="{{ h.quitar }}" style="font-size:12.5px;font-weight:600;color:#B4442B;background:transparent">Quitar</button></sc-if>
+            </div>
+            <input value="{{ h.nombre }}" onChange="{{ h.onNombre }}" placeholder="Nombre" style="height:48px;border:1px solid #E4E7EE;border-radius:12px;padding:0 12px;font-size:15px;outline:none">
+            <label style="display:flex;flex-direction:column;gap:5px"><span style="font-size:12px;font-weight:600;color:#6B7280">Fecha de nacimiento</span>
+              <input type="date" value="{{ h.nac }}" onChange="{{ h.onNac }}" style="height:48px;border:1px solid #E4E7EE;border-radius:12px;padding:0 12px;font-size:15px;outline:none;background:#fff"></label>
+          </div>
+        </sc-for>
+        <button onClick="{{ addHijo }}" style="height:48px;border-radius:14px;border:1px dashed #C9CFDA;background:transparent;font-size:14px;font-weight:600;color:#3068ED">+ Añadir otro hijo</button>
+        <div style="font-size:12px;color:#6B7280;line-height:1.5">Más adelante te pediremos un documento (libro de familia o DNI) para verificar la edad.</div>
+      </div>
+    </sc-if>
+
+    <!-- 4 RECOMENDADA -->
+    <sc-if value="{{ p.recomendada }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <sc-if value="{{ varios }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:8px">
+            <sc-for list="{{ pestanas }}" as="t" hint-placeholder-count="2">
+              <button onClick="{{ t.onClick }}" style="height:38px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:700;background:{{ t.bg }};color:{{ t.tx }};border:1px solid {{ t.borde }}">{{ t.t }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="display:flex;gap:10px;align-items:center;background:#111;color:#fff;border-radius:18px;padding:14px">
+          <img src="facew.png" alt="" style="width:30px;height:30px;flex:none">
+          <div style="font-size:13.5px;line-height:1.45">Para <b>{{ hijo.nombreSeguro }}</b> ({{ hijo.edadTxt }}) te propongo esto. Ajusta lo que quieras.</div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#3068ED;margin-bottom:6px">APPS DE INICIO</div>
+          <sc-for list="{{ cfg.apps }}" as="a" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F0F2F6">
+              <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600">{{ a.t }}</div><div style="font-size:12px;color:#6B7280">{{ a.sub }}</div></div>
+              <button onClick="{{ a.onClick }}" aria-label="Activar" style="width:50px;height:30px;border-radius:999px;background:{{ a.fondo }};position:relative;flex:none"><span style="position:absolute;top:3px;left:{{ a.x }};width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></button>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#E56648">LÍMITES Y HORARIOS</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="flex:1"><div style="font-size:14.5px;font-weight:600">Pantalla entre semana</div><div style="font-size:12px;color:#6B7280">Fuera de Projects y Learning</div></div>
+            <button onClick="{{ cfg.menos }}" style="width:34px;height:34px;border-radius:10px;background:#F0F2F6;font-size:18px;font-weight:700">−</button>
+            <div style="width:52px;text-align:center;font-family:Outfit;font-weight:800;font-size:17px">{{ cfg.pantalla }}</div>
+            <button onClick="{{ cfg.mas }}" style="width:34px;height:34px;border-radius:10px;background:#F0F2F6;font-size:18px;font-weight:700">+</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:14.5px;font-weight:600">Modo descanso desde</div>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
+              <sc-for list="{{ cfg.horas }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.onClick }}" style="height:38px;border-radius:10px;font-size:13.5px;font-weight:700;background:{{ o.bg }};color:{{ o.tx }};border:1px solid {{ o.borde }}">{{ o.t }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:#6B7280">Hasta las 7:30. El móvil solo deja llamar a la familia y al 112.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding-top:4px">
+            <div style="flex:1"><div style="font-size:14.5px;font-weight:600">Modo cole</div><div style="font-size:12px;color:#6B7280">L–V, 9:00–14:00 · solo Learning y llamadas</div></div>
+            <button onClick="{{ cfg.onCole }}" aria-label="Modo cole" style="width:50px;height:30px;border-radius:999px;background:{{ cfg.coleFondo }};position:relative;flex:none"><span style="position:absolute;top:3px;left:{{ cfg.coleX }};width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 5 CONSENTIMIENTOS -->
+    <sc-if value="{{ p.consentimientos }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Tus consentimientos</div>
+        <div style="font-size:14px;color:#374151;line-height:1.5;text-wrap:pretty">Uno a uno. Nada viene marcado: decides tú. Puedes cambiarlo cuando quieras y queda registrado con fecha.</div>
+        <sc-for list="{{ consentimientos }}" as="c" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid {{ c.borde }};border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="flex:1;font-family:Outfit;font-weight:700;font-size:15.5px">{{ c.t }}</div>
+              <span style="font-size:10px;font-weight:800;letter-spacing:.04em;color:#4E7D22;background:#EFF6E8;padding:3px 7px;border-radius:6px">{{ c.reco }}</span>
+            </div>
+            <div style="font-size:13px;line-height:1.5;color:#374151">{{ c.que }}</div>
+            <div style="font-size:12.5px;line-height:1.45;color:#6B7280"><b style="color:#111">Si no consientes:</b> {{ c.sino }}</div>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:2px">
+              <button onClick="{{ c.si }}" style="height:42px;border-radius:12px;font-size:13.5px;font-weight:700;background:{{ c.siBg }};color:{{ c.siTx }};border:1px solid {{ c.siBorde }}">Consiento</button>
+              <button onClick="{{ c.no }}" style="height:42px;border-radius:12px;font-size:13.5px;font-weight:700;background:{{ c.noBg }};color:{{ c.noTx }};border:1px solid {{ c.noBorde }}">No consiento</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 6 OTRO TUTOR -->
+    <sc-if value="{{ p.otro }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:14px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">¿Invitas al otro tutor?</div>
+        <div style="font-size:14px;color:#374151;line-height:1.5;text-wrap:pretty">Podrá ver tendencias, aprobar peticiones y validar rewards. Los consentimientos los podéis gestionar los dos.</div>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#374151">Email o móvil</span>
+          <input value="{{ f.otro }}" onChange="{{ on.otro }}" placeholder="papa@email.com" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none"></label>
+        <sc-if value="{{ otroInvitado }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:13px;font-weight:600;color:#4E7D22;background:#EFF6E8;border-radius:12px;padding:10px 12px">Invitación enviada a {{ f.otro }}.</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- LISTO / FUNNEL -->
+    <sc-if value="{{ p.listo }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:28px 20px;display:flex;flex-direction:column;gap:14px;animation:sube .25s ease-out">
+        <div style="width:56px;height:56px;border-radius:50%;background:#82B94F;color:#fff;display:grid;place-items:center;font-size:26px;font-weight:800">✓</div>
+        <div style="font-family:Outfit;font-weight:800;font-size:26px;line-height:1.12">{{ listoTitulo }}</div>
+        <div style="font-size:14px;color:#374151;line-height:1.5">Está guardada. Cuando llegue su Bro, se aplicará sola al vincularlo.</div>
+        <div style="border-radius:22px;overflow:hidden;background:#111;color:#fff">
+          <div style="padding:18px 18px 8px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#E56648">EL PACK BRO</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:22px;line-height:1.15;margin-top:6px">Móvil Bro + pulsera Aura</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:13.5px;line-height:1.4;opacity:.9">
+              <div>· Móvil Android con el launcher Bro, ya configurado</div>
+              <div>· Pulsera Aura con su correa y su talla</div>
+              <div>· App de padres y Bro AI incluidos</div>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:14px"><span style="font-family:Outfit;font-weight:800;font-size:30px">350 €</span><span style="font-size:13px;opacity:.8">+ 9,99 €/mes</span></div>
+            <div style="font-size:12px;opacity:.7;margin-top:2px">Entrega antes del 15 de abril · a tiempo para la comunión</div>
+          </div>
+          <div style="padding:12px 18px 18px">
+            <button onClick="{{ comprar }}" style="width:100%;height:52px;border-radius:16px;background:#E56648;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">Conseguir su Bro</button>
+          </div>
+        </div>
+        <button onClick="{{ masTarde }}" style="height:46px;border-radius:14px;background:transparent;font-size:14px;font-weight:600;color:#6B7280">Más tarde</button>
+        <sc-if value="{{ guardadoLead }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:13px;color:#374151;background:#fff;border:1px solid #E4E7EE;border-radius:12px;padding:10px 12px;line-height:1.45">Perfecto. Te avisaremos por email cuando abra la preventa. Tu configuración te espera.</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- COMPRA 1 PULSERA -->
+    <sc-if value="{{ p.pulsera }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Pulsera y talla</div>
+        <div style="font-size:13.5px;color:#374151;line-height:1.5">Mide el contorno de su muñeca con una cinta o un hilo.</div>
+        <sc-for list="{{ compraHijos }}" as="h" hint-placeholder-count="1">
+          <div style="background:#fff;border:1px solid {{ h.borde }};border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:{{ h.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;flex:none">{{ h.ini }}</div>
+              <div style="flex:1;font-family:Outfit;font-weight:700;font-size:15px">{{ h.nombre }}</div>
+              <button onClick="{{ h.toggle }}" style="height:32px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:{{ h.selBg }};color:{{ h.selTx }}">{{ h.selTxt }}</button>
+            </div>
+            <sc-if value="{{ h.sel }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
+                <sc-for list="{{ h.tallas }}" as="t" hint-placeholder-count="3">
+                  <button onClick="{{ t.onClick }}" style="padding:8px 4px;border-radius:12px;background:{{ t.bg }};color:{{ t.tx }};border:1px solid {{ t.borde }};display:flex;flex-direction:column;align-items:center;gap:1px"><span style="font-family:Outfit;font-weight:800;font-size:16px">{{ t.t }}</span><span style="font-size:11px;opacity:.75">{{ t.cm }}</span></button>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <span style="font-size:12.5px;font-weight:600;color:#6B7280">Correa</span>
+                <sc-for list="{{ h.colores }}" as="c" hint-placeholder-count="4">
+                  <button onClick="{{ c.onClick }}" aria-label="{{ c.t }}" style="width:30px;height:30px;border-radius:50%;background:{{ c.hex }};box-shadow:0 0 0 {{ c.anillo }} #111;border:2px solid #fff"></button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- COMPRA 2 ENVÍO -->
+    <sc-if value="{{ p.envio }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Dirección de envío</div>
+        <input value="{{ f.calle }}" onChange="{{ on.calle }}" placeholder="Calle y número" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:8px">
+          <input inputmode="numeric" value="{{ f.cp }}" onChange="{{ on.cp }}" placeholder="C.P." style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none;min-width:0">
+          <input value="{{ f.ciudad }}" onChange="{{ on.ciudad }}" placeholder="Ciudad" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none;min-width:0">
+        </div>
+        <input type="tel" value="{{ f.tel }}" onChange="{{ on.tel }}" placeholder="Teléfono de contacto" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none">
+        <div style="font-size:12.5px;color:#6B7280;line-height:1.5">Entrega antes del 15 de abril de 2027. Se entrega en mano a un adulto.</div>
+      </div>
+    </sc-if>
+
+    <!-- COMPRA 3 PAGO -->
+    <sc-if value="{{ p.pago }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 20px;display:flex;flex-direction:column;gap:12px;animation:sube .25s ease-out">
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.15">Pago</div>
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ resumen.lineas }}" as="l" hint-placeholder-count="1">
+            <div style="display:flex;justify-content:space-between;gap:10px;font-size:14px"><span>{{ l.t }}</span><b>{{ l.p }}</b></div>
+          </sc-for>
+          <div style="display:flex;justify-content:space-between;gap:10px;font-size:14px;color:#6B7280"><span>Suscripción (desde la entrega)</span><span>{{ resumen.mes }}</span></div>
+          <div style="height:1px;background:#E4E7EE"></div>
+          <div style="display:flex;justify-content:space-between;gap:10px;font-family:Outfit;font-weight:800;font-size:18px"><span>Hoy pagas</span><span>{{ resumen.total }}</span></div>
+        </div>
+        <input inputmode="numeric" value="{{ f.tarjeta }}" onChange="{{ on.tarjeta }}" placeholder="Número de tarjeta" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none;font-family:ui-monospace,Menlo,monospace">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+          <input value="{{ f.cad }}" onChange="{{ on.cad }}" placeholder="MM/AA" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none;min-width:0">
+          <input inputmode="numeric" value="{{ f.cvc }}" onChange="{{ on.cvc }}" placeholder="CVC" style="height:50px;border:1px solid #E4E7EE;border-radius:14px;padding:0 14px;font-size:15.5px;background:#fff;outline:none;min-width:0">
+        </div>
+        <div style="font-size:12.5px;color:#6B7280;line-height:1.5">La tarjeta debe estar a tu nombre: así verificamos que eres el tutor. Si no llega a tiempo para la comunión, te devolvemos el dinero.</div>
+      </div>
+    </sc-if>
+
+    <!-- CONFIRMADO + VINCULAR -->
+    <sc-if value="{{ p.confirmado }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:26px 20px;display:flex;flex-direction:column;gap:14px;animation:sube .25s ease-out">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#4E7D22">{{ confTitulo }}</div>
+        <div style="font-family:Outfit;font-weight:800;font-size:26px;line-height:1.12">{{ confSub }}</div>
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#3068ED">PRIMER PASO AL RECIBIRLO</div>
+          <div style="font-size:14px;line-height:1.5;text-align:center;text-wrap:pretty">Enciende el Bro y escanea este código con él. Se vincula a tu cuenta y aplica tu configuración.</div>
+          <div style="width:184px;height:184px;padding:12px;box-sizing:border-box;border-radius:16px;background:#fff;border:1px solid #E4E7EE;display:grid;grid-template-columns:repeat(21,1fr);grid-template-rows:repeat(21,1fr)">
+            <sc-for list="{{ qr }}" as="q" hint-placeholder-count="0">
+              <span style="background:{{ q }}"></span>
+            </sc-for>
+          </div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;letter-spacing:.12em">{{ codigoVinc }}</div>
+          <div style="font-size:12px;color:#6B7280">¿No puedes escanear? Escribe el código en el Bro.</div>
+        </div>
+        <a href="Bro OS v4.dc.html" style="height:52px;border-radius:16px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;text-decoration:none">Ir a la app de padres</a>
+        <button onClick="{{ reiniciar }}" style="height:40px;background:transparent;font-size:13px;color:#6B7280">Reiniciar demo</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ conBoton }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:none;padding:12px 20px calc(16px + env(safe-area-inset-bottom));background:#F4F5F9;border-top:1px solid #E4E7EE;display:flex;flex-direction:column;gap:6px">
+      <button onClick="{{ siguiente }}" style="height:54px;border-radius:16px;background:{{ btn.bg }};color:#fff;font-family:Outfit;font-weight:800;font-size:16px">{{ btn.t }}</button>
+      <sc-if value="{{ btn.hayAlt }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ btn.alt }}" style="height:38px;background:transparent;font-size:13.5px;font-weight:600;color:#6B7280">{{ btn.altT }}</button>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:880}}">
+const KEY = 'bro-onboarding-padres-v1';
+const PASOS = ['registro', 'tutor', 'bros', 'recomendada', 'consentimientos', 'otro'];
+const COMPRA = ['pulsera', 'envio', 'pago'];
+const TITULOS = { registro: 'Tu cuenta', tutor: 'Sobre ti', bros: 'Tus Bros', recomendada: 'Configuración recomendada', consentimientos: 'Consentimientos', otro: 'Otro tutor', pulsera: 'Pulsera y talla', envio: 'Envío', pago: 'Pago' };
+const COLORES = ['#3068ED', '#E56648', '#82B94F', '#111111'];
+const CORREAS = [['Azul', '#3068ED'], ['Naranja', '#E56648'], ['Verde', '#82B94F'], ['Negro', '#111111']];
+const TALLAS = [['S', '12–15 cm'], ['M', '15–18 cm'], ['L', '18–21 cm']];
+const HORAS = ['21:00', '21:30', '22:00', '22:30'];
+const CONSENT = [
+  { id: 'voz', t: 'Voz para Bro AI', que: 'Bro procesa su voz para entender lo que pide. El audio no se guarda.', sino: 'usará Bro AI solo escribiendo.' },
+  { id: 'aura', t: 'Pulsera Aura: pasos y sueño', que: 'Son datos de salud. Tú ves tendencias semanales, nunca el detalle.', sino: 'la pulsera no envía datos y Aura queda apagada.' },
+  { id: 'content', t: 'Content: vídeos y artículos', que: 'Solo de fuentes revisadas y canales que tú apruebes. Sin feed ni recomendaciones.', sino: 'no podrá buscar contenido en Bro.' },
+  { id: 'amigos', t: 'Amigos por QR y comunidades', que: 'Puede conectar con Bros de edad parecida (±3 años) escaneando su QR.', sino: 'no podrá añadir amigos ni unirse a comunidades.' },
+  { id: 'marcas', t: 'Rewards de marcas', que: 'Ver retos patrocinados. Nunca se une sin tu aprobación y firma.', sino: 'no verá rewards de marcas.' },
+  { id: 'sos', t: 'Ubicación en emergencias', que: 'Solo si llama al 112 o pulsa SOS, compartimos su ubicación contigo.', sino: 'en una emergencia no recibirás su ubicación.' }
+];
+function edad(nac) { if (!nac) return null; const d = new Date(nac), h = new Date(); let e = h.getFullYear() - d.getFullYear(); if (h < new Date(h.getFullYear(), d.getMonth(), d.getDate())) e--; return e >= 0 && e < 25 ? e : null; }
+function recomendacion(e) {
+  const peq = e != null && e <= 11, may = e != null && e >= 14;
+  return {
+    apps: { classroom: true, duolingo: true, spotify: !peq, whatsapp: may },
+    pantalla: peq ? 60 : may ? 150 : 120,
+    descanso: peq ? '21:00' : may ? '22:30' : '22:00',
+    cole: true
+  };
+}
+const APPS = [['classroom', 'Google Classroom', 'Deberes del cole'], ['duolingo', 'Duolingo', 'Idiomas'], ['spotify', 'Spotify', 'Música · recomendado desde 12'], ['whatsapp', 'WhatsApp', 'Recomendado desde 14 (edad mínima de la app)']];
+const nuevoHijo = i => ({ nombre: '', nac: '', color: COLORES[i % 4], cfg: null, talla: 'M', correa: 'Azul', comprar: true });
+
+class Component extends DCLogic {
+  state = (() => { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.paso) return s; } catch (e) {} return this.inicial(); })();
+  inicial() { return { paso: 'bienvenida', f: {}, rel: 'Madre', hijos: [nuevoHijo(0)], activo: 0, cons: {}, codigoEnviado: false, otroInvitado: false, lead: false, vincular: false }; }
+  componentDidUpdate() { try { localStorage.setItem(KEY, JSON.stringify(this.state)); } catch (e) {} }
+  ir(paso) { this.setState({ paso }); }
+  setHijo(i, cambios) { this.setState(s => ({ hijos: s.hijos.map((h, j) => j === i ? { ...h, ...cambios } : h) })); }
+  cfgDe(h) { return h.cfg || recomendacion(edad(h.nac)); }
+  setCfg(i, cambios) { const h = this.state.hijos[i]; this.setHijo(i, { cfg: { ...this.cfgDe(h), ...cambios } }); }
+  valido() {
+    const s = this.state, f = s.f;
+    switch (s.paso) {
+      case 'registro': return s.codigoEnviado ? f.codigo === '123456' : /.+@.+\..+/.test(f.email || '') && (f.pass || '').length >= 8;
+      case 'tutor': return !!(f.nombre || '').trim();
+      case 'bros': return s.hijos.every(h => h.nombre.trim() && edad(h.nac) != null);
+      case 'consentimientos': return s.hijos.every((h, i) => CONSENT.every(c => (s.cons[i] || {})[c.id] != null));
+      case 'pulsera': return s.hijos.some(h => h.comprar);
+      case 'envio': return !!(f.calle && f.cp && f.ciudad && f.tel);
+      case 'pago': return (f.tarjeta || '').replace(/\D/g, '').length >= 15 && /\d\d\/\d\d/.test(f.cad || '') && (f.cvc || '').length >= 3;
+      default: return true;
+    }
+  }
+  siguiente() {
+    const s = this.state;
+    if (!this.valido()) return;
+    if (s.paso === 'registro' && !s.codigoEnviado) return this.setState({ codigoEnviado: true });
+    if (s.paso === 'consentimientos' && s.activo < s.hijos.length - 1) return this.setState({ activo: s.activo + 1 });
+    if (s.paso === 'recomendada' && s.activo < s.hijos.length - 1) return this.setState({ activo: s.activo + 1 });
+    const i = PASOS.indexOf(s.paso);
+    if (i >= 0) { const sig = PASOS[i + 1] || 'listo'; return this.setState({ paso: sig, activo: 0 }); }
+    const k = COMPRA.indexOf(s.paso);
+    if (k >= 0) return this.ir(COMPRA[k + 1] || 'confirmado');
+  }
+  atras() {
+    const s = this.state;
+    if ((s.paso === 'recomendada' || s.paso === 'consentimientos') && s.activo > 0) return this.setState({ activo: s.activo - 1 });
+    const i = PASOS.indexOf(s.paso);
+    if (i > 0) return this.setState({ paso: PASOS[i - 1], activo: 0 });
+    if (i === 0) return this.ir('bienvenida');
+    const k = COMPRA.indexOf(s.paso);
+    if (k > 0) return this.ir(COMPRA[k - 1]);
+    if (k === 0) return this.ir('listo');
+  }
+  renderVals() {
+    const s = this.state, f = s.f;
+    const enOnb = PASOS.includes(s.paso), enCompra = COMPRA.includes(s.paso);
+    const lista = enOnb ? PASOS : COMPRA, idx = lista.indexOf(s.paso);
+    const on = {}; ['email', 'pass', 'codigo', 'nombre', 'otro', 'calle', 'cp', 'ciudad', 'tel', 'tarjeta', 'cad', 'cvc'].forEach(k => { on[k] = e => { const v = e.target.value; this.setState(st => ({ f: { ...st.f, [k]: v } })); }; });
+    const p = {}; ['bienvenida', 'listo', 'confirmado', ...PASOS, ...COMPRA].forEach(k => p[k] = s.paso === k);
+    const hijo = s.hijos[s.activo] || s.hijos[0], e = edad(hijo.nac), cfg = this.cfgDe(hijo), ai = s.activo;
+    const sel = (on_) => on_ ? { bg: '#111', tx: '#fff', borde: '#111' } : { bg: '#fff', tx: '#111', borde: '#E4E7EE' };
+    const varios = s.hijos.length > 1;
+    const sufijo = varios && (s.paso === 'recomendada' || s.paso === 'consentimientos') ? ` · ${hijo.nombre || 'Bro'}` : '';
+    const nombres = s.hijos.map(h => h.nombre || 'tu Bro');
+    const listaNombres = nombres.length > 1 ? nombres.slice(0, -1).join(', ') + ' y ' + nombres[nombres.length - 1] : nombres[0];
+    const comprar = s.hijos.filter(h => h.comprar), n = comprar.length;
+    const qrSeed = (f.email || 'bro').split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+    const qr = Array.from({ length: 441 }, (_, k) => {
+      const x = k % 21, y = Math.floor(k / 21);
+      const ojo = (ox, oy) => x >= ox && x < ox + 7 && y >= oy && y < oy + 7 && (x === ox || x === ox + 6 || y === oy || y === oy + 6 || (x >= ox + 2 && x <= ox + 4 && y >= oy + 2 && y <= oy + 4));
+      const zona = (ox, oy) => x >= ox - 1 && x <= ox + 7 && y >= oy - 1 && y <= oy + 7;
+      if (ojo(0, 0) || ojo(14, 0) || ojo(0, 14)) return '#111';
+      if (zona(0, 0) || zona(14, 0) || zona(0, 14)) return 'transparent';
+      return ((Math.imul(k + 1, 2654435761) ^ qrSeed) >>> 13) % 3 === 0 ? '#111' : 'transparent';
+    });
+    return {
+      p, f, on,
+      conBarra: enOnb || enCompra,
+      barra: { etiqueta: (enOnb ? 'CONFIGURACIÓN' : 'COMPRA') + ` · PASO ${idx + 1} DE ${lista.length}`, titulo: (TITULOS[s.paso] || '') + sufijo,
+        tramos: lista.map((_, j) => ({ color: j < idx ? '#111' : j === idx ? (enOnb ? '#3068ED' : '#E56648') : '#E4E7EE' })) },
+      atras: () => this.atras(),
+      empezar: () => this.ir('registro'),
+      yaTengo: () => this.setState({ paso: 'confirmado', vincular: true }),
+      codigoEnviado: s.codigoEnviado,
+      relaciones: ['Madre', 'Padre', 'Tutor legal'].map(t => ({ t, ...sel(s.rel === t), onClick: () => this.setState({ rel: t }) })),
+      hijos: s.hijos.map((h, i) => { const ed = edad(h.nac); return { ...h, ini: (h.nombre || '?')[0].toUpperCase(), cabecera: (h.nombre || `Bro ${i + 1}`) + (ed != null ? ` · ${ed} años` : ''), puedeQuitar: s.hijos.length > 1,
+        quitar: () => this.setState(st => ({ hijos: st.hijos.filter((_, j) => j !== i), activo: 0 })),
+        onNombre: ev => this.setHijo(i, { nombre: ev.target.value }), onNac: ev => this.setHijo(i, { nac: ev.target.value, cfg: null }) }; }),
+      addHijo: () => this.setState(st => ({ hijos: [...st.hijos, nuevoHijo(st.hijos.length)] })),
+      varios,
+      pestanas: s.hijos.map((h, i) => ({ t: h.nombre || `Bro ${i + 1}`, ...sel(i === ai), onClick: () => this.setState({ activo: i }) })),
+      hijo: { nombreSeguro: hijo.nombre || 'tu Bro', edadTxt: e != null ? `${e} años` : 'sin edad' },
+      cfg: {
+        apps: APPS.map(([id, t, sub]) => { const v = !!cfg.apps[id]; return { t, sub, fondo: v ? '#82B94F' : '#D5DAE3', x: v ? '23px' : '3px', onClick: () => this.setCfg(ai, { apps: { ...cfg.apps, [id]: !v } }) }; }),
+        pantalla: cfg.pantalla >= 60 ? `${Math.floor(cfg.pantalla / 60)} h${cfg.pantalla % 60 ? ' ' + (cfg.pantalla % 60) : ''}` : `${cfg.pantalla} min`,
+        menos: () => this.setCfg(ai, { pantalla: Math.max(30, cfg.pantalla - 30) }), mas: () => this.setCfg(ai, { pantalla: Math.min(240, cfg.pantalla + 30) }),
+        horas: HORAS.map(t => ({ t, ...sel(cfg.descanso === t), onClick: () => this.setCfg(ai, { descanso: t }) })),
+        coleFondo: cfg.cole ? '#82B94F' : '#D5DAE3', coleX: cfg.cole ? '23px' : '3px', onCole: () => this.setCfg(ai, { cole: !cfg.cole })
+      },
+      consentimientos: CONSENT.map(c => { const v = (s.cons[ai] || {})[c.id];
+        const set = val => this.setState(st => ({ cons: { ...st.cons, [ai]: { ...(st.cons[ai] || {}), [c.id]: val } } }));
+        return { ...c, reco: c.id === 'marcas' && e != null && e < 12 ? 'OPCIONAL' : 'RECOMENDADO', borde: v == null ? '#E4E7EE' : v ? '#82B94F' : '#D5DAE3',
+          siBg: v === true ? '#82B94F' : '#fff', siTx: v === true ? '#fff' : '#111', siBorde: v === true ? '#82B94F' : '#E4E7EE',
+          noBg: v === false ? '#111' : '#fff', noTx: v === false ? '#fff' : '#111', noBorde: v === false ? '#111' : '#E4E7EE',
+          si: () => set(true), no: () => set(false) }; }),
+      otroInvitado: s.otroInvitado,
+      listoTitulo: `La configuración de ${listaNombres} está lista`,
+      comprar: () => this.ir('pulsera'),
+      masTarde: () => this.setState({ lead: true }),
+      guardadoLead: s.lead,
+      compraHijos: s.hijos.map((h, i) => ({ nombre: h.nombre || `Bro ${i + 1}`, ini: (h.nombre || '?')[0].toUpperCase(), color: h.color, sel: h.comprar,
+        borde: h.comprar ? '#111' : '#E4E7EE', selBg: h.comprar ? '#111' : '#F0F2F6', selTx: h.comprar ? '#fff' : '#111', selTxt: h.comprar ? 'Incluido' : 'Añadir',
+        toggle: () => this.setHijo(i, { comprar: !h.comprar }),
+        tallas: TALLAS.map(([t, cm]) => ({ t, cm, ...sel(h.talla === t), onClick: () => this.setHijo(i, { talla: t }) })),
+        colores: CORREAS.map(([t, hex]) => ({ t, hex, anillo: h.correa === t ? '2px' : '0', onClick: () => this.setHijo(i, { correa: t }) })) })),
+      resumen: { lineas: comprar.map(h => ({ t: `Pack Bro · ${h.nombre} (talla ${h.talla})`, p: '350 €' })), mes: `${(n * 9.99).toFixed(2).replace('.', ',')} €/mes`, total: `${n * 350} €` },
+      confTitulo: s.vincular ? 'VINCULAR UN BRO' : 'PEDIDO CONFIRMADO',
+      confSub: s.vincular ? 'Vincula el Bro a tu cuenta' : (n === 1 ? `El Bro de ${comprar[0].nombre || 'tu hijo'} está en camino` : `Los Bros de ${comprar.map(h => h.nombre).join(' y ') || 'tu familia'} están en camino`),
+      qr, codigoVinc: 'BRO-' + (qrSeed % 9000 + 1000) + '-' + ((qrSeed >> 8) % 9000 + 1000),
+      reiniciar: () => { try { localStorage.removeItem(KEY); } catch (e2) {} this.setState(this.inicial()); },
+      conBoton: enOnb || enCompra,
+      siguiente: () => this.siguiente(),
+      btn: (() => {
+        const ok = this.valido(), bg = ok ? '#111' : '#C9CFDA';
+        if (s.paso === 'registro') return { t: s.codigoEnviado ? 'Verificar' : 'Enviar código', bg };
+        if (s.paso === 'otro') return { t: s.otroInvitado ? 'Continuar' : 'Invitar', bg: (f.otro || s.otroInvitado) ? '#111' : '#C9CFDA', hayAlt: !s.otroInvitado, altT: 'Ahora no', alt: () => this.ir('listo') };
+        if (s.paso === 'pago') return { t: ok ? `Pagar ${n * 350} €` : 'Pagar', bg: ok ? '#E56648' : '#C9CFDA' };
+        if ((s.paso === 'recomendada' || s.paso === 'consentimientos') && s.activo < s.hijos.length - 1) return { t: `Siguiente: ${s.hijos[s.activo + 1].nombre || 'Bro'}`, bg };
+        if (s.paso === 'recomendada') return { t: 'Me parece bien', bg };
+        return { t: 'Continuar', bg };
+      })()
+    };
+  }
+}
+// "Invitar" en el paso otro: primer toque envía, segundo continúa
+const _sig = Component.prototype.siguiente;
+Component.prototype.siguiente = function () {
+  const s = this.state;
+  if (s.paso === 'otro' && !s.otroInvitado) { if (s.f.otro) this.setState({ otroInvitado: true }); return; }
+  return _sig.call(this);
+};
+</script>
+</body>
+</html>
