@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#F4F5F9;font-family:Inter,system-ui,sans-serif;color:#111} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer} input,select,textarea{font-family:inherit}</style>
+</helmet>
+<div data-screen-label="Panel de marcas" style="min-height:100vh;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;background:#fff;border-bottom:1px solid #E4E7EE;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="logo.png" alt="Bro" style="width:30px;height:30px">
+      <span style="font-family:Outfit;font-weight:800;font-size:18px">Bro</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#6B7280;padding-left:10px;border-left:1px solid #E4E7EE">PARTNERS</span>
+    </div>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <sc-for list="{{ marcas }}" as="mk" hint-placeholder-count="0">
+        <button onClick="{{ mk.onClick }}" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:12px;background:{{ mk.bg }};border:1px solid {{ mk.borde }}">
+          <span role="img" aria-label="{{ mk.nombre }}" style="width:56px;height:18px;background-image:url({{ mk.logo }});background-size:contain;background-repeat:no-repeat;background-position:center"></span>
+          <span style="font-size:13px;font-weight:600;color:{{ mk.tx }}">{{ mk.nombre }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="max-width:1180px;width:100%;margin:0 auto;padding:22px 24px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+
+    <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#6B7280">{{ m.sector }}</div>
+        <h1 style="font-family:Outfit;font-weight:800;font-size:30px;letter-spacing:-.02em;margin:4px 0 0">{{ m.nombre }}</h1>
+      </div>
+      <div style="display:flex;gap:6px;background:#fff;border:1px solid #E4E7EE;border-radius:12px;padding:4px">
+        <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+          <button onClick="{{ tb.onClick }}" style="height:34px;padding:0 14px;border-radius:9px;font-size:13px;font-weight:700;background:{{ tb.bg }};color:{{ tb.tx }}">{{ tb.t }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <sc-if value="{{ v.resultados }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px">
+        <div style="border-radius:22px;padding:20px;background:{{ m.fondo }};color:{{ m.tx2 }};border:1px solid {{ m.borde2 }};display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <sc-if value="{{ listo }}" hint-placeholder-val="{{ false }}"><div style="height:40px;padding:0 12px;border-radius:12px;background:{{ m.logoBg }};display:flex;align-items:center"><span role="img" aria-label="{{ m.nombre }}" style="width:110px;height:24px;background-image:url({{ m.logo }});background-size:contain;background-repeat:no-repeat;background-position:center"></span></div></sc-if>
+            <div style="flex:1"></div>
+            <span style="font-size:11px;font-weight:800;letter-spacing:.06em;padding:5px 10px;border-radius:999px;background:{{ m.estadoBg }};color:#fff">{{ m.estado }}</span>
+          </div>
+          <div style="font-family:Outfit;font-weight:800;font-size:26px;line-height:1.1;margin-top:6px">{{ m.titulo }}</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.05em;opacity:.75">SI LO CONSIGUEN</div>
+          <div style="font-size:16px;font-weight:700;color:{{ m.acento }}">{{ m.outcome }}</div>
+          <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px">
+            <sc-for list="{{ m.conds }}" as="c" hint-placeholder-count="2"><div style="font-size:13.5px;opacity:.9">· {{ c }}</div></sc-for>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;opacity:.8;margin-top:auto;padding-top:10px">
+            <span>{{ m.vigencia }}</span><span>Validación: {{ m.validacion }}</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">{{ k.t }}</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:28px;letter-spacing:-.02em">{{ k.v }}</div>
+              <div style="font-size:12px;color:{{ k.c }};font-weight:600">{{ k.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px">
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px">
+          <div style="font-family:Outfit;font-weight:700;font-size:17px">Del interés al logro</div>
+          <div style="font-size:12.5px;color:#6B7280;margin:2px 0 14px">Cada paso lo da el Bro o su familia. Bro no empuja ni manda notificaciones a los Bros.</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ embudo }}" as="e" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:10px;align-items:center">
+                <div style="font-size:13px;font-weight:600">{{ e.t }}</div>
+                <div style="height:26px;background:#F4F5F9;border-radius:8px;overflow:hidden"><div style="height:100%;width:{{ e.pct }};background:{{ e.color }};border-radius:8px"></div></div>
+                <div style="font-family:Outfit;font-weight:700;font-size:15px;text-align:right">{{ e.n }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="font-family:Outfit;font-weight:700;font-size:17px">Logros por semana</div>
+            <div style="font-size:12.5px;color:#6B7280;margin-top:2px">Bros que completan el reto.</div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:130px;padding-top:6px">
+            <sc-for list="{{ semanas }}" as="s" hint-placeholder-count="6">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                <div style="font-size:11px;font-weight:700">{{ s.n }}</div>
+                <div style="width:100%;max-width:38px;height:{{ s.h }};border-radius:8px 8px 4px 4px;background:{{ m.barra }}"></div>
+                <div style="font-size:11px;color:#6B7280">{{ s.t }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid #E4E7EE;padding-top:12px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">POR EDAD (GRUPOS DE 20 BROS O MÁS)</div>
+            <sc-for list="{{ edades }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="width:70px">{{ a.t }}</span><div style="flex:1;height:8px;background:#F4F5F9;border-radius:4px;overflow:hidden"><div style="height:100%;width:{{ a.pct }};background:#111"></div></div><span style="width:40px;text-align:right;font-weight:600">{{ a.p }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#111;color:#fff;border-radius:22px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px">
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:17px">Lo que ves</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px;font-size:13.5px;line-height:1.45">
+            <span>· Cifras agregadas de tu reward, nunca por debajo de 20 Bros.</span>
+            <span>· Códigos Bro discount canjeados en tu tienda.</span>
+            <span>· Contratos firmados por las familias y su estado.</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:17px">Lo que nunca verás</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px;font-size:13.5px;line-height:1.45;opacity:.85">
+            <span>· Nombres, fotos, ubicación ni contacto de ningún Bro.</span>
+            <span>· Qué hace en el resto de Bro: chats, búsquedas, Aura.</span>
+            <span>· No puedes enviarles mensajes ni anuncios.</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- CONTRATOS -->
+    <sc-if value="{{ v.contratos }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+          <div style="font-family:Outfit;font-weight:700;font-size:17px">Contratos firmados</div>
+          <div style="font-size:12.5px;color:#6B7280">Cada familia firma con Bro y con {{ m.nombre }}. Si el Bro cumple, tú cumples.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+          <sc-for list="{{ contratos }}" as="c" hint-placeholder-count="4">
+            <div style="border:1px solid #E4E7EE;border-top:4px solid {{ c.color }};border-radius:14px;padding:14px">
+              <div style="font-family:Outfit;font-weight:800;font-size:24px">{{ c.n }}</div>
+              <div style="font-size:13px;font-weight:600">{{ c.t }}</div>
+              <div style="font-size:12px;color:#6B7280;margin-top:2px">{{ c.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#F4F5F9;border-radius:16px;padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <img src="logo.png" alt="" style="width:28px;height:28px">
+          <div style="flex:1;min-width:220px">
+            <div style="font-family:Outfit;font-weight:800;font-size:15px">La palabra de Bro</div>
+            <div style="font-size:13px;line-height:1.5;color:#374151">Te comprometes a dar el reward a cualquier Bro que complete el reto antes de la fecha de fin, aunque se supere el cupo previsto. Puedes cerrar nuevas uniones, pero no cancelar las firmadas.</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">COMPROMISO PENDIENTE</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:22px">{{ m.compromiso }}</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- NUEVO REWARD -->
+    <sc-if value="{{ v.nuevo }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#111;color:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#E56648">BRO PARTNERS · SELF-SERVICE</div>
+          <div style="font-size:12.5px;opacity:.7">Cualquier marca puede proponer un reward. Bro revisa y las familias deciden.</div>
+        </div>
+        <div style="font-family:Outfit;font-weight:800;font-size:26px;line-height:1.15;letter-spacing:-.02em">Crea tu reward en 4 pasos</div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+          <sc-for list="{{ pasosSS }}" as="p" hint-placeholder-count="4">
+            <div style="border-radius:16px;padding:14px;background:{{ p.bg }};border:1px solid {{ p.borde }};display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="width:26px;height:26px;border-radius:50%;background:{{ p.numBg }};color:{{ p.numTx }};display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:13px">{{ p.num }}</span>
+                <span style="font-size:10.5px;font-weight:800;letter-spacing:.05em;opacity:.7">{{ p.estado }}</span>
+              </div>
+              <div style="font-family:Outfit;font-weight:700;font-size:15px">{{ p.t }}</div>
+              <div style="font-size:12.5px;line-height:1.45;opacity:.75">{{ p.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ acc.pendiente }}" hint-placeholder-val="{{ true }}">
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font-family:Outfit;font-weight:700;font-size:17px">1 · Solicita acceso como marca</div>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">MARCA<input value="{{ acc.marca }}" onChange="{{ acc.onMarca }}" placeholder="Ej. Decathlon" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 14px;font-size:14.5px;color:#111;font-weight:500"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">EMAIL CORPORATIVO<input value="{{ acc.email }}" onChange="{{ acc.onEmail }}" placeholder="nombre@tumarca.com" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 14px;font-size:14.5px;color:#111;font-weight:500"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">SECTOR<select value="{{ acc.sector }}" onChange="{{ acc.onSector }}" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 10px;font-size:14px;color:#111;background:#fff"><option value="Libros y cultura">Libros y cultura</option><option value="Deporte">Deporte</option><option value="Videojuegos">Videojuegos</option><option value="Ocio y experiencias">Ocio y experiencias</option><option value="Alimentación">Alimentación</option><option value="Otro">Otro</option></select></label>
+            <button onClick="{{ acc.solicitar }}" style="height:48px;border-radius:14px;background:{{ acc.btnBg }};color:#fff;font-family:Outfit;font-weight:800;font-size:15px">Solicitar acceso</button>
+          </div>
+          <div style="background:#F4F5F9;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.5">
+            <div style="font-family:Outfit;font-weight:700;font-size:15px">Qué comprueba Bro</div>
+            <span>· Que el email es del dominio de la marca.</span>
+            <span>· Que la empresa existe (CIF y datos fiscales).</span>
+            <span>· Que el sector se puede dirigir a menores.</span>
+            <span>· Que acepta «La palabra de Bro»: si el Bro cumple, la marca cumple.</span>
+            <span style="color:#6B7280;margin-top:4px">En la demo, la verificación es inmediata.</span>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ acc.verificada }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:12px;background:#EEF6E6;border:1px solid #CFE4B8;border-radius:16px;padding:12px 16px">
+          <span style="width:26px;height:26px;border-radius:50%;background:#82B94F;color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">✓</span>
+          <div style="flex:1;font-size:13.5px"><b>{{ acc.marcaTxt }}</b> · marca verificada. Ya puedes proponer rewards.</div>
+        </div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;opacity:{{ acc.op }};pointer-events:{{ acc.pe }}">
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-family:Outfit;font-weight:700;font-size:17px">2 · Crea el reto y el reward</div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">QUÉ TIENE QUE HACER EL BRO<input value="{{ f.titulo }}" onChange="{{ f.onTitulo }}" placeholder="Ej. Lee 2 libros este mes" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 14px;font-size:14.5px;color:#111;font-weight:500"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">QUÉ CONSIGUE<input value="{{ f.outcome }}" onChange="{{ f.onOutcome }}" placeholder="Ej. 20 % en su próximo libro" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 14px;font-size:14.5px;color:#111;font-weight:500"></label>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;font-weight:700;color:#6B7280">CÓMO SE VALIDA</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ f.valid }}" as="o" hint-placeholder-count="3">
+                <button onClick="{{ o.onClick }}" style="height:36px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:600;background:{{ o.bg }};color:{{ o.tx }};border:1px solid {{ o.borde }}">{{ o.t }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">DURACIÓN<select value="{{ f.dur }}" onChange="{{ f.onDur }}" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 10px;font-size:14px;color:#111;background:#fff"><option value="1 semana">1 semana</option><option value="1 mes">1 mes</option><option value="3 meses">3 meses</option></select></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#6B7280">EDAD<select value="{{ f.edad }}" onChange="{{ f.onEdad }}" style="height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 10px;font-size:14px;color:#111;background:#fff"><option value="10–12">10–12</option><option value="13–15">13–15</option><option value="10–16">10–16</option></select></label>
+          </div>
+          <button onClick="{{ f.enviar }}" style="height:48px;border-radius:14px;background:{{ f.btnBg }};color:#fff;font-family:Outfit;font-weight:800;font-size:15px">Enviar a revisión de Bro</button>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:Outfit;font-weight:700;font-size:17px">3 · Revisión de Bro</div>
+            <div style="font-size:12.5px;color:#6B7280;margin-top:-6px">Lo comprueba Bro antes de que lo vea ningún Bro.</div>
+            <sc-for list="{{ f.checks }}" as="c" hint-placeholder-count="5">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span style="width:22px;height:22px;border-radius:50%;flex:none;background:{{ c.bg }};color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800">{{ c.ico }}</span>
+                <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:600">{{ c.t }}</div><div style="font-size:12px;color:{{ c.subTx }};margin-top:1px">{{ c.sub }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ f.enviado }}" hint-placeholder-val="{{ false }}">
+            <div style="background:{{ f.resBg }};color:#fff;border-radius:18px;padding:16px">
+              <div style="font-family:Outfit;font-weight:800;font-size:16px">{{ f.resT }}</div>
+              <div style="font-size:13px;line-height:1.5;margin-top:4px;opacity:.9">{{ f.resSub }}</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="font-size:11.5px;color:#6B7280;text-align:center">Demo con datos ficticios · Bro Partners · Confidencial</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const MARCAS = [
+  { id: 'cdl', nombre: 'Casa del Libro', sector: 'LIBRERÍA · REWARD ACTIVO', logo: 'logo-casadellibro.svg', fondo: '#FFFFFF', acento: '#00866B', claro: true,
+    titulo: 'Lee 3 libros este mes', outcome: 'Bro discount en tus próximos 3 libros online', vigencia: 'Hasta el 31 de octubre', validacion: 'test de Bro AI por libro',
+    conds: ['Libro 1 · test de Bro AI', 'Libro 2 · test de Bro AI', 'Libro 3 · test de Bro AI'],
+    embudo: [1840, 612, 498, 471, 188, 141], semanas: [22, 41, 57, 68], edades: [['10–12', 34], ['13–15', 52], ['16', 14]], valor: 18, estado: 'ACTIVO' },
+  { id: 'ea', nombre: 'EA SPORTS FC', sector: 'VIDEOJUEGOS · REWARD ACTIVO', logo: 'logo-easportsfc.svg', fondo: '#0B0B0F', acento: '#00E08F',
+    titulo: 'Lee, escribe y dibuja', outcome: 'EA SPORTS FC 27 con Bro discount', vigencia: 'Hasta el 30 de noviembre', validacion: 'mamá o papá + test de Bro AI',
+    conds: ['Leer 2 libros (test de Bro AI)', 'Escribir un relato de 2 páginas', 'Dibujar 3 láminas'],
+    embudo: [2610, 1105, 902, 860, 214, 162], semanas: [18, 39, 63, 94], edades: [['10–12', 29], ['13–15', 61], ['16', 10]], valor: 25, estado: 'ACTIVO' },
+  { id: 'mcd', nombre: "McDonald's", sector: 'ALIMENTACIÓN · EN REVISIÓN', logo: 'logo-mcdonalds.svg', fondo: '#DA291C', acento: '#FFC72C',
+    titulo: '40.000 pasos esta semana', outcome: 'Big Mac con Bro discount', vigencia: 'Lunes a domingo', validacion: 'Aura',
+    conds: ['40.000 pasos en 7 días'],
+    embudo: [0, 0, 0, 0, 0, 0], semanas: [0, 0, 0, 0], edades: [['10–12', 0], ['13–15', 0], ['16', 0]], valor: 4, estado: 'EN REVISIÓN' }
+];
+const PASOS = ['Vieron el reward', 'Bro join', 'Padres aprobaron', 'En marcha', 'Conseguido', 'Canjeado'];
+const COLORES = ['#D5DAE3', '#3068ED', '#3068ED', '#82B94F', '#E56648', '#111'];
+const VALID = ['Test de Bro AI', 'Mamá o papá', 'Aura (pasos o sueño)'];
+const fmt = n => n.toLocaleString('es-ES');
+class Component extends DCLogic {
+  state = { marca: 'cdl', tab: 'nuevo', acc: { marca: '', email: '', sector: 'Deporte', ok: false }, f: { titulo: '', outcome: '', valid: 'Test de Bro AI', dur: '1 mes', edad: '13–15' }, enviado: false };
+  checks(f) {
+    const t = (f.titulo + ' ' + f.outcome).toLowerCase();
+    const mal = /(apuesta|casino|alcohol|cerveza|energ[eé]tica|vape|cripto)/.test(t);
+    const comida = /(burger|big mac|hamburguesa|men[uú]|patatas|refresco|chuches|nuggets)/.test(t);
+    const compra = /(compra|gasta|pide a tus padres)/.test(f.titulo.toLowerCase());
+    const lleno = f.titulo.trim().length > 4 && f.outcome.trim().length > 2;
+    const C = (ok, t, okT, koT, warn) => ({ t, ico: !lleno ? '' : ok ? '✓' : warn ? '!' : '✕', bg: !lleno ? '#D5DAE3' : ok ? '#82B94F' : warn ? '#E5A148' : '#D64545', sub: !lleno ? 'Pendiente' : ok ? okT : koT, subTx: !lleno || ok ? '#6B7280' : warn ? '#9A5B0C' : '#B4442B', ok: !lleno || ok, warn: !ok && warn });
+    return [
+      C(!mal, 'Categoría permitida', 'Nada de apuestas, alcohol, energéticas ni cripto.', 'Categoría prohibida para menores.'),
+      C(!comida, 'Sin comida poco saludable como reward', 'Cumple los códigos de publicidad a menores.', 'Comida poco saludable: necesita revisión legal (código PAOS).', true),
+      C(!compra, 'El esfuerzo es del Bro, no una compra', 'El reto se consigue haciendo, no gastando.', 'El reto no puede exigir comprar nada.'),
+      C(true, 'Se puede validar con prueba', `Se valida con: ${f.valid}.`, ''),
+      C(true, 'Sin puntos, rankings ni urgencia', 'Bro no muestra cuenta atrás ni compara Bros.', '')
+    ];
+  }
+  renderVals() {
+    const s = this.state, m = MARCAS.find(x => x.id === s.marca), E = m.embudo, max = Math.max(...E, 1);
+    const tasa = E[1] ? Math.round(E[4] / E[3] * 100) : 0;
+    const ck = this.checks(s.f), lleno = s.f.titulo.trim().length > 4 && s.f.outcome.trim().length > 2;
+    const bloquea = ck.some(c => !c.ok && !c.warn), avisa = ck.some(c => c.warn);
+    const A = s.acc, accOk = A.marca.trim().length > 1 && /@.+\./.test(A.email);
+    const setA = (k, v) => this.setState(st => ({ acc: { ...st.acc, [k]: v } }));
+    const paso = !A.ok ? 0 : !s.enviado ? 1 : 3;
+    const SS = [['Solicita acceso', 'Marca, email corporativo y sector. Bro verifica la empresa.'], ['Crea el reto', 'Qué hace el Bro, qué consigue y cómo se valida.'], ['Bro revisa', 'Al momento, con reglas claras. Lo dudoso pasa a revisión legal.'], ['Las familias deciden', 'El Bro hace «Bro join», mamá o papá aprueban y firmáis el contrato.']];
+    const set = (k, v) => this.setState(st => ({ f: { ...st.f, [k]: v }, enviado: false }));
+    return {
+      listo: true,
+      marcas: MARCAS.map(x => ({ ...x, onClick: () => this.setState({ marca: x.id }), bg: x.id === s.marca ? '#111' : '#fff', tx: x.id === s.marca ? '#fff' : '#111', borde: x.id === s.marca ? '#111' : '#E4E7EE' })),
+      m: { ...m, tx2: m.claro ? '#111' : '#fff', borde2: m.claro ? '#E4E7EE' : m.fondo, logoBg: m.claro ? '#F4F6F5' : 'rgba(255,255,255,.14)', estadoBg: m.estado === 'ACTIVO' ? '#82B94F' : '#E5A148', barra: m.claro ? m.acento : m.fondo === '#0B0B0F' ? '#0B0B0F' : m.fondo,
+        compromiso: E[3] ? `${fmt(E[3] - E[5])} rewards` : '—' },
+      pasosSS: SS.map(([t, sub], i) => { const hecho = i < paso, act = i === paso; return { t, sub, num: hecho ? '✓' : String(i + 1), estado: hecho ? 'HECHO' : act ? 'AHORA' : '', bg: act ? 'rgba(255,255,255,.1)' : 'transparent', borde: act ? 'rgba(255,255,255,.35)' : 'rgba(255,255,255,.12)', numBg: hecho ? '#82B94F' : act ? '#E56648' : 'rgba(255,255,255,.14)', numTx: '#fff' }; }),
+      acc: { ...A, pendiente: !A.ok, verificada: A.ok, marcaTxt: A.marca || 'Tu marca', onMarca: e => setA('marca', e.target.value), onEmail: e => setA('email', e.target.value), onSector: e => setA('sector', e.target.value),
+        btnBg: accOk ? '#E56648' : '#D5DAE3', solicitar: () => { if (accOk) setA('ok', true); }, op: A.ok ? 1 : .45, pe: A.ok ? 'auto' : 'none' },
+      tabs: [['nuevo', 'Crear reward'], ['resultados', 'Resultados'], ['contratos', 'Contratos']].map(([k, t]) => ({ t, onClick: () => this.setState({ tab: k }), bg: s.tab === k ? '#111' : 'transparent', tx: s.tab === k ? '#fff' : '#111' })),
+      v: { resultados: s.tab === 'resultados', contratos: s.tab === 'contratos', nuevo: s.tab === 'nuevo' },
+      kpis: m.estado !== 'ACTIVO' ? [
+        { t: 'ESTADO', v: 'En revisión', sub: 'Revisión legal: comida y publicidad a menores', c: '#9A5B0C' },
+        { t: 'BROS QUE LO VEN', v: '0', sub: 'No se publica hasta aprobarse', c: '#6B7280' },
+        { t: 'CONTRATOS', v: '0', sub: '—', c: '#6B7280' }, { t: 'CANJEADOS', v: '0', sub: '—', c: '#6B7280' }] : [
+        { t: 'BROS EN MARCHA', v: fmt(E[3]), sub: `${Math.round(E[2] / E[1] * 100)} % de los padres aprueban`, c: '#3068ED' },
+        { t: 'CONSEGUIDO', v: fmt(E[4]), sub: `${tasa} % de los que empiezan`, c: '#4E7D22' },
+        { t: 'CANJEADOS', v: fmt(E[5]), sub: `${Math.round(E[5] / E[4] * 100)} % de los conseguidos`, c: '#111' },
+        { t: 'VENTAS ATRIBUIDAS', v: `${fmt(E[5] * m.valor)} €`, sub: `≈ ${m.valor} € de ticket medio, sin coste por clic`, c: '#6B7280' }],
+      embudo: PASOS.map((t, i) => ({ t, n: fmt(E[i]), pct: Math.round(E[i] / max * 100) + '%', color: COLORES[i] })),
+      semanas: m.semanas.map((n, i) => ({ t: 'S' + (i + 1), n, h: Math.max(4, Math.round(n / Math.max(...m.semanas, 1) * 96)) + 'px' })),
+      edades: m.edades.map(([t, p]) => ({ t, p: p + ' %', pct: p + '%' })),
+      contratos: [
+        { n: fmt(E[2]), t: 'Firmados', sub: 'Aprobados por mamá o papá', color: '#3068ED' },
+        { n: fmt(E[3] - E[4]), t: 'En curso', sub: 'El Bro está en ello', color: '#82B94F' },
+        { n: fmt(E[4] - E[5]), t: 'Por canjear', sub: 'Código Bro discount entregado', color: '#E56648' },
+        { n: fmt(E[5]), t: 'Cumplidos', sub: 'Promesa cumplida', color: '#111' }],
+      f: {
+        ...s.f, onTitulo: e => set('titulo', e.target.value), onOutcome: e => set('outcome', e.target.value), onDur: e => set('dur', e.target.value), onEdad: e => set('edad', e.target.value),
+        valid: VALID.map(t => ({ t, onClick: () => set('valid', t), bg: s.f.valid === t ? '#111' : '#fff', tx: s.f.valid === t ? '#fff' : '#111', borde: s.f.valid === t ? '#111' : '#E4E7EE' })),
+        checks: ck, btnBg: lleno ? '#E56648' : '#D5DAE3',
+        enviar: () => { if (lleno) this.setState({ enviado: true }); },
+        enviado: s.enviado,
+        resBg: bloquea ? '#D64545' : avisa ? '#E5A148' : '#82B94F',
+        resT: bloquea ? 'No se puede publicar' : avisa ? 'Pasa a revisión legal' : 'Aprobado por Bro',
+        resSub: bloquea ? 'Cambia lo marcado en rojo y vuelve a enviarlo.' : avisa ? 'Lo revisa el equipo legal de Bro en 48 h antes de publicarse.' : `Se publica en Rewards para Bros de ${s.f.edad}. Cada familia lo aprueba antes de que su Bro se una.`
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
