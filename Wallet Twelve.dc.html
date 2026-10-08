@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html,body{margin:0;background:#F4F5F9;font-family:Inter,system-ui,sans-serif;color:#111} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit}</style>
+</helmet>
+<div data-screen-label="Wallet Bro × Twelve" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:20px 16px 40px;box-sizing:border-box">
+
+  <div style="width:100%;max-width:760px;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <img src="logo.png" alt="Bro" style="width:28px;height:28px">
+      <span style="font-family:Outfit;font-weight:800;font-size:18px">Bro</span>
+      <span style="font-family:Outfit;font-weight:700;color:#9CA3AF">×</span>
+      <span style="font-family:Outfit;font-weight:800;font-size:18px;color:#E8508A">twelve</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#6B7280;padding-left:10px;border-left:1px solid #E4E7EE">WALLET · FLUJO COMPLETO</span>
+    </div>
+    <div style="display:flex;gap:4px">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="14">
+        <button onClick="{{ d.onClick }}" aria-label="{{ d.t }}" style="flex:1;height:6px;border-radius:3px;background:{{ d.bg }};padding:0"></button>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <div style="font-size:12px;font-weight:700;color:#6B7280">{{ paso }}</div>
+        <div style="font-family:Outfit;font-weight:800;font-size:24px;letter-spacing:-.01em;line-height:1.15">{{ titulo }}</div>
+      </div>
+      <span style="font-size:11.5px;font-weight:800;letter-spacing:.05em;padding:6px 11px;border-radius:999px;background:{{ quienBg }};color:#fff">{{ quien }}</span>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ prev }}" style="height:40px;padding:0 14px;border-radius:12px;background:#fff;border:1px solid #E4E7EE;font-weight:700;font-size:13.5px">Anterior</button>
+        <button onClick="{{ next }}" style="height:40px;padding:0 16px;border-radius:12px;background:#111;color:#fff;font-weight:700;font-size:13.5px">{{ nextTxt }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+    <sc-for list="{{ phones }}" as="ph" hint-placeholder-count="2">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700">
+          <span style="width:26px;height:26px;border-radius:50%;background:{{ ph.avBg }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:13px">{{ ph.ini }}</span>
+          {{ ph.quien }}
+          <span style="font-size:11px;font-weight:800;color:#3068ED">{{ ph.tuTurno }}</span>
+        </div>
+        <div style="width:340px;max-width:calc(100vw - 32px);height:700px;border-radius:44px;background:#111;padding:10px;box-sizing:border-box;box-shadow:0 0 0 {{ ph.anillo }} #3068ED, 0 24px 60px rgba(17,17,17,.18);transition:box-shadow .3s">
+          <div style="width:100%;height:100%;border-radius:34px;background:#fff;overflow:hidden;display:flex;flex-direction:column">
+            <div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:12.5px;font-weight:700"><span>9:41</span><span style="font-size:11px">5G ▮</span></div>
+
+            <div style="flex:none;display:flex;align-items:center;gap:8px;padding:6px 16px 10px;background:{{ ph.hdBg }};color:{{ ph.hdTx }}">
+              <sc-if value="{{ ph.esTwelve }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:Outfit;font-weight:800;font-size:18px;letter-spacing:-.02em">twelve</span>
+                <span style="flex:1"></span>
+                <span style="font-size:11px;font-weight:700;opacity:.9">🔒 Alta segura</span>
+              </sc-if>
+              <sc-if value="{{ ph.esBro }}" hint-placeholder-val="{{ true }}">
+                <img src="logo.png" alt="" style="width:22px;height:22px">
+                <span style="font-family:Outfit;font-weight:800;font-size:16px">{{ ph.app }}</span>
+              </sc-if>
+            </div>
+
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:12px 16px 16px;display:flex;flex-direction:column;gap:12px">
+              <sc-if value="{{ ph.hayBanner }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:16px;padding:12px 14px;background:{{ ph.banner.bg }};color:#fff;animation:sube .3s ease-out">
+                  <div style="font-family:Outfit;font-weight:800;font-size:15.5px">{{ ph.banner.t }}</div>
+                  <div style="font-size:12.5px;line-height:1.45;opacity:.9;margin-top:2px">{{ ph.banner.sub }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayCard }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;aspect-ratio:1.586;border-radius:16px;background:#fff;border:1px solid #F5C7DA;overflow:hidden;box-shadow:0 10px 24px rgba(232,80,138,.18);opacity:{{ ph.cardOp }}">
+                  <div style="position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:#E8508A"></div>
+                  <div style="position:absolute;right:30px;top:-70px;width:120px;height:120px;border-radius:50%;background:#F7A8C6"></div>
+                  <div style="position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:6px"><img src="logo.png" alt="" style="width:22px;height:22px"><span style="font-family:Outfit;font-weight:800;font-size:15px">Bro</span></div>
+                  <div style="position:absolute;right:14px;top:14px;font-family:Outfit;font-weight:800;font-size:15px;color:#fff">twelve</div>
+                  <div style="position:absolute;left:14px;top:52px;width:34px;height:24px;border-radius:5px;background:#E9D7B0"></div>
+                  <div style="position:absolute;left:14px;bottom:34px;font-family:ui-monospace,Menlo,monospace;font-size:14px;letter-spacing:.12em">•••• •••• •••• 4821</div>
+                  <div style="position:absolute;left:14px;bottom:12px;font-size:11px;font-weight:700;letter-spacing:.06em">JULIO GÓMEZ</div>
+                  <div style="position:absolute;right:14px;bottom:10px;font-family:Outfit;font-weight:800;font-style:italic;font-size:17px;color:#1A1F71">VISA</div>
+                </div>
+                <sc-if value="{{ ph.hayCardEstado }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:center;margin-top:-4px;font-size:11.5px;font-weight:800;letter-spacing:.05em;padding:5px 10px;border-radius:999px;background:#FFF4E5;color:#9A5B0C">{{ ph.cardEstado }}</div>
+                </sc-if>
+              </sc-if>
+
+              <sc-if value="{{ ph.haySaldo }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <span style="font-size:12px;font-weight:700;color:#6B7280">{{ ph.saldoT }}</span>
+                  <span style="font-family:Outfit;font-weight:800;font-size:28px;letter-spacing:-.02em">{{ ph.saldo }}</span>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayTitulo }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.2">{{ ph.titulo }}</div>
+                  <div style="font-size:13.5px;line-height:1.5;color:#4B5563;margin-top:4px;text-wrap:pretty">{{ ph.texto }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayHucha }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px solid #E4E7EE;border-radius:16px;padding:14px">
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700"><span>🎯 Botas de fútbol</span><span>{{ ph.hucha.t }}</span></div>
+                  <div style="height:10px;border-radius:5px;background:#F0F2F6;margin-top:10px;overflow:hidden"><div style="height:100%;width:{{ ph.hucha.pct }};background:#82B94F;border-radius:5px;transition:width .5s"></div></div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:6px">{{ ph.hucha.falta }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayImporte }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:10px 0"><div style="font-family:Outfit;font-weight:800;font-size:46px;letter-spacing:-.03em">{{ ph.importe }}</div><div style="font-size:12px;color:#6B7280">Llega al momento</div></div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayVerif }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                  <div style="border:1px solid #F5C7DA;background:#FDF0F5;border-radius:14px;padding:14px;text-align:center"><div style="font-size:26px">🪪</div><div style="font-size:12.5px;font-weight:700;margin-top:4px">DNI</div><div style="font-size:11.5px;color:#4E7D22;font-weight:700">✓ Leído</div></div>
+                  <div style="border:1px solid #F5C7DA;background:#FDF0F5;border-radius:14px;padding:14px;text-align:center"><div style="font-size:26px">🤳</div><div style="font-size:12.5px;font-weight:700;margin-top:4px">Selfie</div><div style="font-size:11.5px;color:#4E7D22;font-weight:700">✓ Coincide</div></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayCampos }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ ph.campos }}" as="c" hint-placeholder-count="3">
+                    <div style="border:1px solid #E4E7EE;border-radius:12px;padding:8px 12px"><div style="font-size:10.5px;font-weight:700;color:#6B7280;letter-spacing:.04em">{{ c.l }}</div><div style="font-size:14px;font-weight:600;margin-top:1px">{{ c.v }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayFilas }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;border:1px solid #E4E7EE;border-radius:16px;overflow:hidden">
+                  <sc-for list="{{ ph.filas }}" as="f" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #F0F2F6;background:{{ f.bg }}">
+                      <span style="width:30px;height:30px;border-radius:50%;flex:none;background:{{ f.icoBg }};color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800">{{ f.ico }}</span>
+                      <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:600">{{ f.t }}</div><div style="font-size:11.5px;color:{{ f.subTx }};margin-top:1px">{{ f.sub }}</div></div>
+                      <span style="font-size:13.5px;font-weight:700;color:{{ f.derTx }};white-space:nowrap">{{ f.der }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ph.hayEdu }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:16px;border:1px dashed #E8508A;background:#FDF0F5;padding:12px 14px;font-size:12px;line-height:1.5;color:#7A1F45">Espacio de Twelve dentro de Bro. Twelve decide el contenido, los retos y la IA. Bro solo da la plataforma.</div>
+              </sc-if>
+
+              <div style="flex:1"></div>
+              <sc-if value="{{ ph.hayNota }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:11px;color:#6B7280;text-align:center">{{ ph.nota }}</div>
+              </sc-if>
+              <sc-if value="{{ ph.hayBoton }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ ph.onBoton }}" style="height:50px;border-radius:16px;background:{{ ph.btnBg }};color:#fff;font-family:Outfit;font-weight:800;font-size:15px;flex:none">{{ ph.boton }}</button>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-size:11.5px;color:#6B7280;text-align:center;max-width:640px">Prototipo de demo con datos ficticios. En producción: alta, verificación, cuenta, tarjeta y movimientos los gestiona Twelve; Bro muestra la experiencia.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = 'bro-wallet-twelve-paso';
+const V = '#82B94F', R = '#D64545', P = '#E8508A', B = '#3068ED';
+const fila = (t, sub, der, tipo) => ({ t, sub: sub || '', der: der || '', tipo });
+const S = [
+  { t: 'Julio pide su Wallet', q: 'BRO', act: 'j',
+    j: { app: 'Wallet', titulo: 'Tu primera cuenta', texto: 'Paga con el móvil, ahorra para tus metas y recibe dinero de tus padres. Mamá o papá tienen que aprobarlo.', boton: 'Pedir mi Wallet' },
+    l: { app: 'Bro para padres', titulo: 'Hoy', texto: 'Lo urgente, por fecha.', filas: [fila('Examen de mates de Julio', 'Mañana', '', 'i'), fila('Excursión de Sofía', 'Firmar antes del viernes', '', 'i')] } },
+  { t: 'Laura recibe la petición', q: 'BRO', act: 'l',
+    j: { app: 'Wallet', titulo: 'Petición enviada', texto: 'Mamá ya tiene el aviso. Te avisamos cuando cree tu cuenta.', estado: 'ESPERANDO A MAMÁ' },
+    l: { app: 'Bro para padres', banner: ['Julio quiere su Wallet', 'Cuenta y tarjeta de Twelve, a nombre de Julio. Tú eres la titular legal.', B], titulo: 'Qué incluye', texto: '', filas: [fila('Cuenta a nombre de Julio', 'Twelve, entidad regulada', '', 'ok'), fila('Tarjeta virtual al momento', 'Y física a casa', '', 'ok'), fila('Tú pones los límites', 'Y ves todos los movimientos', '', 'ok')], boton: 'Empezar alta con Twelve' } },
+  { t: 'Alta con Twelve, sin salir de Bro', q: 'TWELVE', act: 'l',
+    j: { app: 'Wallet', titulo: 'Mamá está creando tu cuenta', texto: 'Tarda un par de minutos.', estado: 'EN CURSO' },
+    l: { tw: true, titulo: 'Tus datos', texto: 'Eres la titular legal de la cuenta de Julio.', campos: [['NOMBRE', 'Laura Gómez Ruiz'], ['EMAIL', 'laura@email.com'], ['MÓVIL', '+34 6•• ••• 218'], ['DIRECCIÓN', 'C/ Pradillo 12, Madrid']], boton: 'Continuar', nota: 'Paso 1 de 3 · Lo gestiona Twelve' } },
+  { t: 'Laura verifica su identidad', q: 'TWELVE', act: 'l',
+    j: { app: 'Wallet', titulo: 'Mamá está creando tu cuenta', texto: 'Tarda un par de minutos.', estado: 'EN CURSO' },
+    l: { tw: true, titulo: 'DNI y selfie', texto: 'Para cumplir la ley, verificamos que eres tú.', verif: true, boton: 'Verificar', nota: 'Paso 2 de 3 · Twelve no comparte estos datos con Bro' } },
+  { t: 'Datos de Julio', q: 'TWELVE', act: 'l',
+    j: { app: 'Wallet', titulo: 'Casi está', texto: 'Mamá está poniendo tus datos.', estado: 'EN CURSO' },
+    l: { tw: true, titulo: 'Datos de tu hijo', texto: 'La cuenta irá a su nombre.', campos: [['NOMBRE', 'Julio Gómez'], ['FECHA DE NACIMIENTO', '14/03/2013'], ['RELACIÓN', 'Madre · titular legal']], boton: 'Crear cuenta de Julio', nota: 'Paso 3 de 3' } },
+  { t: 'Cuenta creada · Laura pone los límites', q: 'TWELVE → BRO', act: 'l',
+    j: { app: 'Wallet', card: 'pend', titulo: 'Tu cuenta ya existe', texto: 'Mamá está poniendo los límites. Luego se activa tu tarjeta.' },
+    l: { app: 'Bro para padres', banner: ['Cuenta de Julio creada', 'Twelve lo ha confirmado ahora mismo.', V], titulo: 'Límites antes de activar', texto: 'Los aplica Twelve en cada pago.', filas: [fila('Por compra', '', '30 €', 'n'), fila('Por día', '', '50 €', 'n'), fila('Aprobar compras de más de', '', '20 €', 'n'), fila('Bloqueado siempre', 'Apuestas, alcohol, tabaco, adultos, cripto', '', 'x'), fila('Envíos entre Bros', 'Solo amigos del QR', '', 'n')], boton: 'Activar tarjeta' } },
+  { t: 'Tarjeta virtual al momento', q: 'TWELVE', act: 'j',
+    j: { app: 'Wallet', card: 'ok', banner: ['¡Tu tarjeta está lista!', 'La física llega a casa en 5 días.', P], saldo: '0,00 €', boton: 'Añadir a Apple Pay' },
+    l: { app: 'Bro para padres', banner: ['Tarjeta de Julio activa', 'Física en camino · llega en 5 días', V], saldoT: 'SALDO DE JULIO', saldo: '0,00 €', titulo: 'Wallet de Julio', texto: 'Ya puedes enviarle dinero.' } },
+  { t: 'Laura envía la paga', q: 'TWELVE', act: 'l',
+    j: { app: 'Wallet', card: 'ok', saldo: '0,00 €', titulo: 'Tus movimientos', texto: 'Todavía no hay ninguno.' },
+    l: { app: 'Bro para padres', titulo: 'Enviar a Julio', texto: '', importe: '30 €', filas: [fila('Concepto', 'Paga · ha terminado su proyecto', '', 'i')], boton: 'Enviar 30 €' } },
+  { t: 'Julio la recibe al instante', q: 'TWELVE → BRO', act: 'j',
+    j: { app: 'Wallet', banner: ['+30 € de mamá', 'Paga · ha terminado su proyecto', V], card: 'ok', saldo: '30,00 €', filas: [fila('Mamá', 'Paga · ahora', '+30,00 €', 'in')], boton: 'Ahorrar para algo' },
+    l: { app: 'Bro para padres', saldoT: 'SALDO DE JULIO', saldo: '30,00 €', titulo: 'Enviado', texto: 'Julio lo ha recibido al momento.', filas: [fila('A Julio', 'Paga · ahora', '−30,00 €', 'out')] } },
+  { t: 'Hucha por metas', q: 'BRO', act: 'j',
+    j: { app: 'Wallet', saldo: '30,00 €', titulo: 'Tu hucha', texto: 'Ahorra para algo concreto.', hucha: ['10 € de 60 €', '17%', 'Te faltan 50 €'], boton: 'Guardar 5 €' },
+    l: { app: 'Bro para padres', saldoT: 'SALDO DE JULIO', saldo: '30,00 €', titulo: 'Metas de Julio', texto: 'Botas de fútbol · 60 €' } },
+  { t: 'Julio envía dinero a Hugo', q: 'TWELVE', act: 'j',
+    j: { app: 'Wallet', saldo: '25,00 €', titulo: 'Enviar a un amigo', texto: 'Solo amigos conectados por QR.', hucha: ['15 € de 60 €', '25%', 'Te faltan 45 €'], filas: [fila('Hugo', 'Amigo por QR', '3 €', 'sel'), fila('Lucía', 'Amiga por QR', '', 'n'), fila('Mateo', 'Amigo por QR', '', 'n')], boton: 'Enviar 3 € a Hugo · pizza' },
+    l: { app: 'Bro para padres', saldoT: 'SALDO DE JULIO', saldo: '25,00 €', titulo: 'Movimientos', texto: '', filas: [fila('Hucha · Botas', 'Ahorro', '−5,00 €', 'out'), fila('Paga de mamá', 'Hoy', '+30,00 €', 'in')] } },
+  { t: 'Julio pide dinero a mamá', q: 'BRO', act: 'l',
+    j: { app: 'Wallet', saldo: '22,00 €', titulo: 'Has pedido 10 €', texto: 'Entrada de cine el sábado.', estado: 'ESPERANDO A MAMÁ' },
+    l: { app: 'Bro para padres', banner: ['Julio te pide 10 €', 'Para la entrada de cine del sábado', B], saldoT: 'SALDO DE JULIO', saldo: '22,00 €', titulo: '', texto: '', boton: 'Aceptar y enviar 10 €' } },
+  { t: 'Un pago bloqueado y otro por aprobar', q: 'TWELVE', act: 'l',
+    j: { app: 'Wallet', saldo: '32,00 €', titulo: 'Tus pagos', texto: '', filas: [fila('Web de apuestas', 'Bloqueado · categoría no permitida', '12 €', 'x'), fila('Decathlon · botas', 'Esperando a mamá (más de 20 €)', '24 €', 'wait'), fila('Mamá', 'Cine · ahora', '+10,00 €', 'in')] },
+    l: { app: 'Bro para padres', banner: ['Julio quiere pagar 24 € en Decathlon', 'Supera tu límite de aprobación (20 €)', B], titulo: '', texto: '', filas: [fila('Bloqueado por Twelve', 'Web de apuestas · 12 €', '✕', 'x')], boton: 'Aprobar 24 €' } },
+  { t: 'Educación financiera, la lleva Twelve', q: 'TWELVE', act: null,
+    j: { app: 'Wallet', saldo: '8,00 €', titulo: 'Aprende con Twelve', texto: '', edu: true, filas: [fila('Ahorrar con una meta', 'Reto de Twelve · 3 min', '›', 'tw'), fila('¿Cuánto cuesta de verdad?', 'Vídeo de Twelve', '›', 'tw'), fila('Pregunta a Twelve', 'Asistente de Twelve', '›', 'tw')] },
+    l: { app: 'Bro para padres', saldoT: 'SALDO DE JULIO', saldo: '8,00 €', titulo: 'Movimientos de Julio', texto: 'Detalle completo.', filas: [fila('Decathlon', 'Aprobado por ti', '−24,00 €', 'out'), fila('Web de apuestas', 'Bloqueado por Twelve', '12 €', 'x'), fila('De mamá · cine', 'Aceptado', '+10,00 €', 'in'), fila('A Hugo · pizza', 'Amigo por QR', '−3,00 €', 'out'), fila('Hucha · Botas', 'Ahorro', '−5,00 €', 'out'), fila('Paga de mamá', 'Proyecto terminado', '+30,00 €', 'in')] } }
+];
+const ICO = { ok: ['✓', V], i: ['•', '#9CA3AF'], n: ['•', '#9CA3AF'], x: ['✕', R], in: ['+', V], out: ['−', '#111'], wait: ['…', '#E5A148'], sel: ['H', B], tw: ['t', P] };
+class Component extends DCLogic {
+  state = { p: (() => { try { const n = +localStorage.getItem(KEY); return n >= 0 && n < S.length ? n : 0; } catch (e) { return 0; } })() };
+  ir(p) { p = Math.max(0, Math.min(S.length - 1, p)); this.setState({ p }); try { localStorage.setItem(KEY, p); } catch (e) {} }
+  phone(d, quien, ini, avBg, act) {
+    const fl = (d.filas || []).map(f => { const [ico, icoBg] = ICO[f.tipo] || ICO.n; return { ...f, ico: f.tipo === 'sel' ? f.t[0] : ico, icoBg, bg: f.tipo === 'sel' ? '#EEF3FE' : '#fff', subTx: f.tipo === 'x' ? R : '#6B7280', derTx: f.tipo === 'in' ? '#4E7D22' : f.tipo === 'x' ? R : '#111' }; });
+    return {
+      quien, ini, avBg, tuTurno: act ? '· TE TOCA' : '', anillo: act ? '4px' : '0',
+      esTwelve: !!d.tw, esBro: !d.tw, app: d.app || '', hdBg: d.tw ? P : '#fff', hdTx: d.tw ? '#fff' : '#111',
+      hayBanner: !!d.banner, banner: d.banner ? { t: d.banner[0], sub: d.banner[1], bg: d.banner[2] } : {},
+      hayCard: !!d.card, cardOp: d.card === 'pend' ? .55 : 1, hayCardEstado: d.card === 'pend', cardEstado: 'PENDIENTE DE ACTIVACIÓN',
+      haySaldo: !!d.saldo, saldo: d.saldo || '', saldoT: d.saldoT || 'TU SALDO',
+      hayTitulo: !!(d.titulo || d.estado), titulo: d.titulo || '', texto: d.estado ? `${d.texto} · ${d.estado.charAt(0) + d.estado.slice(1).toLowerCase()}` : d.texto || '',
+      hayHucha: !!d.hucha, hucha: d.hucha ? { t: d.hucha[0], pct: d.hucha[1], falta: d.hucha[2] } : {},
+      hayImporte: !!d.importe, importe: d.importe || '',
+      hayVerif: !!d.verif, hayCampos: !!d.campos, campos: (d.campos || []).map(([l, v]) => ({ l, v })),
+      hayFilas: fl.length > 0, filas: fl, hayEdu: !!d.edu,
+      hayNota: !!d.nota, nota: d.nota || '',
+      hayBoton: !!d.boton && act, boton: d.boton || '', btnBg: d.tw ? P : '#111', onBoton: () => this.ir(this.state.p + 1)
+    };
+  }
+  renderVals() {
+    const p = this.state.p, s = S[p], fin = p === S.length - 1;
+    const QB = { 'BRO': B, 'TWELVE': P, 'TWELVE → BRO': '#111' };
+    return {
+      dots: S.map((x, i) => ({ t: x.t, bg: i < p ? '#111' : i === p ? B : '#D5DAE3', onClick: () => this.ir(i) })),
+      paso: `Paso ${p + 1} de ${S.length}`, titulo: s.t, quien: s.q, quienBg: QB[s.q] || '#111',
+      prev: () => this.ir(p - 1), next: () => fin ? this.ir(0) : this.ir(p + 1), nextTxt: fin ? 'Reiniciar' : 'Siguiente',
+      phones: [this.phone(s.j, 'Julio · 13 años', 'J', B, s.act === 'j'), this.phone(s.l, 'Laura · madre', 'L', '#E56648', s.act === 'l')]
+    };
+  }
+}
+</script>
+</body>
+</html>
