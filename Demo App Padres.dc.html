@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;background:#EEF0F5;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-tap-highlight-color:transparent} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit;background:none;padding:0}</style>
+</helmet>
+<div style="min-height:100dvh;display:flex;flex-direction:column;align-items:center">
+  <div style="width:100%;max-width:1040px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="Bro" style="width:30px;height:30px"><span style="font-family:Outfit;font-weight:800;font-size:18px">Bro para familias</span><span style="font-size:13px;color:#6B7280">Demo</span></div>
+    <div style="display:flex;gap:4px">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="10"><button onClick="{{ d.onClick }}" aria-label="{{ d.t }}" style="width:{{ d.w }};height:6px;border-radius:3px;background:{{ d.bg }};transition:all .3s"></button></sc-for>
+    </div>
+  </div>
+
+  <div style="flex:1;width:100%;max-width:1040px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px 56px;padding:8px 16px 24px;box-sizing:border-box">
+
+    <div style="width:min(372px,100%);height:min(780px,calc(100dvh - 180px));min-height:600px;border-radius:54px;background:#1B1C1F;padding:11px;box-sizing:border-box;box-shadow:0 30px 70px rgba(17,17,17,.22);flex:none">
+      <div style="width:100%;height:100%;border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:#F6F7FA">
+        <div style="flex:none;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:14px;font-weight:600;position:relative">
+          <span>9:41</span>
+          <span style="position:absolute;left:50%;top:10px;width:110px;height:30px;margin-left:-55px;border-radius:16px;background:#000"></span>
+          <span style="display:flex;gap:6px;align-items:center;font-size:12px"><span>5G</span><span style="width:22px;height:11px;border:1.5px solid #111;border-radius:3px;box-sizing:border-box;padding:1px;display:flex"><span style="width:80%;background:#111;border-radius:1px"></span></span></span>
+        </div>
+
+        <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:4px 18px 10px">
+          <div style="flex:1;min-width:0;font-family:Outfit;font-weight:800;font-size:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ cab.titulo }}</div>
+          <div style="flex:none;display:flex;gap:6px">
+            <sc-for list="{{ hijos }}" as="h" hint-placeholder-count="2">
+              <div style="height:32px;padding:0 10px 0 4px;border-radius:999px;display:flex;align-items:center;gap:6px;background:{{ h.bg }};color:{{ h.tx }};border:1px solid {{ h.borde }};font-size:12.5px;font-weight:700;transition:all .3s">
+                <span style="width:24px;height:24px;border-radius:50%;background:{{ h.c }};color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800">{{ h.i }}</span>{{ h.n }}
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="flex:1;min-height:0;position:relative;overflow:hidden">
+
+          <sc-if value="{{ p.s0 }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#E56648">LO URGENTE HOY</div>
+              <sc-for list="{{ urgente }}" as="u" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:12px 14px;opacity:{{ u.op }};transform:translateY({{ u.y }});transition:all .4s">
+                  <div style="width:38px;height:38px;border-radius:12px;background:{{ u.c }};color:#fff;display:grid;place-items:center;font-weight:800;flex:none">{{ u.i }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">{{ u.t }}</div><div style="font-size:12px;color:#6B7280">{{ u.s }}</div></div>
+                  <span style="font-size:11px;font-weight:700;color:{{ u.c }};white-space:nowrap">{{ u.cuando }}</span>
+                </div>
+              </sc-for>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280;margin-top:6px">ESTA SEMANA</div>
+              <div style="background:#111;color:#fff;border-radius:20px;padding:16px">
+                <div style="font-family:Outfit;font-weight:800;font-size:18px">Julio ha construido y aprendido</div>
+                <div style="display:flex;gap:16px;margin-top:10px;font-size:12.5px;opacity:.85"><span>2 proyectos</span><span>1 libro</span><span>1 reward</span></div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s1 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:4px 18px 18px">
+              <sc-for list="{{ resumen }}" as="r" hint-placeholder-count="3">
+                <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid {{ r.c }};border-radius:18px;padding:14px;opacity:{{ r.op }};transform:translateY({{ r.y }});transition:all .4s">
+                  <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:{{ r.c }}">{{ r.k }}</div>
+                  <div style="font-size:14.5px;font-weight:700;margin-top:6px">{{ r.t }}</div>
+                  <div style="font-size:12.5px;color:#6B7280;margin-top:2px">{{ r.s }}</div>
+                </div>
+              </sc-for>
+              <div style="font-size:12px;color:#6B7280;text-align:center;line-height:1.45;padding:0 8px">Sin chats ni búsquedas: solo lo que construye y aprende.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s2 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#3068ED">JULIO TE PIDE UNA APP</div>
+                <div style="display:flex;gap:12px;align-items:center"><div style="width:52px;height:52px;border-radius:16px;background:#0B6E4F;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:18px">MF</div><div><div style="font-family:Outfit;font-weight:800;font-size:19px">MadFútbol</div><div style="font-size:12.5px;color:#6B7280">Deportes · Para 12+ años</div></div></div>
+                <div style="background:#F4F6FB;border-radius:14px;padding:12px;font-size:14px;line-height:1.45">«Para ver los resultados de mi equipo»</div>
+                <sc-if value="{{ app.decidir }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                    <button onClick="{{ app.aprobar }}" style="height:48px;border-radius:14px;background:#82B94F;color:#fff;font-family:Outfit;font-weight:800;font-size:15.5px;transform:scale({{ app.esc }});transition:transform .15s">Aprobar</button>
+                    <div style="height:48px;border-radius:14px;background:#F0F2F6;display:grid;place-items:center;font-weight:700;font-size:15px">No</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ app.ok }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#EEF6E6;color:#3D6B1F;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700">✓ Instalada en el Bro de Julio</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s3 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" style="width:24px;height:24px"><div style="flex:1;font-family:Outfit;font-weight:800;font-size:17px">Contrato Bro</div><img src="logo-casadellibro.svg" alt="Casa del Libro" style="height:22px;max-width:100px;object-fit:contain"></div>
+                <div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.15">Lee 3 libros este mes</div>
+                <div style="font-size:13px;line-height:1.5;color:#374151">Julio lo intenta a su ritmo. Tú validas. Casa del Libro da el reward si cumple.</div>
+                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;font-size:12.5px">
+                  <div><div style="font-size:10.5px;font-weight:700;color:#6B7280">REWARD</div><div style="font-weight:700;margin-top:2px">Bro discount en 3 libros</div></div>
+                  <div><div style="font-size:10.5px;font-weight:700;color:#6B7280">PRUEBA</div><div style="font-weight:700;margin-top:2px">Test de Bro AI por libro</div></div>
+                </div>
+                <sc-if value="{{ con.firmar }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ con.onFirmar }}" style="height:48px;border-radius:14px;background:#E56648;color:#fff;font-family:Outfit;font-weight:800;font-size:15.5px;transform:scale({{ con.esc }});transition:transform .15s">Aprobar y firmar</button>
+                </sc-if>
+                <sc-if value="{{ con.firmado }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#EEF6E6;color:#3D6B1F;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700">✓ Firmado por Laura · hoy</div>
+                </sc-if>
+              </div>
+              <div style="background:#111;color:#fff;border-radius:18px;padding:14px"><div style="font-family:Outfit;font-weight:800;font-size:15px">La palabra de Bro</div><div style="font-size:12.5px;opacity:.85;margin-top:4px;line-height:1.45">Si Julio cumple, la marca cumple. Sin letra pequeña.</div></div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s4 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="border-radius:22px;padding:16px;background:#fff;border:1px solid #F3C6D8">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:#6B7280">Saldo de Julio</span><span style="font-family:Outfit;font-weight:800;font-size:14px;color:#E8508A">twelve</span></div>
+                <div style="font-family:Outfit;font-weight:800;font-size:34px;margin-top:4px">{{ wal.saldo }}</div>
+              </div>
+              <div style="font-size:12px;font-weight:700;color:#6B7280">ENVIAR A JULIO</div>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+                <sc-for list="{{ wal.importes }}" as="m" hint-placeholder-count="3">
+                  <div style="height:46px;border-radius:14px;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:17px;background:{{ m.bg }};color:{{ m.tx }};border:1px solid {{ m.borde }};transition:all .25s">{{ m.t }}</div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ f.b }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#EEF6E6;color:#3D6B1F;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700">✓ Enviado al instante</div>
+              </sc-if>
+              <div style="font-size:12px;font-weight:700;color:#6B7280;margin-top:4px">MOVIMIENTOS</div>
+              <sc-for list="{{ wal.movs }}" as="m" hint-placeholder-count="3">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:2px 2px"><div><div style="font-weight:600">{{ m.t }}</div><div style="font-size:11.5px;color:#6B7280">{{ m.s }}</div></div><b style="color:{{ m.c }}">{{ m.v }}</b></div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s5 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:4px 18px 18px">
+              <sc-for list="{{ limites }}" as="l" hint-placeholder-count="4">
+                <div style="display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px">
+                  <div style="flex:1"><div style="font-size:14.5px;font-weight:700">{{ l.t }}</div><div style="font-size:12px;color:#6B7280;margin-top:2px">{{ l.s }}</div></div>
+                  <div style="width:48px;height:28px;border-radius:14px;background:{{ l.bg }};position:relative;transition:background .3s;flex:none"><span style="position:absolute;top:3px;left:{{ l.x }};width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .3s"></span></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s6 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;font-weight:700;color:#6B7280">SUEÑO · 7 DÍAS</div><div style="font-size:12px;font-weight:700;color:#4E7D22">↑ mejorando</div></div>
+                <div style="display:flex;align-items:flex-end;gap:8px;height:100px;margin-top:10px">
+                  <sc-for list="{{ aura.sueno }}" as="b" hint-placeholder-count="7">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><div style="width:100%;border-radius:6px;background:#82B94F;height:{{ b.h }};transition:height .7s cubic-bezier(.2,.8,.2,1)"></div><span style="font-size:10.5px;color:#6B7280">{{ b.d }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:14px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;font-weight:700;color:#6B7280">MOVIMIENTO · 7 DÍAS</div><div style="font-size:12px;font-weight:700;color:#3068ED">→ estable</div></div>
+                <div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-top:10px">
+                  <sc-for list="{{ aura.pasos }}" as="b" hint-placeholder-count="7">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><div style="width:100%;border-radius:6px;background:#3068ED;height:{{ b.h }};transition:height .7s cubic-bezier(.2,.8,.2,1)"></div><span style="font-size:10.5px;color:#6B7280">{{ b.d }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="font-size:12.5px;color:#6B7280;text-align:center">Tendencias, nunca el detalle.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s7 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:4px 18px 18px">
+              <sc-for list="{{ consent }}" as="c" hint-placeholder-count="4">
+                <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:13px 14px;display:flex;flex-direction:column;gap:8px">
+                  <div style="display:flex;gap:10px;align-items:center"><div style="flex:1;font-size:14.5px;font-weight:700">{{ c.t }}</div>
+                    <div style="display:flex;background:#F0F2F6;border-radius:999px;padding:3px">
+                      <span style="padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;background:{{ c.siBg }};color:{{ c.siTx }};transition:all .3s">Sí</span>
+                      <span style="padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;background:{{ c.noBg }};color:{{ c.noTx }};transition:all .3s">No</span>
+                    </div>
+                  </div>
+                  <div style="font-size:12px;color:#6B7280;line-height:1.45">{{ c.s }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s8 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:all .4s">
+                <div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:52px;border-radius:50%;background:{{ hijo.c }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px;transition:background .4s">{{ hijo.i }}</div><div><div style="font-family:Outfit;font-weight:800;font-size:20px">{{ hijo.n }}</div><div style="font-size:12.5px;color:#6B7280">{{ hijo.s }}</div></div></div>
+                <sc-for list="{{ hijo.items }}" as="x" hint-placeholder-count="3">
+                  <div style="display:flex;gap:10px;align-items:center;font-size:13.5px;padding:6px 0;border-top:1px solid #F0F2F6"><span style="width:8px;height:8px;border-radius:50%;background:{{ x.c }}"></span>{{ x.t }}</div>
+                </sc-for>
+              </div>
+              <div style="font-size:12.5px;color:#6B7280;text-align:center;line-height:1.45">Cada hijo con sus límites, sus consentimientos y su dispositivo.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s9 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;text-align:center">
+              <img src="logo.png" alt="Bro" style="width:90px;height:90px">
+              <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.2">Tú decides.<br>Ellos crecen.</div>
+              <div style="font-size:14px;color:#6B7280;line-height:1.5">Todo en una app, sin vigilar cada mensaje.</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:26px">Start protected.</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="flex:none;height:26px;display:grid;place-items:center"><span style="width:130px;height:5px;border-radius:3px;background:#111"></span></div>
+      </div>
+    </div>
+
+    <div style="width:min(380px,100%);display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:12px;font-weight:800;letter-spacing:.08em;color:{{ cap.color }}">{{ cap.n }} · {{ cap.k }}</div>
+      <div style="font-family:Outfit;font-weight:800;font-size:36px;line-height:1.05;letter-spacing:-.02em;text-wrap:balance">{{ cap.t }}</div>
+      <div style="font-size:16.5px;line-height:1.55;color:#374151;text-wrap:pretty">{{ cap.d }}</div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button onClick="{{ atras }}" style="height:52px;padding:0 20px;border-radius:16px;background:#fff;border:1px solid #E4E7EE;font-weight:700;font-size:15px;opacity:{{ atrasOp }}">Atrás</button>
+        <button onClick="{{ siguiente }}" style="flex:1;height:52px;border-radius:16px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">{{ sigTxt }}</button>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF">También con las flechas del teclado.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = 'bro-demo-padres-v1';
+const STEPS = [
+  { k: 'INICIO', c: '#E56648', t: 'Solo lo que importa hoy.', d: 'Laura abre la app y ve lo urgente, ordenado por fecha. Nada más.' },
+  { k: 'RESUMEN SEMANAL', c: '#3068ED', t: 'Lo que construye y aprende.', d: 'Cada semana, lo que Julio ha creado, aprendido y conseguido. Sin leer sus chats ni sus búsquedas.' },
+  { k: 'MY APPS', c: '#3068ED', t: 'Una petición, una decisión.', d: 'Julio pide MadFútbol y explica para qué. Laura la aprueba con un toque y se instala en su Bro.' },
+  { k: 'REWARDS DE MARCAS', c: '#E56648', t: 'Tú firmas. La marca cumple.', d: 'Julio quiere unirse a un reto de Casa del Libro. Laura revisa las condiciones y firma el contrato.' },
+  { k: 'WALLET', c: '#E8508A', t: 'Dinero al instante.', d: 'Laura envía 10 € y le llegan a Julio en el momento. Ve todos sus movimientos.' },
+  { k: 'LÍMITES Y HORARIOS', c: '#111', t: 'Reglas claras, sin discusiones.', d: 'Tiempo de pantalla, descanso nocturno y modo cole. Se aplican solos en el Bro.' },
+  { k: 'AURA', c: '#82B94F', t: 'Tendencias, no vigilancia.', d: 'Cómo duerme y cuánto se mueve Julio, en tendencia. Nunca el detalle minuto a minuto.' },
+  { k: 'CONSENTIMIENTOS', c: '#3068ED', t: 'Cada dato, con tu permiso.', d: 'Laura decide qué se activa, con una explicación clara de cada cosa. Puede cambiarlo cuando quiera.' },
+  { k: 'VARIOS HIJOS', c: '#82B94F', t: 'Toda la familia, en una app.', d: 'Julio tiene 13 años y Lucía 10. Cada uno con sus reglas y su dispositivo.' },
+  { k: 'BRO', c: '#111', t: 'Tranquilidad para la familia.', d: 'Acompañar sin vigilar. Start protected.' }
+];
+const FASES = [[300, 600, 900], [300, 600, 900], [1500, 1800], [1500, 1800], [800, 1600], [400, 800, 1200, 1600], [200], [900], [1200], []];
+class Component extends DCLogic {
+  state = { paso: (() => { try { const n = +localStorage.getItem(KEY); return n >= 0 && n < STEPS.length ? n : 0; } catch (e) { return 0; } })(), fase: 0 };
+  timers = [];
+  componentDidMount() {
+    this.ir(this.state.paso);
+    this.onKey = e => { if (e.key === 'ArrowRight') this.siguiente(); if (e.key === 'ArrowLeft') this.ir(this.state.paso - 1); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); window.removeEventListener('keydown', this.onKey); }
+  ir(i) {
+    if (i < 0 || i >= STEPS.length) return;
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.setState({ paso: i, fase: 0 });
+    try { localStorage.setItem(KEY, String(i)); } catch (e) {}
+    FASES[i].forEach((ms, k) => this.timers.push(setTimeout(() => this.setState(s => ({ fase: Math.max(s.fase, k + 1) })), ms)));
+  }
+  saltar(n) { this.timers.forEach(clearTimeout); this.timers = []; this.setState({ fase: n - 1 }); this.timers.push(setTimeout(() => this.setState({ fase: n }), 200)); }
+  siguiente() { const i = this.state.paso; this.ir(i === STEPS.length - 1 ? 0 : i + 1); }
+  renderVals() {
+    const s = this.state, i = s.paso, f = s.fase, st = STEPS[i];
+    const p = {}; STEPS.forEach((_, k) => p['s' + k] = i === k);
+    const lucia = i === 8 && f >= 1;
+    const H = (on, n, ini, c) => ({ n, i: ini, c, bg: on ? '#111' : '#fff', tx: on ? '#fff' : '#111', borde: on ? '#111' : '#E4E7EE' });
+    const ap = (k, t) => ({ op: f >= k ? 1 : 0, y: f >= k ? '0' : '10px', ...t });
+    const sueno = [8.2, 8.5, 8.4, 8.8, 8.9, 9.1, 9.0], pasos = [9.1, 8.4, 9.8, 7.9, 9.5, 11.2, 10.4];
+    const tit = ['Hola, Laura', 'Semana de Julio', 'Petición', 'Contrato', 'Wallet', 'Límites', 'Aura', 'Permisos', 'Tus hijos', ''];
+    return {
+      p, f: { a: f >= 1, b: f >= 2, c: f >= 3 },
+      cab: { titulo: tit[i] },
+      hijos: [H(!lucia, 'Julio', 'J', '#3068ED'), H(lucia, 'Lucía', 'L', '#E56648')],
+      dots: STEPS.map((x, k) => ({ t: x.k, w: k === i ? '22px' : '6px', bg: k === i ? '#111' : k < i ? '#9CA3AF' : '#D5DAE3', onClick: () => this.ir(k) })),
+      cap: { n: `${i + 1}/${STEPS.length}`, k: st.k, color: st.c, t: st.t, d: st.d },
+      sigTxt: i === STEPS.length - 1 ? 'Volver a empezar' : 'Siguiente', atrasOp: i === 0 ? .4 : 1,
+      atras: () => this.ir(i - 1), siguiente: () => this.siguiente(),
+      urgente: [
+        ap(1, { i: 'MF', c: '#3068ED', t: 'Julio pide MadFútbol', s: 'Pendiente de tu aprobación', cuando: 'Hoy' }),
+        ap(2, { i: '✎', c: '#E56648', t: 'Contrato Casa del Libro', s: 'Julio quiere unirse al reto', cuando: 'Hoy' }),
+        ap(3, { i: '½', c: '#111', t: 'Examen de mates', s: 'Julio lo ha repasado 3 tardes', cuando: 'Mañana' })
+      ],
+      resumen: [
+        ap(1, { k: 'HA CONSTRUIDO', c: '#82B94F', t: 'Videojuego de plataformas · 40 %', s: 'Y el periódico digital del cole' }),
+        ap(2, { k: 'HA APRENDIDO', c: '#3068ED', t: 'Fracciones · test superado', s: 'Y se ha leído «El principito»' }),
+        ap(3, { k: 'HA CONSEGUIDO', c: '#E56648', t: '1 h extra de consola', s: 'Reward familiar validado por Bro AI' })
+      ],
+      app: { decidir: f < 2, ok: f >= 2, esc: f === 1 ? .94 : 1, aprobar: () => this.saltar(2) },
+      con: { firmar: f < 2, firmado: f >= 2, esc: f === 1 ? .94 : 1, onFirmar: () => this.saltar(2) },
+      wal: {
+        saldo: f >= 2 ? '28,00 €' : '18,00 €',
+        importes: ['5 €', '10 €', '20 €'].map((t, k) => { const on = k === 1 && f >= 1; return { t, bg: on ? '#E8508A' : '#fff', tx: on ? '#fff' : '#111', borde: on ? '#E8508A' : '#E4E7EE' }; }),
+        movs: [...(f >= 2 ? [{ t: 'Enviado por ti', s: 'Ahora', v: '+10,00 €', c: '#4E7D22' }] : []), { t: 'Casa del Libro', s: 'Ayer', v: '−4,50 €', c: '#111' }, { t: 'Hugo (Bro)', s: 'Lunes', v: '+3,00 €', c: '#4E7D22' }]
+      },
+      limites: [['Tiempo de pantalla', '2 h al día · +1 h el fin de semana'], ['Descanso nocturno', '22:00 – 7:30'], ['Modo cole', '8:30 – 14:30, solo apps del cole'], ['Bro ↔ Bro solo amigos del QR', 'Mensajes y dinero']].map(([t, s2], k) => { const on = f >= k + 1; return { t, s: s2, bg: on ? '#82B94F' : '#D5DAE3', x: on ? '23px' : '3px' }; }),
+      aura: {
+        sueno: sueno.map((h, k) => ({ d: 'LMXJVSD'[k], h: f >= 1 ? Math.round((h - 7) / 2.3 * 80) + 'px' : '4px' })),
+        pasos: pasos.map((h, k) => ({ d: 'LMXJVSD'[k], h: f >= 1 ? Math.round((h - 6) / 5.5 * 60) + 'px' : '4px' }))
+      },
+      consent: [
+        ['Aura: sueño y pasos', 'Ves tendencias semanales. Julio ve sus propios datos.', true],
+        ['Voz para Bro AI', 'Bro AI entiende lo que Julio dice. No se guarda la voz.', true],
+        ['Retos de marcas', 'Julio puede ver retos patrocinados. Tú firmas cada uno.', f >= 1],
+        ['Ubicación', 'Solo si Julio llama al 112.', true]
+      ].map(([t, s2, si]) => ({ t, s: s2, siBg: si ? '#111' : 'transparent', siTx: si ? '#fff' : '#6B7280', noBg: si ? 'transparent' : '#fff', noTx: si ? '#6B7280' : '#111' })),
+      hijo: lucia
+        ? { n: 'Lucía', i: 'L', c: '#E56648', s: '10 años · Pulsera Aura', items: [{ t: 'Proyecto: un cómic de 4 páginas', c: '#82B94F' }, { t: 'Descanso: 9 h 20 min de media', c: '#82B94F' }, { t: 'Sin peticiones pendientes', c: '#9CA3AF' }] }
+        : { n: 'Julio', i: 'J', c: '#3068ED', s: '13 años · Bro + Aura', items: [{ t: 'Proyecto: videojuego de plataformas', c: '#82B94F' }, { t: 'Mañana: examen de mates', c: '#E56648' }, { t: 'MadFútbol: aprobada hoy', c: '#3068ED' }] }
+    };
+  }
+}
+</script>
+</body>
+</html>

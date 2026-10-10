@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;background:#EEF0F5;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-tap-highlight-color:transparent} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit;background:none;padding:0}</style>
+</helmet>
+<div style="min-height:100dvh;display:flex;flex-direction:column;align-items:center">
+  <div style="width:100%;max-width:1040px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="Bro" style="width:30px;height:30px"><span style="font-family:Outfit;font-weight:800;font-size:18px">Un día de Laura</span><span style="font-size:13px;color:#6B7280">Demo</span></div>
+    <div style="display:flex;gap:4px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="11"><button onClick="{{ d.onClick }}" aria-label="{{ d.t }}" style="width:{{ d.w }};height:6px;border-radius:3px;background:{{ d.bg }};transition:all .3s"></button></sc-for></div>
+  </div>
+  <div style="flex:1;width:100%;max-width:1040px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px 56px;padding:8px 16px 24px;box-sizing:border-box">
+    <div style="width:min(372px,100%);height:min(780px,calc(100dvh - 180px));min-height:600px;border-radius:54px;background:#1B1C1F;padding:11px;box-sizing:border-box;box-shadow:0 30px 70px rgba(17,17,17,.22);flex:none">
+      <div style="width:100%;height:100%;border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:{{ fondo }};transition:background .6s">
+        <div style="flex:none;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:14px;font-weight:600;position:relative;color:{{ barraTx }}">
+          <span>{{ hora }}</span><span style="position:absolute;left:50%;top:10px;width:110px;height:30px;margin-left:-55px;border-radius:16px;background:#000"></span>
+          <span style="display:flex;gap:6px;align-items:center;font-size:12px"><span>5G</span><span style="width:22px;height:11px;border:1.5px solid currentColor;border-radius:3px;box-sizing:border-box;padding:1px;display:flex"><span style="width:{{ bateria }};background:currentColor;border-radius:1px"></span></span></span>
+        </div>
+        <div style="flex:none;display:flex;align-items:center;gap:10px;padding:4px 18px 10px;color:{{ barraTx }}">
+          <img src="logo.png" alt="" style="width:26px;height:26px;opacity:{{ logoOp }}">
+          <div style="flex:1;min-width:0;font-family:Outfit;font-weight:800;font-size:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ cab }}</div>
+          <div style="flex:none;width:34px;height:34px;border-radius:50%;background:#E56648;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:14px">L</div>
+        </div>
+        <div style="flex:1;min-height:0;position:relative;overflow:hidden">
+
+          <sc-if value="{{ p.s0 }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:4px 18px 18px">
+              <div style="font-size:13.5px;color:#6B7280">Buenos días, Laura. Esto es lo único que necesitas hoy:</div>
+              <sc-for list="{{ urgente }}" as="u" hint-placeholder-count="2">
+                <div style="display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #E4E7EE;border-left:4px solid {{ u.c }};border-radius:14px;padding:12px 14px;opacity:{{ u.op }};transform:translateY({{ u.y }});transition:all .4s">
+                  <div style="flex:1"><div style="font-size:14.5px;font-weight:700">{{ u.t }}</div><div style="font-size:12px;color:#6B7280;margin-top:2px">{{ u.s }}</div></div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ f.c }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#EEF6E6;border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+                  <div style="width:40px;height:40px;border-radius:50%;background:#82B94F;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800">J</div>
+                  <div style="flex:1"><div style="font-size:14px;font-weight:700">Julio ha descansado bien</div><div style="font-size:12px;color:#4E7D22">Tendencia de la semana: por encima de su objetivo</div></div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s1 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:16px;display:flex;gap:12px;align-items:center">
+                <div style="width:46px;height:46px;border-radius:50%;background:#3068ED;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:18px">J</div>
+                <div style="flex:1"><div style="font-family:Outfit;font-weight:800;font-size:17px">Julio</div><div style="font-size:12.5px;color:#6B7280">En modo cole hasta las 14:30</div></div>
+                <span style="width:10px;height:10px;border-radius:50%;background:#82B94F"></span>
+              </div>
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px;opacity:{{ fa.op }};transition:opacity .4s">
+                <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">DURANTE EL COLE</div>
+                <div style="font-size:14px;line-height:1.5">Las apps están en pausa. Solo podéis llamaros entre vosotros y a emergencias.</div>
+              </div>
+              <sc-if value="{{ f.b }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;font-size:13px;color:#6B7280;margin-top:6px">0 avisos esta mañana</div></sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s2 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#3068ED">JULIO PIDE UNA APP</div>
+                <div style="display:flex;gap:12px;align-items:center"><div style="width:52px;height:52px;border-radius:14px;background:#2E7D32;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:20px">M</div><div><div style="font-family:Outfit;font-weight:800;font-size:18px">MadFútbol</div><div style="font-size:12.5px;color:#6B7280">Deportes · apta para 12+</div></div></div>
+                <div style="font-size:13.5px;line-height:1.5;color:#374151">«Para ver los resultados de la liga del barrio.»</div>
+                <div style="display:flex;gap:8px">
+                  <div style="flex:1;min-width:0;white-space:nowrap;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:14px;background:{{ app.siBg }};color:{{ app.siTx }};transition:all .3s">{{ app.si }}</div>
+                  <div style="flex:1;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:14px;background:#F0F2F6">No</div>
+                </div>
+              </div>
+              <sc-if value="{{ f.b }}" hint-placeholder-val="{{ false }}"><div style="background:#EEF6E6;color:#3D6B1F;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700">✓ Instalada en el Bro de Julio</div></sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s3 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" style="width:22px;height:22px"><div style="flex:1;font-family:Outfit;font-weight:800;font-size:16px">Contrato Bro</div><div style="height:30px;padding:0 8px;border-radius:8px;background:#F4F6F5;display:flex;align-items:center"><img src="logo-casadellibro.svg" alt="Casa del Libro" style="height:16px;max-width:90px;object-fit:contain"></div></div>
+                <div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.15">Lee 3 libros este mes</div>
+                <div style="padding:10px 12px;border-radius:12px;background:#FDF0EC;font-size:14px;font-weight:700">Bro discount en sus próximos 3 libros</div>
+                <div style="font-size:12.5px;color:#6B7280;line-height:1.45">Julio se compromete a intentarlo. Tú validas. Casa del Libro cumple si él cumple.</div>
+                <div style="height:46px;border-radius:12px;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:15px;background:{{ firma.bg }};color:{{ firma.tx }};transition:all .3s">{{ firma.t }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s4 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:22px;text-align:center">
+              <div style="width:96px;height:96px;border-radius:50%;background:#fff;border:1px solid #E4E7EE;display:grid;place-items:center"><div style="width:40px;height:30px;border-radius:6px;border:4px solid #111;box-sizing:border-box;position:relative"><div style="position:absolute;left:-4px;right:-4px;bottom:-10px;height:4px;border-radius:2px;background:#111"></div></div></div>
+              <div style="font-family:Outfit;font-weight:800;font-size:22px">Nada que hacer</div>
+              <div style="font-size:14px;color:#6B7280;line-height:1.5">Julio está en casa, con su proyecto.<br>Bro solo te avisa de lo que necesita tu decisión.</div>
+              <sc-if value="{{ f.a }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 16px;border-radius:999px;background:#fff;border:1px solid #E4E7EE;font-size:13px;font-weight:600">0 avisos esta tarde</div></sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s5 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:8px;align-items:center"><span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:#3068ED;padding:4px 9px;border-radius:6px">FAMILIA</span><span style="font-size:12.5px;color:#6B7280">Tu acuerdo con Julio</span></div>
+                <div style="font-family:Outfit;font-weight:800;font-size:20px">Leer «El principito»</div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="width:24px;height:24px;border-radius:50%;background:#82B94F;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800">✓</span>Test de Bro AI superado · 3 de 3</div>
+                <div style="padding:10px 12px;border-radius:12px;background:#FDF0EC;font-size:14px;font-weight:700">Reward: 1 h extra de consola el sábado</div>
+              </div>
+              <sc-if value="{{ f.a }}" hint-placeholder-val="{{ false }}"><div style="background:#82B94F;color:#fff;border-radius:16px;padding:14px;font-size:14.5px;font-weight:700">✓ Validado. Julio lo verá en Rewards.</div></sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s6 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="font-size:13.5px;color:#6B7280;line-height:1.45">Julio organiza un partido. Te lo deja todo preparado:</div>
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ reserva }}" as="r" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;font-size:14px;border-bottom:1px solid #F0F2F6;padding-bottom:8px"><span style="color:#6B7280">{{ r.l }}</span><b>{{ r.v }}</b></div></sc-for>
+                <div style="height:48px;border-radius:14px;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:15px;background:{{ res.bg }};color:#fff;transition:all .3s">{{ res.t }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s7 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:18px"><div style="font-size:12px;color:#6B7280">Saldo de Julio</div><div style="font-family:Outfit;font-weight:800;font-size:34px">{{ saldo }}</div></div>
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:6px 14px">
+                <sc-for list="{{ movs }}" as="m" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;padding:9px 0;font-size:13.5px;border-bottom:1px solid #F0F2F6"><span>{{ m.t }}</span><b>{{ m.v }}</b></div></sc-for>
+              </div>
+              <div style="height:48px;border-radius:14px;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:15px;background:{{ envio.bg }};color:#fff;transition:all .3s">{{ envio.t }}</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s8 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:4px 18px 18px">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">LA SEMANA DE JULIO</div>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+                <sc-for list="{{ semana }}" as="r" hint-placeholder-count="4"><div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid {{ r.c }};border-radius:14px;padding:12px;opacity:{{ r.op }};transform:translateY({{ r.y }});transition:all .4s"><div style="font-family:Outfit;font-weight:800;font-size:20px">{{ r.v }}</div><div style="font-size:12px;color:#6B7280">{{ r.l }}</div></div></sc-for>
+              </div>
+              <sc-if value="{{ f.e }}" hint-placeholder-val="{{ false }}"><div style="background:#F4F6FB;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.5;color:#374151">Sus chats, lo que habla con Bro AI y lo que busca son suyos. Tú ves tendencias, no conversaciones.</div></sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s9 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:22px;color:#fff;text-align:center">
+              <div style="width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center"><div style="width:44px;height:44px;border-radius:50%;box-shadow:inset -12px -6px 0 0 #fff;transform:rotate(-20deg)"></div></div>
+              <div style="font-family:Outfit;font-weight:800;font-size:24px">El Bro de Julio descansa</div>
+              <div style="font-size:14px;opacity:.8;line-height:1.5">Modo descanso activado a las 22:00.<br>Sin discusiones, sin quitarle el móvil.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s10 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center">
+              <img src="logo.png" alt="Bro" style="width:96px;height:96px">
+              <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.2">Cinco decisiones al día.<br>Cero discusiones.</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:26px">Start protected.</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="flex:none;height:26px;display:grid;place-items:center"><span style="width:130px;height:5px;border-radius:3px;background:{{ barraTx }}"></span></div>
+      </div>
+    </div>
+
+    <div style="width:min(380px,100%);display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-family:Outfit;font-weight:800;font-size:15px;padding:5px 11px;border-radius:999px;background:#111;color:#fff">{{ cap.h }}</span><span style="font-size:12px;font-weight:800;letter-spacing:.08em;color:{{ cap.color }}">{{ cap.k }}</span></div>
+      <div style="font-family:Outfit;font-weight:800;font-size:36px;line-height:1.05;letter-spacing:-.02em;text-wrap:balance">{{ cap.t }}</div>
+      <div style="font-size:16.5px;line-height:1.55;color:#374151;text-wrap:pretty">{{ cap.d }}</div>
+      <sc-if value="{{ cap.hayNo }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px">
+          <span style="flex:none;font-size:10.5px;font-weight:800;letter-spacing:.05em;color:#fff;background:#3068ED;padding:4px 8px;border-radius:6px;margin-top:1px">TRANQUILIDAD</span>
+          <span style="font-size:14px;line-height:1.45">{{ cap.no }}</span>
+        </div>
+      </sc-if>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button onClick="{{ atras }}" style="height:52px;padding:0 20px;border-radius:16px;background:#fff;border:1px solid #E4E7EE;font-weight:700;font-size:15px;opacity:{{ atrasOp }}">Atrás</button>
+        <button onClick="{{ siguiente }}" style="flex:1;height:52px;border-radius:16px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">{{ sigTxt }}</button>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF">También con las flechas del teclado.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = 'bro-demo-dia-laura-v1';
+const OSC = '#10131C';
+const STEPS = [
+  { h: '7:15', k: 'INICIO', c: '#3068ED', cab: 'Hoy', hora: '7:15', bat: '100%', t: 'Solo lo urgente.', d: 'Al abrir la app, Laura ve lo que necesita su decisión, ordenado por fecha. Y cómo ha descansado Julio.', no: 'Nada de 40 avisos: dos cosas, por orden de urgencia.' },
+  { h: '9:00', k: 'MODO COLE', c: '#111', cab: 'Julio', hora: '9:00', bat: '96%', t: 'Julio, en clase.', d: 'El modo cole funciona solo. Laura no tiene que vigilar nada.', no: 'Las reglas se cumplen sin que nadie tenga que pelearse por ellas.' },
+  { h: '11:00', k: 'MY APPS', c: '#3068ED', cab: 'Petición', hora: '11:00', bat: '90%', t: 'Una app, una decisión.', d: 'Julio pide MadFútbol y explica para qué. Laura la aprueba en un segundo, desde el trabajo.', no: 'Ella decide. Bro no recomienda ni instala nada por su cuenta.' },
+  { h: '13:30', k: 'REWARDS · MARCA', c: '#E56648', cab: 'Contrato', hora: '13:30', bat: '84%', t: 'Firma el contrato.', d: 'Julio quiere unirse al reto de Casa del Libro. Laura revisa las condiciones y firma.', no: 'Ninguna marca llega a Julio sin su firma.' },
+  { h: '16:00', k: 'SILENCIO', c: '#82B94F', cab: 'Hoy', hora: '16:00', bat: '78%', t: 'Nada que hacer.', d: 'Julio está con su proyecto. Laura trabaja tranquila.', no: 'Bro solo avisa cuando hace falta una decisión suya. El resto del tiempo, silencio.' },
+  { h: '18:00', k: 'REWARDS · FAMILIA', c: '#E56648', cab: 'Validar', hora: '18:00', bat: '71%', t: 'Validar un reward.', d: 'Julio ha terminado «El principito» y ha pasado el test de Bro AI. Laura valida con un toque.', no: 'Hay prueba: no hace falta discutir si se lo ha leído o no.' },
+  { h: '19:00', k: 'PROJECTS', c: '#82B94F', cab: 'Petición', hora: '19:00', bat: '66%', t: 'Su plan, listo para reservar.', d: 'Julio organiza un partido con sus amigos. Bro le deja a Laura la reserva hecha: pista, día, hora y precio.', no: 'Julio aprende a organizarse. Laura solo pulsa «Reservar».' },
+  { h: '20:00', k: 'WALLET', c: '#E8508A', cab: 'Wallet', hora: '20:00', bat: '61%', t: 'La paga, con sentido.', d: 'Laura ve en qué ha gastado Julio y le envía 10 € por terminar su proyecto. Le llegan al instante.', no: 'La paga no es automática: va ligada a lo que Julio hace.' },
+  { h: '21:00', k: 'AURA · SEMANA', c: '#82B94F', cab: 'Semana', hora: '21:00', bat: '57%', t: 'Su semana, de un vistazo.', d: 'Laura ve tendencias: descanso, movimiento, lo que ha construido y su tiempo de pantalla.', no: 'Ve tendencias, no conversaciones. La privacidad de Julio también se protege.' },
+  { h: '22:00', k: 'MODO DESCANSO', c: '#111', cab: '', hora: '22:00', bat: '55%', dark: true, t: 'Sin discusiones.', d: 'A las 22:00 el Bro de Julio entra en modo descanso. Nadie tiene que quitarle el móvil.', no: 'La regla la cumple el móvil, no la madre.' },
+  { h: 'BRO', k: 'START PROTECTED', c: '#111', cab: '', hora: '22:01', bat: '55%', t: 'Tranquilidad.', d: 'Pocas decisiones, todas importantes. Y un hijo que crece conectado, no enganchado.', no: '' }
+];
+const FASES = [[300, 700, 1200], [500, 1200], [800, 1500], [900], [800], [700], [], [700, 1500], [300, 600, 900, 1200, 1600], [], []];
+class Component extends DCLogic {
+  state = { paso: (() => { try { const n = +localStorage.getItem(KEY); return n >= 0 && n < STEPS.length ? n : 0; } catch (e) { return 0; } })(), fase: 0 };
+  timers = [];
+  componentDidMount() { this.ir(this.state.paso); this.onKey = e => { if (e.key === 'ArrowRight') this.siguiente(); if (e.key === 'ArrowLeft') this.ir(this.state.paso - 1); }; window.addEventListener('keydown', this.onKey); }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); window.removeEventListener('keydown', this.onKey); }
+  ir(i) {
+    if (i < 0 || i >= STEPS.length) return;
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.setState({ paso: i, fase: 0 });
+    try { localStorage.setItem(KEY, String(i)); } catch (e) {}
+    FASES[i].forEach((ms, k) => this.timers.push(setTimeout(() => this.setState({ fase: k + 1 }), ms)));
+    if (i === 6) this.timers.push(setTimeout(() => this.setState({ fase: 1 }), 900), setTimeout(() => this.setState({ fase: 2 }), 1700));
+  }
+  siguiente() { const i = this.state.paso; this.ir(i === STEPS.length - 1 ? 0 : i + 1); }
+  renderVals() {
+    const s = this.state, i = s.paso, f = s.fase, st = STEPS[i];
+    const p = {}; STEPS.forEach((_, k) => p['s' + k] = i === k);
+    const ap = n => ({ op: f >= n ? 1 : 0, y: f >= n ? '0' : '10px' });
+    return {
+      p, f: { a: f >= 1, b: f >= 2, c: f >= 3, e: f >= 5 }, fa: ap(1),
+      fondo: st.dark ? OSC : '#F6F7FA', logoOp: st.dark ? 0 : 1, barraTx: st.dark ? '#fff' : '#111', hora: st.hora, bateria: st.bat, cab: st.cab,
+      dots: STEPS.map((x, k) => ({ t: x.h, w: k === i ? '22px' : '6px', bg: k === i ? '#111' : k < i ? '#9CA3AF' : '#D5DAE3', onClick: () => this.ir(k) })),
+      cap: { h: st.h, k: st.k, color: st.c, t: st.t, d: st.d, no: st.no, hayNo: !!st.no },
+      sigTxt: i === STEPS.length - 1 ? 'Volver a empezar' : 'Siguiente', atrasOp: i === 0 ? .4 : 1,
+      atras: () => this.ir(i - 1), siguiente: () => this.siguiente(),
+      urgente: [['Julio te pide una app', 'MadFútbol · hoy', '#E56648'], ['Contrato de Casa del Libro', 'Pendiente de tu firma · vence el viernes', '#3068ED']].map(([t, s2, c], k) => ({ t, s: s2, c, ...ap(k + 1) })),
+      app: f >= 1 ? { si: '✓ Aprobada', siBg: '#82B94F', siTx: '#fff' } : { si: 'Aprobar', siBg: '#111', siTx: '#fff' },
+      firma: f >= 1 ? { t: '✓ Firmado por Laura', bg: '#EEF6E6', tx: '#3D6B1F' } : { t: 'Aprobar y firmar', bg: '#E56648', tx: '#fff' },
+      reserva: [['Pista', 'Pradillo · La Colonia'], ['Día', 'Viernes 13'], ['Hora', '18:00 – 19:30'], ['Precio', '24 €']].map(([l, v]) => ({ l, v })),
+      res: f >= 2 ? { t: '✓ Pista reservada', bg: '#82B94F' } : f >= 1 ? { t: 'Reservando…', bg: '#3068ED' } : { t: 'Reservar', bg: '#111' },
+      saldo: f >= 2 ? '15,10 €' : '5,10 €',
+      movs: [['Librería del barrio', '−6,90 €'], ['A Hugo · balón', '−3,00 €']].map(([t, v]) => ({ t, v })),
+      envio: f >= 2 ? { t: '✓ 10 € enviados · «Por tu proyecto»', bg: '#82B94F' } : f >= 1 ? { t: 'Enviando…', bg: '#E8508A' } : { t: 'Enviar 10 €', bg: '#111' },
+      semana: [['9 h 05', 'descanso medio', '#82B94F'], ['62.400', 'pasos', '#82B94F'], ['2', 'proyectos en marcha', '#3068ED'], ['1 h 40', 'pantalla al día', '#111']].map(([v, l, c], k) => ({ v, l, c, ...ap(k + 1) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;background:#EEF0F5;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-tap-highlight-color:transparent} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit;background:none;padding:0}</style>
+</helmet>
+<div style="min-height:100dvh;display:flex;flex-direction:column;align-items:center">
+  <div style="width:100%;max-width:1040px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="Bro" style="width:30px;height:30px"><span style="font-family:Outfit;font-weight:800;font-size:18px">Primer encendido</span><span style="font-size:13px;color:#6B7280">Demo</span></div>
+    <div style="display:flex;gap:4px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="10"><button onClick="{{ d.onClick }}" aria-label="{{ d.t }}" style="width:{{ d.w }};height:6px;border-radius:3px;background:{{ d.bg }};transition:all .3s"></button></sc-for></div>
+  </div>
+  <div style="flex:1;width:100%;max-width:1040px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px 56px;padding:8px 16px 24px;box-sizing:border-box">
+    <div style="width:min(360px,100%);height:min(760px,calc(100dvh - 180px));min-height:600px;border-radius:42px;background:#111;padding:9px;box-sizing:border-box;box-shadow:0 30px 70px rgba(17,17,17,.22);flex:none">
+      <div style="width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:#fff">
+        <div style="flex:none;height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12.5px;font-weight:600;position:relative">
+          <span>17:42</span><span style="position:absolute;left:50%;top:9px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#000"></span>
+          <span style="display:flex;gap:6px;align-items:center"><span>5G</span><span style="width:20px;height:10px;border:1.5px solid #111;border-radius:3px;box-sizing:border-box;padding:1px;display:flex"><span style="width:90%;background:#111;border-radius:1px"></span></span></span>
+        </div>
+        <sc-if value="{{ conGuia }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:none;padding:8px 18px 0;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:4px"><sc-for list="{{ tramos }}" as="b" hint-placeholder-count="7"><div style="flex:1;height:4px;border-radius:2px;background:{{ b }};transition:background .3s"></div></sc-for></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><img src="facew.png" alt="" style="width:32px;height:32px;background:#3068ED;border-radius:50%;padding:3px;box-sizing:border-box;flex:none"><div style="flex:1;background:#F4F6FB;border-radius:4px 16px 16px 16px;padding:10px 12px;font-size:14px;line-height:1.45">{{ guia }}</div></div>
+          </div>
+        </sc-if>
+        <div style="flex:1;min-height:0;position:relative;overflow:hidden">
+
+          <sc-if value="{{ p.s0 }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px">
+              <img src="logo.png" alt="Bro" style="width:120px;height:120px;opacity:{{ bv.op }};transform:scale({{ bv.esc }});transition:all .9s cubic-bezier(.2,.8,.2,1)">
+              <div style="font-family:Outfit;font-weight:800;font-size:32px;opacity:{{ bv.tOp }};transform:translateY({{ bv.ty }});transition:all .7s">{{ bv.t }}</div>
+              <div style="font-size:15px;color:#6B7280;opacity:{{ bv.sOp }};transition:opacity .7s">Piensa. Aprende. Construye.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s1 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:16px;padding:22px 20px">
+              <div style="font-family:Outfit;font-weight:800;font-size:22px">{{ vinc.t }}</div>
+              <sc-if value="{{ vinc.qr }}" hint-placeholder-val="{{ true }}">
+                <div style="width:190px;height:190px;padding:12px;box-sizing:border-box;border-radius:20px;border:1px solid #E4E7EE;display:grid;grid-template-columns:repeat(21,1fr);grid-template-rows:repeat(21,1fr);position:relative">
+                  <sc-for list="{{ qr }}" as="q" hint-placeholder-count="0"><span style="background:{{ q }}"></span></sc-for>
+                  <div style="position:absolute;left:4px;right:4px;height:3px;background:#3068ED;top:{{ vinc.linea }};opacity:{{ vinc.lOp }};transition:top 1s linear;box-shadow:0 0 12px #3068ED"></div>
+                </div>
+                <div style="font-size:13.5px;color:#6B7280;text-align:center;line-height:1.45">{{ vinc.s }}</div>
+              </sc-if>
+              <sc-if value="{{ vinc.ok }}" hint-placeholder-val="{{ false }}">
+                <div style="width:100px;height:100px;border-radius:50%;background:#82B94F;color:#fff;display:grid;place-items:center;font-size:46px;font-weight:800">✓</div>
+                <div style="font-size:15px;text-align:center;line-height:1.5">Tu Bro ya es tuyo. Mamá lo ha configurado para ti.</div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s2 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:22px">
+              <div style="width:180px;height:180px;border-radius:50%;border:4px solid {{ face.c }};display:grid;place-items:center;transition:border-color .4s;box-shadow:0 0 0 {{ face.halo }} rgba(48,104,237,.15)">
+                <div style="width:130px;height:130px;border-radius:50%;background:#F4F6FB;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:15px;text-align:center;padding:12px;box-sizing:border-box">{{ face.t }}</div>
+              </div>
+              <div style="font-size:13.5px;color:#6B7280">O usa un PIN de 4 números</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s3 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:18px;padding:22px 20px">
+              <div style="width:150px;height:150px;border-radius:50%;background:{{ av.fondo }};position:relative;overflow:hidden;transition:background .4s">
+                <div style="position:absolute;left:50%;bottom:-34px;width:118px;height:76px;margin-left:-59px;border-radius:50px 50px 0 0;background:{{ av.ropa }};transition:background .4s"></div>
+                <div style="position:absolute;left:50%;top:30px;width:76px;height:86px;margin-left:-38px;border-radius:40px 40px 36px 36px;background:#E8B48A"></div>
+                <div style="position:absolute;left:50%;top:22px;width:84px;height:38px;margin-left:-42px;border-radius:42px 42px 14px 14px;background:{{ av.pelo }};transition:background .4s"></div>
+                <div style="position:absolute;left:58px;top:70px;width:7px;height:9px;border-radius:50%;background:#111"></div>
+                <div style="position:absolute;left:85px;top:70px;width:7px;height:9px;border-radius:50%;background:#111"></div>
+                <div style="position:absolute;left:64px;top:88px;width:22px;height:10px;border-radius:0 0 12px 12px;border:3px solid #111;border-top:0;box-sizing:border-box"></div>
+              </div>
+              <sc-for list="{{ av.grupos }}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:7px;align-self:stretch">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#6B7280">{{ g.t }}</div>
+                  <div style="display:flex;gap:10px"><sc-for list="{{ g.ops }}" as="o" hint-placeholder-count="4"><span style="width:36px;height:36px;border-radius:50%;background:{{ o.c }};box-shadow:0 0 0 {{ o.a }} #fff,0 0 0 {{ o.b }} #111;transition:box-shadow .3s"></span></sc-for></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s4 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:22px 20px">
+              <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px">
+                <sc-if value="{{ f.a }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-end;background:#3068ED;color:#fff;border-radius:18px 18px 4px 18px;padding:11px 14px;font-size:15px">Hola, Bro</div></sc-if>
+                <sc-if value="{{ f.b }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-start;max-width:85%;background:#F4F6FB;border-radius:18px 18px 18px 4px;padding:11px 14px;font-size:15px;line-height:1.4">Hola, Julio. Te he oído perfecto. Cuando quieras algo, pídemelo así.</div></sc-if>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+                <div style="width:110px;height:110px;border-radius:50%;background:#3068ED;display:grid;place-items:center;box-shadow:0 0 0 {{ voz.halo }} rgba(48,104,237,.2);transition:box-shadow .3s"><img src="facew.png" alt="" style="width:60px;height:60px"></div>
+                <div style="font-size:13.5px;color:#6B7280">{{ voz.t }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s5 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px 20px">
+              <div style="width:100%;border:1px solid #E4E7EE;border-radius:24px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px;box-sizing:border-box">
+                <div style="display:flex;align-items:center;gap:10px;align-self:stretch"><div style="width:42px;height:42px;border-radius:50%;background:#3068ED;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800">J</div><div style="flex:1"><div style="font-family:Outfit;font-weight:800;font-size:16px">Julio</div><div style="font-size:12px;color:#6B7280">Edad verificada · 13 años</div></div><img src="logo.png" alt="" style="width:24px;height:24px"></div>
+                <div style="width:180px;height:180px;display:grid;grid-template-columns:repeat(21,1fr);grid-template-rows:repeat(21,1fr)"><sc-for list="{{ qr2 }}" as="q" hint-placeholder-count="0"><span style="background:{{ q }}"></span></sc-for></div>
+              </div>
+              <div style="font-size:13px;color:#6B7280;text-align:center;line-height:1.45">Solo con Bros de tu edad (±3 años). Siempre en tu inicial, en la home.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s6 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:22px">
+              <div style="width:120px;height:180px;border-radius:44px;background:#3068ED;display:grid;place-items:center;box-shadow:0 0 0 {{ aura.halo }} rgba(130,185,79,.25);transition:box-shadow .5s"><div style="width:74px;height:74px;border-radius:22px;background:#111;display:grid;place-items:center"><img src="logo.png" alt="" style="width:34px;height:34px;opacity:{{ aura.op }};transition:opacity .4s"></div></div>
+              <div style="font-size:15px;text-align:center;line-height:1.5">{{ aura.t }}</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s7 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:18px 20px">
+              <div style="background:#EEF6E6;border-radius:18px;padding:14px">
+                <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#4E7D22;margin-bottom:6px">MAMÁ VE</div>
+                <sc-for list="{{ ve }}" as="v" hint-placeholder-count="4"><div style="font-size:13.5px;line-height:1.45;padding:3px 0;opacity:{{ v.op }};transition:opacity .3s">· {{ v.t }}</div></sc-for>
+              </div>
+              <div style="background:#F4F6FB;border-radius:18px;padding:14px">
+                <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280;margin-bottom:6px">MAMÁ NO VE</div>
+                <sc-for list="{{ noVe }}" as="v" hint-placeholder-count="4"><div style="font-size:13.5px;line-height:1.45;padding:3px 0;opacity:{{ v.op }};transition:opacity .3s">· {{ v.t }}</div></sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s8 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:22px 20px">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#6B7280;text-align:center">TIENES UN MENSAJE</div>
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 40px rgba(17,17,17,.1);opacity:{{ msg.op }};transform:translateY({{ msg.y }});transition:all .5s">
+                <div style="display:flex;align-items:center;gap:10px"><div style="width:40px;height:40px;border-radius:50%;background:#E56648;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800">L</div><div><div style="font-weight:700;font-size:14.5px">Mamá</div><div style="font-size:12px;color:#6B7280">ahora</div></div></div>
+                <div style="font-family:Outfit;font-weight:800;font-size:22px;line-height:1.15">Bienvenido a tu Bro, Julio.</div>
+                <div style="font-size:14.5px;line-height:1.5;color:#374151">Es tuyo. Úsalo para pensar, aprender y construir cosas chulas.</div>
+              </div>
+              <div style="height:52px;border-radius:16px;background:#3068ED;color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:16px">Ir a mi Bro</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.s9 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;text-align:center">
+              <img src="logo.png" alt="Bro" style="width:96px;height:96px">
+              <div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.2">Tres minutos.<br>Y es suyo.</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:26px">Start protected.</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="flex:none;height:22px;display:grid;place-items:center"><span style="width:110px;height:4px;border-radius:2px;background:#111;opacity:.5"></span></div>
+      </div>
+    </div>
+
+    <div style="width:min(380px,100%);display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:12px;font-weight:800;letter-spacing:.08em;color:{{ cap.color }}">{{ cap.n }} · {{ cap.k }}</div>
+      <div style="font-family:Outfit;font-weight:800;font-size:36px;line-height:1.05;letter-spacing:-.02em;text-wrap:balance">{{ cap.t }}</div>
+      <div style="font-size:16.5px;line-height:1.55;color:#374151;text-wrap:pretty">{{ cap.d }}</div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button onClick="{{ atras }}" style="height:52px;padding:0 20px;border-radius:16px;background:#fff;border:1px solid #E4E7EE;font-weight:700;font-size:15px;opacity:{{ atrasOp }}">Atrás</button>
+        <button onClick="{{ siguiente }}" style="flex:1;height:52px;border-radius:16px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">{{ sigTxt }}</button>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF">También con las flechas del teclado.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = 'bro-demo-encendido-v1';
+const STEPS = [
+  { k: 'BIENVENIDA', c: '#3068ED', t: 'El día que llega su Bro.', d: 'Julio enciende su móvil por primera vez. Nada de ajustes ni formularios: una bienvenida.' },
+  { k: 'VINCULAR', c: '#3068ED', t: 'Juntos, en un minuto.', d: 'Mamá escanea el código desde su app. El Bro ya está configurado: solo falta hacerlo suyo.' },
+  { k: 'DESBLOQUEO', c: '#111', t: 'Solo él lo abre.', d: 'Julio registra su cara o elige un PIN.' },
+  { k: 'AVATAR', c: '#E56648', t: 'Así le verán sus amigos.', d: 'Julio crea su avatar o usa una foto.' },
+  { k: 'BRO AI', c: '#3068ED', t: '«Hola, Bro».', d: 'Primera conversación con Bro AI. Desde aquí puede pedirlo todo hablando o escribiendo.' },
+  { k: 'CONNECT', c: '#3068ED', t: 'Su código para hacer amigos.', d: 'Su QR personal, con la edad verificada. Se conecta con otros Bros en persona.' },
+  { k: 'AURA', c: '#82B94F', t: 'Su pulsera, conectada.', d: 'La pulsera Aura se empareja sola. Desde hoy cuenta pasos y descanso.' },
+  { k: 'PRIVACIDAD', c: '#82B94F', t: 'Lo que ve mamá, y lo que no.', d: 'Julio sabe desde el primer día qué ve su familia. Sus chats y lo que habla con Bro AI son suyos.' },
+  { k: 'BIENVENIDO', c: '#E56648', t: 'Un mensaje de mamá.', d: 'El cierre es un mensaje de su madre. Y a su Bro.' },
+  { k: 'BRO', c: '#111', t: 'Es suyo.', d: 'Tres minutos y el Bro es suyo. Start protected.' }
+];
+const FASES = [[300, 1100, 1700], [1000, 2100], [800, 2000], [700, 1400, 2100], [700, 1500], [], [800, 2000], [300, 600, 900, 1200], [400], []];
+function qrDe(seed) {
+  return Array.from({ length: 441 }, (_, k) => {
+    const x = k % 21, y = Math.floor(k / 21);
+    const ojo = (ox, oy) => x >= ox && x < ox + 7 && y >= oy && y < oy + 7 && (x === ox || x === ox + 6 || y === oy || y === oy + 6 || (x >= ox + 2 && x <= ox + 4 && y >= oy + 2 && y <= oy + 4));
+    const zona = (ox, oy) => x >= ox - 1 && x <= ox + 7 && y >= oy - 1 && y <= oy + 7;
+    if (ojo(0, 0) || ojo(14, 0) || ojo(0, 14)) return '#111';
+    if (zona(0, 0) || zona(14, 0) || zona(0, 14)) return 'transparent';
+    return ((Math.imul(k + 1, 2654435761) ^ seed) >>> 13) % 3 === 0 ? '#111' : 'transparent';
+  });
+}
+const QR1 = qrDe(77), QR2 = qrDe(4821);
+const GUIA = ['', 'Hola. Soy Bro AI. Primero, este móvil tiene que conocer a tu familia.', 'Encantado, Julio. Elige cómo abrir tu Bro. Solo tú podrás.', 'Ahora tu avatar. Es lo que verán tus amigos.', 'Puedes hablarme o escribirme. Prueba: di «Hola, Bro».', 'Este es tu código. Así te haces amigo de otros Bros, en persona.', 'Tu pulsera Aura cuenta tus pasos y tu descanso. Vamos a conectarla.', 'Importante: tu Bro es tuyo. Esto es lo que ve tu familia y lo que no.'];
+class Component extends DCLogic {
+  state = { paso: (() => { try { const n = +localStorage.getItem(KEY); return n >= 0 && n < STEPS.length ? n : 0; } catch (e) { return 0; } })(), fase: 0 };
+  timers = [];
+  componentDidMount() { this.ir(this.state.paso); this.onKey = e => { if (e.key === 'ArrowRight') this.siguiente(); if (e.key === 'ArrowLeft') this.ir(this.state.paso - 1); }; window.addEventListener('keydown', this.onKey); }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); window.removeEventListener('keydown', this.onKey); }
+  ir(i) {
+    if (i < 0 || i >= STEPS.length) return;
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.setState({ paso: i, fase: 0 });
+    try { localStorage.setItem(KEY, String(i)); } catch (e) {}
+    FASES[i].forEach((ms, k) => this.timers.push(setTimeout(() => this.setState({ fase: k + 1 }), ms)));
+  }
+  siguiente() { const i = this.state.paso; this.ir(i === STEPS.length - 1 ? 0 : i + 1); }
+  renderVals() {
+    const s = this.state, i = s.paso, f = s.fase, st = STEPS[i];
+    const p = {}; STEPS.forEach((_, k) => p['s' + k] = i === k);
+    const sel = (on) => ({ a: on ? '3px' : '0', b: on ? '5px' : '0' });
+    const pelo = ['#2A1B12', '#6B4226', '#C99A5B', '#111'], ropa = ['#3068ED', '#E56648', '#82B94F', '#111'], fondo = ['#6B7280', '#3068ED', '#E56648', '#82B94F'];
+    const ip = Math.min(f, 1), ir2 = f >= 2 ? 1 : 0, ifo = f >= 3 ? 2 : 0;
+    return {
+      p, f: { a: f >= 1, b: f >= 2, c: f >= 3 }, conGuia: i >= 1 && i <= 7, guia: GUIA[i] || '',
+      tramos: [1, 2, 3, 4, 5, 6, 7].map(k => k < i ? '#111' : k === i ? '#3068ED' : '#E4E7EE'),
+      dots: STEPS.map((x, k) => ({ t: x.k, w: k === i ? '22px' : '6px', bg: k === i ? '#111' : k < i ? '#9CA3AF' : '#D5DAE3', onClick: () => this.ir(k) })),
+      cap: { n: `${i + 1}/${STEPS.length}`, k: st.k, color: st.c, t: st.t, d: st.d },
+      sigTxt: i === STEPS.length - 1 ? 'Volver a empezar' : 'Siguiente', atrasOp: i === 0 ? .4 : 1,
+      atras: () => this.ir(i - 1), siguiente: () => this.siguiente(),
+      bv: { op: f >= 1 ? 1 : 0, esc: f >= 1 ? 1 : .6, t: f >= 3 ? 'Hola, Julio' : 'Bienvenido a Bro', tOp: f >= 2 ? 1 : 0, ty: f >= 2 ? '0' : '12px', sOp: f >= 3 ? 1 : 0 },
+      qr: QR1, qr2: QR2,
+      vinc: { t: f >= 2 ? 'Hola, Julio' : 'Vinculad tu Bro', qr: f < 2, ok: f >= 2, linea: f >= 1 ? '100%' : '0%', lOp: f === 1 ? 1 : 0, s: f >= 1 ? 'Mamá lo está escaneando…' : 'Que mamá escanee este código desde su app.' },
+      face: { c: f >= 2 ? '#82B94F' : f >= 1 ? '#3068ED' : '#E4E7EE', halo: f === 1 ? '14px' : '0', t: f >= 2 ? 'Listo. Te reconozco.' : f >= 1 ? 'Mueve la cabeza despacio…' : 'Mira a la pantalla' },
+      av: {
+        pelo: pelo[ip], ropa: ropa[ir2], fondo: fondo[ifo === 2 ? 1 : 0],
+        grupos: [{ t: 'PELO', ops: pelo.map((c, k) => ({ c, ...sel(k === ip) })) }, { t: 'ROPA', ops: ropa.map((c, k) => ({ c, ...sel(k === ir2) })) }, { t: 'FONDO', ops: fondo.map((c, k) => ({ c, ...sel(k === (ifo === 2 ? 1 : 0)) })) }]
+      },
+      voz: { halo: f === 1 ? '22px' : '0', t: f >= 2 ? '' : f >= 1 ? 'Te escucho…' : 'Toca y habla' },
+      aura: { halo: f === 1 ? '26px' : '0', op: f >= 2 ? 1 : .3, t: f >= 2 ? 'Conectada. Pulsera Aura de Julio, correa azul.' : f >= 1 ? 'Buscando tu pulsera…' : 'Ponte la pulsera y acércala.' },
+      ve: ['Tendencias de sueño y pasos', 'Las apps que pides', 'Tus proyectos y rewards', 'Tus horarios'].map((t, k) => ({ t, op: f >= k + 1 ? 1 : 0 })),
+      noVe: ['Tus chats con amigos', 'Lo que hablas con Bro AI', 'Lo que buscas y lees', 'Tus fotos'].map((t, k) => ({ t, op: f >= k + 1 ? 1 : 0 })),
+      msg: { op: f >= 1 ? 1 : 0, y: f >= 1 ? '0' : '16px' }
+    };
+  }
+}
+</script>
+</body>
+</html>
