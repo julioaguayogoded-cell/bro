@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F4F5F9;font-family:Inter,system-ui,sans-serif;color:#111} a{color:#3068ED} a:hover{color:#1f4fc0} button,input,textarea{font-family:inherit} button{border:0;cursor:pointer}</style>
+</helmet>
+<div style="max-width:860px;margin:0 auto;padding:24px 16px 48px;display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="BroS Life" style="width:32px;height:32px"><span style="font-family:Outfit;font-weight:800;font-size:19px;letter-spacing:-.02em">BroS Life</span></div>
+    <div style="display:flex;gap:4px"><span style="width:24px;height:6px;border-radius:3px;background:#3068ED"></span><span style="width:24px;height:6px;border-radius:3px;background:#E56648"></span><span style="width:24px;height:6px;border-radius:3px;background:#82B94F"></span><span style="width:24px;height:6px;border-radius:3px;background:#111"></span></div>
+  </div>
+
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#3068ED">PLAN DEL DÍA · {{ estadoTxt }}</div>
+      <div style="font-size:11.5px;font-weight:700;color:{{ syncColor }}">{{ syncTxt }}</div>
+    </div>
+    <div style="font-family:Outfit;font-weight:800;font-size:clamp(26px,4vw,34px);letter-spacing:-.02em;margin-top:4px">{{ fecha }}</div>
+  </div>
+
+  <sc-if value="{{ puedeEditar }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #3068ED;border-radius:14px;padding:12px 14px">
+      <div style="font-family:Outfit;font-weight:800;font-size:15px">1 · Revisa</div>
+      <div style="font-size:13px;line-height:1.5;color:#374151;margin-top:4px">Aprueba o manda a la basura cada tarea. Añade las que falten.</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #E56648;border-radius:14px;padding:12px 14px">
+      <div style="font-family:Outfit;font-weight:800;font-size:15px">2 · Asigna</div>
+      <div style="font-size:13px;line-height:1.5;color:#374151;margin-top:4px">Owner y deadline en cada tarea aprobada.</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #82B94F;border-radius:14px;padding:12px 14px">
+      <div style="font-family:Outfit;font-weight:800;font-size:15px">3 · Aprueba y comparte</div>
+      <div style="font-size:13px;line-height:1.5;color:#374151;margin-top:4px">{{ resumen }}</div>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ aprobado }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #82B94F;border-radius:14px;padding:12px 14px;font-family:Outfit;font-weight:800;font-size:15px">{{ resumen }}</div>
+  </sc-if>
+
+  <sc-if value="{{ soloLectura }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#111;color:#fff;border-radius:14px;padding:12px 16px;font-size:13.5px;line-height:1.5">Plan aprobado por Julio. Filtra por tu nombre y marca tus tareas cuando las termines: todos lo vemos al momento.</div>
+  </sc-if>
+  <sc-if value="{{ cargando }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px solid #E4E7EE;border-radius:14px;padding:18px;text-align:center;font-size:14px;color:#6B7280">Cargando plan…</div>
+  </sc-if>
+  <sc-if value="{{ errorCarga }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px dashed #E56648;border-radius:14px;padding:18px;text-align:center;font-size:14px;color:#B4442B">No se pudo cargar el plan. Revisa la conexión.</div>
+  </sc-if>
+  <sc-if value="{{ noExiste }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px dashed #E56648;border-radius:14px;padding:18px;text-align:center;font-size:14px;color:#B4442B">Este plan todavía no está publicado. Pide a Julio que lo apruebe.</div>
+  </sc-if>
+
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#6B7280">FILTRAR</span>
+    <sc-for list="{{ filtros }}" as="f" hint-placeholder-count="5">
+      <button onClick="{{ f.onClick }}" style="height:34px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;background:{{ f.bg }};color:{{ f.tx }};border:1px solid {{ f.borde }}">{{ f.t }}</button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ sinResultados }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px dashed #C9CFDA;border-radius:14px;padding:18px;text-align:center;font-size:14px;color:#6B7280">No hay tareas para «{{ filtroTxt }}».</div>
+  </sc-if>
+
+  <sc-for list="{{ bloques }}" as="b" hint-placeholder-count="3">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:{{ b.color }};margin-top:6px">{{ b.t }}</div>
+      <sc-for list="{{ b.tareas }}" as="x" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid {{ x.borde }};border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <button onClick="{{ x.toggleHecho }}" aria-label="Hecha" style="width:26px;height:26px;border-radius:8px;flex:none;border:2px solid {{ x.chkBorde }};background:{{ x.chkBg }};color:#fff;font-weight:800;font-size:14px;display:{{ x.chkD }};place-items:center">{{ x.chk }}</button>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:15px;line-height:1.35;text-decoration:{{ x.tachado }}">{{ x.t }}</div>
+              <div style="font-size:13px;line-height:1.45;color:#374151;margin-top:4px"><b>Objetivo:</b> {{ x.obj }}</div>
+            </div>
+            <span style="flex:none;font-size:11px;font-weight:800;letter-spacing:.04em;padding:4px 9px;border-radius:999px;background:{{ x.estBg }};color:{{ x.estTx }};white-space:nowrap">{{ x.estTxt }}</span>
+          </div>
+
+          <sc-if value="{{ x.propuesta }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:8px;padding-left:38px;flex-wrap:wrap">
+              <button onClick="{{ x.aprobar }}" style="height:38px;padding:0 16px;border-radius:12px;background:#111;color:#fff;font-weight:700;font-size:13.5px">✓ Aprobar</button>
+              <button onClick="{{ x.basura }}" style="height:38px;padding:0 16px;border-radius:12px;background:#fff;border:1px solid #E4E7EE;color:#B4442B;font-weight:700;font-size:13.5px">🗑 Basura</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ x.aprobada }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:10px;padding-left:38px">
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                <span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280;width:72px">OWNER</span>
+                <sc-for list="{{ x.personas }}" as="p" hint-placeholder-count="3">
+                  <button onClick="{{ p.onClick }}" style="height:32px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:{{ p.bg }};color:{{ p.tx }};border:1px solid {{ p.borde }}">{{ p.n }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                <span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280;width:72px">DEADLINE</span>
+                <sc-for list="{{ x.rapidas }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="height:32px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:{{ r.bg }};color:{{ r.tx }};border:1px solid {{ r.borde }}">{{ r.t }}</button>
+                </sc-for>
+                <input type="date" value="{{ x.fecha }}" onChange="{{ x.onFecha }}" style="height:32px;padding:0 10px;border-radius:10px;border:1px solid {{ x.fechaBorde }};font-size:13px;background:#fff;color:#111">
+              </div>
+              <button onClick="{{ x.deshacer }}" style="align-self:flex-start;height:28px;padding:0 10px;border-radius:8px;background:#F0F2F6;color:#6B7280;font-size:12px;font-weight:600">Volver a revisar</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </sc-for>
+
+  <sc-if value="{{ puedeEditar }}" hint-placeholder-val="{{ true }}">
+  <div style="background:#fff;border:1px dashed #C9CFDA;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;margin-top:6px">
+    <div style="font-family:Outfit;font-weight:800;font-size:16px">+ Añadir tarea</div>
+    <input value="{{ nueva.t }}" onChange="{{ nueva.onT }}" placeholder="Tarea (ej. Llamar a fabricante de pulseras)" style="height:42px;padding:0 12px;border-radius:12px;border:1px solid #E4E7EE;font-size:14px;outline:none">
+    <input value="{{ nueva.obj }}" onChange="{{ nueva.onObj }}" placeholder="Objetivo (qué tiene que estar hecho)" style="height:42px;padding:0 12px;border-radius:12px;border:1px solid #E4E7EE;font-size:14px;outline:none">
+    <button onClick="{{ nueva.add }}" style="align-self:flex-start;height:40px;padding:0 18px;border-radius:12px;background:{{ nueva.bg }};color:#fff;font-weight:700;font-size:14px">Añadir al plan</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hayBasura }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#9CA3AF">BASURA · {{ nBasura }}</div>
+      <sc-for list="{{ basura }}" as="z" hint-placeholder-count="0">
+        <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E4E7EE;border-radius:12px;padding:10px 12px;opacity:.7">
+          <div style="flex:1;min-width:0;font-size:13.5px;text-decoration:line-through;color:#6B7280">{{ z.t }}</div>
+          <button onClick="{{ z.recuperar }}" style="flex:none;height:30px;padding:0 12px;border-radius:9px;background:#F0F2F6;font-size:12px;font-weight:700">Recuperar</button>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ borrador }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ aprobarPlan }}" style="height:54px;border-radius:16px;background:{{ apBg }};color:#fff;font-family:Outfit;font-weight:800;font-size:16px;margin-top:6px">{{ apTxt }}</button>
+  </sc-if>
+
+  <sc-if value="{{ panelJulio }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#111;color:#fff;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;margin-top:6px">
+      <div style="font-family:Outfit;font-weight:800;font-size:18px">Plan aprobado. Compártelo.</div>
+      <div style="font-size:13px;opacity:.8;line-height:1.5">El enlace abre el plan online. Cada socio filtra sus tareas y las marca como hechas; lo veis todos al momento.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onClick="{{ copiarEnlace }}" style="height:46px;padding:0 18px;border-radius:12px;background:#3068ED;color:#fff;font-family:Outfit;font-weight:800;font-size:15px">Copiar enlace para socios</button>
+        <sc-if value="{{ puedeCompartir }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ compartirEnlace }}" style="height:46px;padding:0 18px;border-radius:12px;background:#fff;color:#111;font-family:Outfit;font-weight:800;font-size:15px">Compartir (WhatsApp…)</button>
+        </sc-if>
+      </div>
+      <sc-if value="{{ hayManual }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:12.5px;opacity:.8">Tu navegador no deja copiar automáticamente. Mantén pulsado y copia:</div>
+          <textarea readonly="" onFocus="{{ selTodo }}" style="width:100%;box-sizing:border-box;min-height:64px;border-radius:10px;border:0;padding:10px;font-size:13px;color:#111;resize:vertical">{{ manual }}</textarea>
+          <button onClick="{{ cerrarManual }}" style="align-self:flex-start;height:32px;padding:0 12px;border-radius:9px;background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:600">Cerrar</button>
+        </div>
+      </sc-if>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ compartir }}" as="c" hint-placeholder-count="3">
+          <button onClick="{{ c.onClick }}" style="height:44px;padding:0 16px;border-radius:12px;background:#fff;color:#111;font-weight:700;font-size:14px">{{ c.t }}</button>
+        </sc-for>
+      </div>
+      <button onClick="{{ reabrir }}" style="align-self:flex-start;height:36px;padding:0 12px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:600">Volver a editar</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hayAviso }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#82B94F;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.2)">{{ aviso }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = 'bros-plan-del-dia-2026-10-12-v2';
+const HOY = '2026-10-12';
+const PLAN_ID = HOY;
+const SB_URL = 'https://nxdkjayuonzrqwjokfyu.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg';
+const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal', ...(opts.headers || {}) } });
+async function leerPlan(id) { const r = await sb(`planes?id=eq.${encodeURIComponent(id)}&select=tareas`); if (!r.ok) throw new Error(r.status); const j = await r.json(); return j[0] ? j[0].tareas : null; }
+async function guardarPlan(id, tareas) { const r = await sb('planes', { method: 'POST', body: JSON.stringify([{ id, fecha: HOY, tareas, actualizado: new Date().toISOString() }]) }); if (!r.ok) throw new Error(r.status); }
+const PERSONAS = [['Julio', '#3068ED'], ['Jesús', '#E56648'], ['Pilar', '#82B94F']];
+const RAPIDAS = [['Hoy', '2026-10-12'], ['Mañana', '2026-10-13'], ['Viernes', '2026-10-16']];
+const PROPUESTAS = [
+  { b: 'PRIORIDADES', id: 'red', t: 'Outreach red-teaming: VYS, Surge y Giskard', obj: 'Los 3 mensajes enviados desde Gmail y registrados en Pipeline.', f: '2026-10-12' },
+  { b: 'PRIORIDADES', id: 'demos', t: 'Subir las 8 demos (modo móvil) a GitHub', obj: 'Las 8 demos se ven a pantalla completa en el iPhone desde el PDF.', f: '2026-10-12' },
+  { b: 'PRIORIDADES', id: 'patentes', t: 'Enviar el material de patentes al despacho', obj: 'El despacho tiene los 8 PDF (Patente 00 a 07) y fecha de reunión.', f: '2026-10-12' },
+  { b: 'SEGUIMIENTOS', id: 'angel', t: 'Business angel: enviar el insight «software primero»', obj: 'Insight enviado y siguiente paso acordado.', f: '2026-10-14' },
+  { b: 'SEGUIMIENTOS', id: 'twelve', t: 'Twelve: recordatorio a Lucas si no ha llegado su propuesta', obj: 'Fecha cerrada para recibir su propuesta de socio.', f: '2026-10-16' },
+  { b: 'SEGUIMIENTOS', id: 'cris', t: 'Cristina Berzal: colaboración con su red de inversores', obj: 'Saber si acepta y a qué inversores nos presenta.', f: '2026-10-16' },
+  { b: 'SEGUIMIENTOS', id: 'inst', t: 'Persona de instituciones: primeras puertas abiertas', obj: 'Lista de instituciones contactadas y primera reunión.', f: '2026-10-19' },
+  { b: 'SEGUIMIENTOS', id: 'marcas', t: 'Marcas (Casa del Libro, EA, McDonald\'s): estado del contacto', obj: 'Estado real de cada marca en Pipeline.', f: '2026-10-16' },
+  { b: 'ESTA SEMANA', id: 'pulsera', t: 'Coste de la pulsera', obj: 'Precio por unidad (300 uds) para recalcular la caja del business plan.', f: '2026-10-15' },
+  { b: 'ESTA SEMANA', id: 'compliance', t: 'Enviar el email al despacho de compliance', obj: 'Presupuesto pedido para el servicio de compliance.', f: '2026-10-15' },
+  { b: 'ESTA SEMANA', id: 'drive', t: 'Revisión semanal de Drive', obj: 'Una sola versión viva por documento; lo viejo en 99 Old material.', f: '2026-10-16' }
+];
+const COLOR = { PRIORIDADES: '#3068ED', SEGUIMIENTOS: '#E56648', 'ESTA SEMANA': '#111', 'AÑADIDAS POR JULIO': '#82B94F' };
+const fmt = iso => { if (!iso) return ''; const d = new Date(iso + 'T12:00:00'); return d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).replace('.', ''); };
+class Component extends DCLogic {
+  state = (() => {
+    const mp = (location.hash || '').match(/plan=([^&]+)/);
+    if (mp) return { tareas: [], aprobado: true, soloLectura: true, planId: decodeURIComponent(mp[1]), cargando: true, sync: 'cargando', nT: '', nObj: '', filtro: 'Todos', aviso: '' };
+    try { const m = (location.hash || '').match(/p=([^&]+)/); if (m) { const t = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1]))))); return { tareas: t.map((x, i) => ({ ...x, id: 's' + i, estado: 'aprobada' })), aprobado: true, soloLectura: true, nT: '', nObj: '', filtro: 'Todos', aviso: '' }; } } catch (e) {}
+    try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) return { filtro: 'Todos', ...s, soloLectura: false, aviso: '' }; } catch (e) {}
+    return { ...this.inicial(), filtro: 'Todos' };
+  })();
+  enlace() { return 'https://julioaguayogoded-cell.github.io/bro/Plan%20del%20dia.dc.html#plan=' + encodeURIComponent(PLAN_ID); }
+  aprobadas() { return this.state.tareas.filter(x => x.estado === 'aprobada').map(({ id, b, t, obj, f, owner, hecho }) => ({ id, b, t, obj, f, owner, hecho: !!hecho })); }
+  idRemoto() { return this.state.planId || PLAN_ID; }
+  async refrescar() {
+    const s = this.state;
+    if (!s.aprobado) return;
+    try {
+      const rem = await leerPlan(this.idRemoto());
+      if (s.soloLectura) {
+        if (!rem) return this.setState({ cargando: false, sync: 'noexiste' });
+        this.setState({ tareas: rem.map(x => ({ ...x, estado: 'aprobada' })), cargando: false, sync: 'ok' });
+      } else if (rem) {
+        const h = {}; rem.forEach(x => { h[x.id] = x.hecho; });
+        this.setState(st => ({ tareas: st.tareas.map(x => x.id in h ? { ...x, hecho: h[x.id] } : x), sync: 'ok' }));
+      }
+    } catch (e) { this.setState({ cargando: false, sync: 'error' }); }
+  }
+  async publicar() {
+    try {
+      const rem = await leerPlan(PLAN_ID).catch(() => null);
+      const h = {}; (rem || []).forEach(x => { if (x.hecho) h[x.id] = true; });
+      await guardarPlan(PLAN_ID, this.aprobadas().map(x => ({ ...x, hecho: x.hecho || !!h[x.id] })));
+      this.setState({ sync: 'ok' });
+      this.avisar('Plan publicado: ya puedes compartir el enlace');
+    } catch (e) { this.setState({ sync: 'error' }); this.avisar('No se pudo publicar en Supabase'); }
+  }
+  async marcar(id, valor) {
+    this.setState(st => ({ tareas: st.tareas.map(x => x.id === id ? { ...x, hecho: valor } : x) }));
+    try {
+      const rem = (await leerPlan(this.idRemoto())) || this.aprobadas();
+      await guardarPlan(this.idRemoto(), rem.map(x => x.id === id ? { ...x, hecho: valor } : x));
+      this.setState({ sync: 'ok' });
+    } catch (e) { this.setState({ sync: 'error' }); this.avisar('Sin conexión: no se ha guardado'); }
+  }
+  componentDidMount() { this.refrescar(); this.poll = setInterval(() => this.refrescar(), 8000); }
+  componentWillUnmount() { clearInterval(this.poll); clearTimeout(this.ta); }
+  inicial() { return { tareas: PROPUESTAS.map(x => ({ ...x, estado: 'propuesta', owner: null, hecho: false })), aprobado: false, nT: '', nObj: '', aviso: '' }; }
+  componentDidUpdate() { if (this.state.soloLectura) return; try { const { aviso, soloLectura, sync, manual, ...r } = this.state; localStorage.setItem(KEY, JSON.stringify(r)); } catch (e) {} }
+  async copiarTexto(txt, ok) {
+    try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(txt); this.avisar(ok); return true; } } catch (e) {}
+    try {
+      const ta = document.createElement('textarea'); ta.value = txt; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, txt.length); const r = document.execCommand('copy'); document.body.removeChild(ta);
+      if (r) { this.avisar(ok); return true; }
+    } catch (e) {}
+    this.setState({ manual: txt }); return false;
+  }
+  avisar(t) { this.setState({ aviso: t }); clearTimeout(this.ta); this.ta = setTimeout(() => this.setState({ aviso: '' }), 2200); }
+  set(id, cambios) { if (this.state.soloLectura || (this.state.aprobado && !('hecho' in cambios))) return; this.setState(s => ({ tareas: s.tareas.map(x => x.id === id ? { ...x, ...cambios } : x) })); }
+  copiar(n) {
+    const mias = this.state.tareas.filter(x => x.estado === 'aprobada' && x.owner === n).sort((a, b) => a.f.localeCompare(b.f));
+    const txt = `Plan del día · ${fmt(HOY)}\n\n${n}, esto es lo tuyo:\n` + mias.map(x => `• ${x.t} · deadline ${fmt(x.f)}\n  Objetivo: ${x.obj}`).join('\n');
+    this.copiarTexto(txt, `Copiado el plan de ${n}`);
+  }
+  renderVals() {
+    const s = this.state, T = s.tareas;
+    const vivas = T.filter(x => x.estado !== 'basura');
+    const porRevisar = vivas.filter(x => x.estado === 'propuesta').length;
+    const sinOwner = vivas.filter(x => x.estado === 'aprobada' && (!x.owner || !x.f)).length;
+    const listo = vivas.length > 0 && porRevisar === 0 && sinOwner === 0;
+    const vista = x => {
+      const ap = x.estado === 'aprobada', ok = ap && x.owner && x.f;
+      return {
+        ...x, propuesta: x.estado === 'propuesta' && !s.aprobado && !s.soloLectura, aprobada: ap && !s.aprobado && !s.soloLectura,
+        estTxt: x.hecho ? 'HECHA' : ok ? `${x.owner.toUpperCase()} · ${fmt(x.f)}` : ap ? 'FALTA OWNER/FECHA' : 'PROPUESTA',
+        estBg: x.hecho ? '#EEF6E6' : ok ? '#EEF3FE' : ap ? '#FDF0EC' : '#F0F2F6', estTx: x.hecho ? '#3D6B1F' : ok ? '#2452C4' : ap ? '#B4442B' : '#6B7280',
+        borde: x.estado === 'propuesta' ? '#E4E7EE' : ok ? '#D5E0FA' : '#F2C6B8',
+        chkD: s.aprobado && ap ? 'grid' : 'none', chk: x.hecho ? '✓' : '', chkBg: x.hecho ? '#82B94F' : '#fff', chkBorde: x.hecho ? '#82B94F' : '#D5DAE3', tachado: x.hecho ? 'line-through' : 'none',
+        toggleHecho: () => s.aprobado && this.marcar(x.id, !x.hecho),
+        aprobar: () => this.set(x.id, { estado: 'aprobada' }),
+        basura: () => this.set(x.id, { estado: 'basura' }),
+        deshacer: () => this.set(x.id, { estado: 'propuesta' }),
+        personas: PERSONAS.map(([n, c]) => { const on = x.owner === n; return { n, bg: on ? c : '#fff', tx: on ? '#fff' : '#111', borde: on ? c : '#E4E7EE', onClick: () => this.set(x.id, { owner: on ? null : n }) }; }),
+        rapidas: RAPIDAS.map(([t, f]) => { const on = x.f === f; return { t, bg: on ? '#111' : '#fff', tx: on ? '#fff' : '#111', borde: on ? '#111' : '#E4E7EE', onClick: () => this.set(x.id, { f }) }; }),
+        fecha: x.f || '', fechaBorde: x.f ? '#E4E7EE' : '#E56648',
+        onFecha: e => this.set(x.id, { f: e.target.value })
+      };
+    };
+    const nombres = ['PRIORIDADES', 'SEGUIMIENTOS', 'ESTA SEMANA', 'AÑADIDAS POR JULIO'];
+    const F = s.filtro || 'Todos';
+    const pasa = x => F === 'Todos' || (F === 'Sin owner' ? !x.owner : x.owner === F);
+    const bloques = nombres.map(b => ({ t: b, color: COLOR[b], tareas: vivas.filter(x => x.b === b && pasa(x)).map(vista) })).filter(b => b.tareas.length);
+    const cuenta = n => n === 'Todos' ? vivas.length : vivas.filter(x => n === 'Sin owner' ? !x.owner : x.owner === n).length;
+    const filtros = ['Todos', ...PERSONAS.map(p => p[0]), 'Sin owner'].filter(n => !(s.soloLectura && n === 'Sin owner')).map(n => {
+      const on = F === n, c = (PERSONAS.find(p => p[0] === n) || [0, '#111'])[1];
+      return { t: `${n} · ${cuenta(n)}`, bg: on ? c : '#fff', tx: on ? '#fff' : '#111', borde: on ? c : '#E4E7EE', onClick: () => this.setState({ filtro: n }) };
+    });
+    const basura = T.filter(x => x.estado === 'basura').map(x => ({ t: x.t, recuperar: () => { if (!s.aprobado) this.set(x.id, { estado: 'propuesta' }); } }));
+    const partes = [];
+    if (porRevisar) partes.push(`${porRevisar} por revisar`);
+    if (sinOwner) partes.push(`${sinOwner} sin owner o deadline`);
+    const nuevaOk = !!s.nT.trim();
+    return {
+      fecha: 'Lunes, 12 de octubre de 2026', estadoTxt: s.aprobado ? 'APROBADO' : 'BORRADOR',
+      resumen: s.aprobado ? `${vivas.filter(x => x.hecho).length} de ${vivas.length} hechas` : partes.length ? partes.join(' · ') : 'Todo listo para aprobar',
+      bloques, basura, hayBasura: basura.length > 0 && !s.soloLectura && !s.aprobado && F === 'Todos', nBasura: basura.length,
+      filtros, sinResultados: bloques.length === 0 && !s.cargando && !(s.soloLectura && (s.sync === 'error' || s.sync === 'noexiste')), filtroTxt: F,
+      errorCarga: !!s.soloLectura && s.sync === 'error',
+      soloLectura: !!s.soloLectura, puedeEditar: !s.aprobado && !s.soloLectura, panelJulio: s.aprobado && !s.soloLectura,
+      copiarEnlace: () => this.copiarTexto(this.enlace(), 'Enlace copiado: pégalo a tus socios'),
+      puedeCompartir: typeof navigator !== 'undefined' && !!navigator.share,
+      compartirEnlace: async () => { try { await navigator.share({ title: 'Plan del día · BroS Life', text: 'Plan del día de BroS Life: filtra por tu nombre y marca tus tareas.', url: this.enlace() }); } catch (e) {} },
+      hayManual: !!s.manual, manual: s.manual || '', cerrarManual: () => this.setState({ manual: '' }), selTodo: e => e.target.select(),
+      nueva: {
+        t: s.nT, obj: s.nObj, bg: nuevaOk ? '#3068ED' : '#9CA3AF',
+        onT: e => this.setState({ nT: e.target.value }), onObj: e => this.setState({ nObj: e.target.value }),
+        add: () => {
+          if (!nuevaOk) return this.avisar('Escribe la tarea');
+          if (s.aprobado) return this.avisar('Vuelve a editar para añadir');
+          this.setState(st => ({ tareas: [...st.tareas, { b: 'AÑADIDAS POR JULIO', id: 'n' + Date.now(), t: st.nT.trim(), obj: st.nObj.trim() || '—', f: '', estado: 'aprobada', owner: null, hecho: false }], nT: '', nObj: '' }));
+          this.avisar('Tarea añadida');
+        }
+      },
+      borrador: !s.aprobado && !s.soloLectura, aprobado: s.aprobado,
+      apBg: listo ? '#111' : '#9CA3AF', apTxt: listo ? 'Aprobar plan del día' : `Para aprobar: ${partes.join(' · ') || 'añade al menos una tarea'}`,
+      aprobarPlan: () => listo ? this.setState({ aprobado: true }, () => this.publicar()) : this.avisar('Revisa las tareas pendientes'),
+      cargando: !!s.cargando, noExiste: s.sync === 'noexiste',
+      syncTxt: { ok: '● Sincronizado', error: '● Sin conexión', cargando: '● Cargando…', noexiste: '● Plan no encontrado' }[s.sync] || '', syncColor: s.sync === 'ok' ? '#4E7D22' : s.sync === 'error' ? '#B4442B' : '#6B7280',
+      reabrir: () => this.setState({ aprobado: false }),
+      compartir: PERSONAS.filter(([n]) => vivas.some(x => x.estado === 'aprobada' && x.owner === n)).map(([n]) => ({ t: `Copiar para ${n}`, onClick: () => this.copiar(n) })),
+      hayAviso: !!s.aviso, aviso: s.aviso
+    };
+  }
+}
+</script>
+</body>
+</html>
