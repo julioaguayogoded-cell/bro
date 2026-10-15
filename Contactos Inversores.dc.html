@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0;background:#F4F5F9;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-text-size-adjust:100%} a{color:#3068ED} a:hover{color:#1f4fc0} button,input,select{font-family:inherit} button{cursor:pointer;border:0}</style>
+</helmet>
+<div style="max-width:880px;margin:0 auto;padding:24px 16px 60px;display:flex;flex-direction:column;gap:16px">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="BroS Life" style="width:32px;height:32px"><span style="font-family:Outfit;font-weight:800;font-size:19px;letter-spacing:-.02em">BroS Life</span></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6B7280"><span style="width:8px;height:8px;border-radius:50%;background:{{ syncColor }}"></span>{{ syncTxt }}</div>
+  </div>
+
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#3068ED">03 SALES · CONTACTOS</div>
+    <h1 style="font-family:Outfit;font-weight:800;font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:6px 0 6px">Contactos para la ronda</h1>
+    <div style="font-size:14px;color:#4B5563;line-height:1.5;text-wrap:pretty">Cada socio se asigna los contactos que conoce y marca cuando ya ha contactado. Los cambios se ven al momento para los tres.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+    <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">TOTAL</div><div style="font-family:Outfit;font-weight:800;font-size:26px">{{ nTotal }}</div></div>
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #E56648;border-radius:16px;padding:14px"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">PENDIENTES</div><div style="font-family:Outfit;font-weight:800;font-size:26px">{{ nPend }}</div></div>
+    <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid #82B94F;border-radius:16px;padding:14px"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#6B7280">CONTACTADOS</div><div style="font-family:Outfit;font-weight:800;font-size:26px">{{ nHecho }}</div></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <sc-for list="{{ filtrosOwner }}" as="f" hint-placeholder-count="5">
+        <button onClick="{{ f.onClick }}" style="flex:none;white-space:nowrap;height:36px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;background:{{ f.bg }};color:{{ f.tx }};border:1px solid {{ f.borde }}">{{ f.t }} · {{ f.n }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <sc-for list="{{ filtrosEstado }}" as="f" hint-placeholder-count="3">
+        <button onClick="{{ f.onClick }}" style="flex:none;white-space:nowrap;height:32px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:600;background:{{ f.bg }};color:{{ f.tx }};border:1px solid {{ f.borde }}">{{ f.t }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;overflow:hidden">
+    <sc-for list="{{ lista }}" as="c" hint-placeholder-count="10">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid #F0F2F6;background:{{ c.fondo }}">
+        <button onClick="{{ c.onEstado }}" aria-label="Cambiar estado" style="width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:{{ c.checkBg }};border:2px solid {{ c.checkBorde }};color:#fff;font-weight:800;font-size:14px;box-sizing:border-box">{{ c.check }}</button>
+        <div style="flex:1 1 180px;min-width:0">
+          <div style="font-weight:700;font-size:15px;color:{{ c.nombreTx }};text-decoration:{{ c.tachado }}">{{ c.nombre }}</div>
+          <div style="font-size:12px;font-weight:600;color:{{ c.estadoTx }};margin-top:2px">{{ c.estadoLabel }}</div>
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <sc-for list="{{ c.owners }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.onClick }}" style="flex:none;white-space:nowrap;height:32px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:700;background:{{ o.bg }};color:{{ o.tx }};border:1px solid {{ o.borde }}">{{ o.t }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ vacio }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px;text-align:center;font-size:14px;color:#6B7280">No hay contactos con este filtro.</div>
+    </sc-if>
+  </div>
+
+  <div style="background:#fff;border:1px dashed #C9CFDB;border-radius:18px;padding:14px;display:flex;gap:8px;flex-wrap:wrap">
+    <input value="{{ nuevo }}" onChange="{{ onNuevo }}" onKeyDown="{{ onNuevoKey }}" placeholder="Añadir contacto…" style="flex:1 1 220px;min-width:0;height:44px;border:1px solid #E4E7EE;border-radius:12px;padding:0 14px;font-size:15px;outline:none">
+    <button onClick="{{ anadir }}" style="height:44px;padding:0 18px;border-radius:12px;background:#111;color:#fff;font-weight:700;font-size:14px">Añadir</button>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <button onClick="{{ copiar }}" style="height:44px;padding:0 18px;border-radius:12px;background:#3068ED;color:#fff;font-weight:700;font-size:14px">Copiar enlace para socios</button>
+    <span style="font-size:12.5px;color:#6B7280">Todos editan la misma lista.</span>
+  </div>
+
+  <sc-if value="{{ hayAviso }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);max-width:90vw;text-align:center">{{ aviso }}</div>
+  </sc-if>
+
+  <div style="font-size:11.5px;color:#9CA3AF;text-align:center">Confidencial · BroS Life · 2026</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const LISTA_ID = 'contactos-ronda-2026';
+const KEY = 'bros-contactos-ronda-v1';
+const SB_URL = 'https://nxdkjayuonzrqwjokfyu.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg';
+const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates' } });
+async function leer() { const r = await sb(`planes?id=eq.${LISTA_ID}&select=tareas`); if (!r.ok) throw new Error(r.status); const j = await r.json(); return j[0] ? j[0].tareas : null; }
+async function guardar(lista) { const r = await sb('planes', { method: 'POST', body: JSON.stringify([{ id: LISTA_ID, fecha: '2026-10-15', tareas: lista, actualizado: new Date().toISOString() }]) }); if (!r.ok) throw new Error(r.status); }
+const OWNERS = ['Julio', 'Jesús', 'Pilar'];
+const COLOR = { Julio: '#3068ED', 'Jesús': '#E56648', Pilar: '#82B94F' };
+const NOMBRES = ['Álvaro Escrivá', 'Bea Yoga', 'Paloma Miranda', 'Marc', 'Abry', 'Míchel', 'Jaime Nieto', 'Laura Mugica', 'María Bartolomé', 'Atresmedia · Isa Amate', 'Jorge Planes', 'Cova y Cris', 'Antonio Atleti + socio', 'Diego Serrano', 'Carlos Núñez', 'Alex Fannius', 'Ran Buck', 'Jon W', 'Banano', 'Noelia', 'Nadav Perry', 'Fernando Portugal', 'Bertolín', 'IESE', 'ESIC', 'Daniel Zeotap', 'Fundador Affel', 'Poyatos', 'Fran Utrera', 'Albert Nieto', 'Luis Fer', 'Marido Loca', 'Investors Explora / Duolingo', 'Granero / Mario', 'Arbeloa', 'Garbajosa', 'Orange', 'Telefónica', 'Alejandra Henneo', 'Pablo Motos'];
+const inicial = () => NOMBRES.map((n, i) => ({ id: 'c' + (i + 1), nombre: n, owner: null, hecho: false }));
+class Component extends DCLogic {
+  state = (() => { let l = null; try { l = JSON.parse(localStorage.getItem(KEY)); } catch (e) {} return { lista: l || inicial(), fOwner: 'Todos', fEstado: 'Todos', nuevo: '', aviso: '', sync: 'cargando' }; })();
+  componentDidMount() { this.refrescar(true); this.poll = setInterval(() => this.refrescar(false), 5000); }
+  componentWillUnmount() { clearInterval(this.poll); clearTimeout(this.ta); }
+  componentDidUpdate() { try { localStorage.setItem(KEY, JSON.stringify(this.state.lista)); } catch (e) {} }
+  async refrescar(primera) {
+    try {
+      const rem = await leer();
+      if (rem) this.setState({ lista: rem, sync: 'ok' });
+      else if (primera) { await guardar(this.state.lista); this.setState({ sync: 'ok' }); }
+    } catch (e) { this.setState({ sync: 'error' }); }
+  }
+  async cambiar(fn) {
+    this.setState(s => ({ lista: fn(s.lista) }));
+    try { const rem = (await leer()) || this.state.lista; const nueva = fn(rem); await guardar(nueva); this.setState({ lista: nueva, sync: 'ok' }); }
+    catch (e) { this.setState({ sync: 'error' }); this.avisar('No se pudo guardar. Revisa la conexión.'); }
+  }
+  avisar(t) { this.setState({ aviso: t }); clearTimeout(this.ta); this.ta = setTimeout(() => this.setState({ aviso: '' }), 2500); }
+  anadir() {
+    const n = (this.state.nuevo || '').trim(); if (!n) return;
+    this.setState({ nuevo: '' });
+    this.cambiar(l => l.some(x => x.nombre.toLowerCase() === n.toLowerCase()) ? l : [...l, { id: 'c' + Date.now(), nombre: n, owner: null, hecho: false }]);
+  }
+  async copiar() {
+    const url = 'https://julioaguayogoded-cell.github.io/bro/Contactos%20Inversores.dc.html';
+    try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(url); return this.avisar('Enlace copiado'); } } catch (e) {}
+    try { const t = document.createElement('textarea'); t.value = url; document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove(); if (ok) return this.avisar('Enlace copiado'); } catch (e) {}
+    window.prompt('Copia este enlace:', url);
+  }
+  renderVals() {
+    const s = this.state, L = s.lista;
+    const cuenta = o => o === 'Todos' ? L.length : o === 'Sin asignar' ? L.filter(x => !x.owner).length : L.filter(x => x.owner === o).length;
+    const chip = (on, c) => ({ bg: on ? (c || '#111') : '#fff', tx: on ? '#fff' : '#111', borde: on ? (c || '#111') : '#E4E7EE' });
+    const vis = L.filter(x => (s.fOwner === 'Todos' || (s.fOwner === 'Sin asignar' ? !x.owner : x.owner === s.fOwner)) && (s.fEstado === 'Todos' || (s.fEstado === 'Contactado' ? x.hecho : !x.hecho)));
+    const nHecho = L.filter(x => x.hecho).length;
+    return {
+      nTotal: L.length, nHecho, nPend: L.length - nHecho,
+      syncColor: s.sync === 'ok' ? '#82B94F' : s.sync === 'error' ? '#E56648' : '#C9CFDB',
+      syncTxt: s.sync === 'ok' ? 'Sincronizado' : s.sync === 'error' ? 'Sin conexión' : 'Conectando…',
+      filtrosOwner: ['Todos', ...OWNERS, 'Sin asignar'].map(o => ({ t: o, n: cuenta(o), ...chip(s.fOwner === o, COLOR[o]), onClick: () => this.setState({ fOwner: o }) })),
+      filtrosEstado: ['Todos', 'Pendiente', 'Contactado'].map(e => ({ t: e, ...chip(s.fEstado === e), onClick: () => this.setState({ fEstado: e }) })),
+      lista: vis.map(c => ({
+        ...c,
+        fondo: c.hecho ? '#F7FBF3' : '#fff',
+        check: c.hecho ? '✓' : '', checkBg: c.hecho ? '#82B94F' : 'transparent', checkBorde: c.hecho ? '#82B94F' : '#C9CFDB',
+        nombreTx: c.hecho ? '#6B7280' : '#111', tachado: 'none',
+        estadoLabel: c.hecho ? `Contactado${c.owner ? ' · ' + c.owner : ''}` : c.owner ? `Pendiente · ${c.owner}` : 'Pendiente · sin asignar',
+        estadoTx: c.hecho ? '#4E7D22' : c.owner ? '#B4442B' : '#9CA3AF',
+        onEstado: () => this.cambiar(l => l.map(x => x.id === c.id ? { ...x, hecho: !x.hecho } : x)),
+        owners: OWNERS.map(o => ({ t: o, ...chip(c.owner === o, COLOR[o]), onClick: () => this.cambiar(l => l.map(x => x.id === c.id ? { ...x, owner: x.owner === o ? null : o } : x)) }))
+      })),
+      vacio: vis.length === 0,
+      nuevo: s.nuevo, onNuevo: e => this.setState({ nuevo: e.target.value }), onNuevoKey: e => { if (e.key === 'Enter') this.anadir(); },
+      anadir: () => this.anadir(), copiar: () => this.copiar(),
+      hayAviso: !!s.aviso, aviso: s.aviso
+    };
+  }
+}
+</script>
+</body>
+</html>
