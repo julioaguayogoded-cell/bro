@@ -1,13 +1,685 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bro OS</title>
-<meta http-equiv="refresh" content="0; url=Bro%20OS%20v4.dc.html">
-<link rel="apple-touch-icon" href="logo.png">
+<script src="./support.js"></script>
 </head>
-<body style="font-family:system-ui,sans-serif;background:#F5F6F9;display:grid;place-items:center;min-height:100vh;margin:0">
-<a href="Bro%20OS%20v4.dc.html" style="color:#3068ED">Abrir Bro OS</a>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BroS Life · Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#FFFFFF;color:#111;font-family:Inter,system-ui,sans-serif;-webkit-text-size-adjust:100%;text-size-adjust:100%} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit} input{font-family:inherit} @keyframes sube{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}</style>
+</helmet>
+
+<sc-if value="{{ bloqueado }}" hint-placeholder-val="{{ false }}">
+  <div style="min-height:100dvh;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#fff">
+    <div style="width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+      <img src="logo.png" alt="BroS Life" style="width:64px;height:64px">
+      <div style="font-family:Outfit;font-weight:800;font-size:26px;letter-spacing:-.02em">BroS Life</div>
+      <div style="font-size:14px;line-height:1.5;color:#6B7280">Dossier confidencial. Escribe el código de acceso que te hemos enviado.</div>
+      <input value="{{ codigo }}" onChange="{{ onCodigo }}" onKeyDown="{{ onKey }}" placeholder="Código de acceso" autocomplete="off" style="width:100%;box-sizing:border-box;height:52px;border-radius:14px;border:1px solid {{ bordeCodigo }};padding:0 16px;font-size:16px;text-align:center;letter-spacing:.08em;outline:none">
+      <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Ese código no es correcto.</div></sc-if>
+      <button onClick="{{ entrar }}" style="width:100%;height:52px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">Entrar</button>
+      <div style="display:flex;gap:5px;margin-top:6px"><span style="width:26px;height:5px;border-radius:3px;background:#3068ED"></span><span style="width:26px;height:5px;border-radius:3px;background:#E56648"></span><span style="width:26px;height:5px;border-radius:3px;background:#82B94F"></span><span style="width:26px;height:5px;border-radius:3px;background:#111"></span></div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ abierto }}" hint-placeholder-val="{{ true }}">
+<div style="min-height:100dvh;display:flex;flex-direction:column;background:#fff">
+
+  <div style="position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #EEF0F4">
+    <div style="max-width:1120px;margin:0 auto;padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <button onClick="{{ irInicio }}" style="display:flex;align-items:center;gap:9px"><img src="logo.png" alt="" style="width:28px;height:28px"><span style="font-family:Outfit;font-weight:800;font-size:17px;letter-spacing:-.02em">BroS Life</span></button>
+      <span style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#9CA3AF">DOSSIER CONFIDENCIAL</span>
+    </div>
+    <div style="max-width:1120px;margin:0 auto;padding:10px 20px 0;display:flex;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="9">
+        <button onClick="{{ n.onClick }}" style="flex:none;padding:8px 12px 11px;font-size:13.5px;font-weight:{{ n.peso }};color:{{ n.color }};border-bottom:3px solid {{ n.linea }};white-space:nowrap">{{ n.t }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex:1;width:100%;max-width:1120px;margin:0 auto;padding:40px 20px 28px;box-sizing:border-box">
+
+    <!-- 1 VISIÓN -->
+    <sc-if value="{{ s.vision }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:36px;animation:sube .35s ease-out">
+        <div style="position:relative;width:100%;aspect-ratio:1672/941;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px rgba(17,17,17,.12);container-type:inline-size">
+          <img src="bros-hero-limpia.png" alt="Bro Phone y Bro Band en su caja BroS Life" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.97) 18%,rgba(255,255,255,.75) 25%,rgba(255,255,255,.35) 31%,rgba(255,255,255,0) 38%)"></div>
+          <div style="position:absolute;left:4%;top:0;bottom:0;width:22%;display:flex;flex-direction:column;justify-content:center;gap:2cqw">
+            <div style="display:flex;align-items:center;gap:1.1cqw">
+              <img src="logo.png" alt="" style="width:5.4cqw;height:5.4cqw;flex:none">
+              <span style="font-family:Outfit;font-weight:800;font-size:3.5cqw;letter-spacing:-.03em;color:#111;line-height:1;white-space:nowrap">BroS Life</span>
+            </div>
+            <div style="display:flex;gap:.6cqw"><span style="width:3cqw;height:.55cqw;border-radius:1cqw;background:#3068ED"></span><span style="width:3cqw;height:.55cqw;border-radius:1cqw;background:#E56648"></span><span style="width:3cqw;height:.55cqw;border-radius:1cqw;background:#82B94F"></span><span style="width:3cqw;height:.55cqw;border-radius:1cqw;background:#111"></span></div>
+            <div style="font-family:Inter;font-weight:800;font-size:1.7cqw;letter-spacing:.2em;color:#111;margin-top:1cqw">COMING SOON</div>
+            <div style="font-family:Inter;font-weight:500;font-size:1.3cqw;line-height:1.45;color:#374151">Bro Phone + Bro Band<br>The first step in their journey.</div>
+          </div>
+        </div>
+        <div style="max-width:820px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED">MISIÓN</div>
+            <h1 style="font-family:Outfit;font-weight:800;font-size:clamp(32px,5vw,52px);line-height:1.04;letter-spacing:-.03em;margin:0;text-wrap:balance">Una nueva forma de conectarse para un desarrollo saludable de niños y adolescentes.</h1>
+            <p style="font-size:17px;line-height:1.55;color:#374151;margin:0;text-wrap:pretty">BroS Life es una familia de dispositivos con su propio sistema operativo para niños y adolescentes de 8 a 16 años. Les convierte de pasivos y consumidores en activos y creadores.</p>
+            <div style="display:flex;gap:6px"><span style="width:34px;height:6px;border-radius:3px;background:#3068ED"></span><span style="width:34px;height:6px;border-radius:3px;background:#E56648"></span><span style="width:34px;height:6px;border-radius:3px;background:#82B94F"></span><span style="width:34px;height:6px;border-radius:3px;background:#111"></span></div>
+          </div>
+        </div>
+        <div style="background:#111;color:#fff;border-radius:26px;padding:clamp(22px,4vw,40px);display:flex;flex-direction:column;gap:24px">
+          <div style="max-width:780px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#FF7A5C;margin-bottom:10px">EL PROBLEMA</div>
+            <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.1;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance">Les damos un móvil de adulto cada vez antes. Y está diseñado para engancharles.</h2>
+            <p style="font-size:16px;line-height:1.6;margin:0;opacity:.85;text-wrap:pretty">La pregunta ya no es si un niño va a tener móvil, sino qué móvil. Hoy solo existe el de adulto, con feeds infinitos y desconocidos. Los controles parentales llegan tarde y no cambian lo que pasa dentro.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+            <sc-for list="{{ datos }}" as="d" hint-placeholder-count="6">
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:baseline;gap:8px;white-space:nowrap">
+                  <span style="font-family:Outfit;font-weight:700;font-size:18px;color:#FF7A5C;opacity:.85">{{ d.pre }}</span>
+                  <span style="font-family:Outfit;font-weight:800;font-size:clamp(34px,4.6vw,46px);line-height:1;letter-spacing:-.03em;color:#FF7A5C">{{ d.big }}</span>
+                </div>
+                <div style="font-size:14.5px;line-height:1.45;font-weight:600">{{ d.txt }}</div>
+                <div style="font-size:11.5px;opacity:.55;margin-top:auto">{{ d.src }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,.14);padding-top:16px;font-size:15px;line-height:1.55;opacity:.9">Y las familias se mueven: en España se organizan para retrasar el móvil y han llevado peticiones al Congreso, y la UE legisla para proteger a los menores en entornos digitales. <b>Lo que falta es una alternativa.</b></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+          <div style="border:1px solid #EEF0F4;border-top:5px solid #3068ED;border-radius:20px;padding:22px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">LA SOLUCIÓN</div>
+            <p style="font-size:15px;line-height:1.6;margin:0;color:#374151;text-wrap:pretty">Un móvil y una pulsera construidos desde cero para esta edad, con una app para los padres. Sin likes, feeds ni desconocidos. Con Bro AI, que hace pensar y nunca decide por el niño.</p>
+          </div>
+          <div style="border:1px solid #EEF0F4;border-top:5px solid #111;border-radius:20px;padding:22px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#111;margin-bottom:10px">NUESTRA MISIÓN CON LA IA</div>
+            <p style="font-size:15px;line-height:1.6;margin:0;color:#374151;text-wrap:pretty">La IA va a estar en la vida de cada niño. Desde el primer día, nuestra misión es que llegue de forma <b>ética y segura para su desarrollo</b>: una IA que les ayuda a pensar y crear, nunca a depender de ella ni a dejar de decidir por sí mismos.</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:clamp(22px,3.4vw,38px);padding:clamp(8px,2vw,20px) 0">
+          <sc-for list="{{ pilares }}" as="p" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:10px 32px;align-items:end">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="font-family:Outfit;font-weight:800;font-size:clamp(52px,9vw,104px);line-height:.95;letter-spacing:-.04em;color:{{ p.color }}">{{ p.v }}</div>
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="width:46px;height:7px;border-radius:4px;background:{{ p.color }};flex:none"></span>
+                  <span style="font-family:Inter;font-weight:800;font-size:clamp(14px,1.8vw,19px);letter-spacing:.16em;color:#111">{{ p.n }}</span>
+                </div>
+              </div>
+              <div style="font-size:clamp(15px,1.7vw,18px);line-height:1.5;color:#374151;padding-bottom:4px;text-wrap:pretty">{{ p.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 2 PRODUCTO REAL -->
+    <sc-if value="{{ s.real }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#82B94F;margin-bottom:10px">LO QUE YA FUNCIONA</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px">No es una presentación. Es producto.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:0">Una familia de prueba vive ya el día a día con BroS Life: dos Bros y la app de los padres, conectados en tiempo real sobre infraestructura real.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px">
+          <sc-for list="{{ real }}" as="r" hint-placeholder-count="9">
+            <div style="border:1px solid #EEF0F4;border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start">
+              <div style="width:36px;height:36px;border-radius:11px;background:{{ r.bg }};color:{{ r.c }};display:grid;place-items:center;font-weight:800;font-size:16px;flex:none">✓</div>
+              <div><div style="font-family:Outfit;font-weight:800;font-size:17px">{{ r.t }}</div><div style="font-size:14px;line-height:1.5;color:#4B5563;margin-top:4px">{{ r.d }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 3 ARQUITECTURA -->
+    <sc-if value="{{ s.arq }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">ARQUITECTURA</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px">Un solo backend, todas las pantallas.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:0">Cada decisión de los padres se convierte en una regla que se aplica al instante en el móvil del Bro. El sistema operativo se actualiza sin reinstalar nada.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ capas }}" as="c" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:16px;align-items:center;border:1px solid #EEF0F4;border-left:6px solid {{ c.color }};border-radius:16px;padding:16px 18px">
+              <div><div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:{{ c.color }}">{{ c.k }}</div><div style="font-family:Outfit;font-weight:800;font-size:18px;margin-top:2px">{{ c.t }}</div></div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ c.items }}" as="i" hint-placeholder-count="3"><span style="font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;background:#F4F5F9">{{ i }}</span></sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#F4F6FB;border-radius:18px;padding:18px 20px;font-size:14.5px;line-height:1.6;color:#374151">
+          <b>Principios técnicos:</b> datos en la UE y mínimos · IA europea open source · la familia decide, el sistema aplica · privacidad por diseño: por defecto, y es lo que recomendamos, los padres ven tendencias y no conversaciones. Si lo consideran necesario, pueden activar durante un tiempo un seguimiento más cercano, para llegar antes de que haya un problema.
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 4 ROADMAP Y RETOS -->
+    <sc-if value="{{ s.retos }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:28px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#E56648;margin-bottom:10px">ROADMAP Y RETOS</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">Del prototipo al lanzamiento oficial en la vuelta al cole de 2027.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:12px 0 0;text-wrap:pretty">Tres pruebas antes de abrir la venta: una familia nuestra, 20 familias en enero y un colegio en abril. Cada una valida lo que la siguiente necesita.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;position:relative">
+          <sc-for list="{{ hitos }}" as="h" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:clamp(86px,14vw,130px) 28px minmax(0,1fr);gap:0 12px">
+              <div style="padding-top:16px;text-align:right">
+                <div style="font-size:12px;font-weight:800;letter-spacing:.06em;color:{{ h.c }}">{{ h.cuando }}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:2px;height:16px;background:{{ h.lineaArriba }}"></div>
+                <div style="width:{{ h.punto }};height:{{ h.punto }};border-radius:50%;background:{{ h.c }};box-shadow:0 0 0 5px {{ h.halo }};flex:none"></div>
+                <div style="width:2px;flex:1;background:{{ h.lineaAbajo }}"></div>
+              </div>
+              <div style="padding:10px 0 20px">
+                <div style="background:{{ h.bg }};color:{{ h.tx }};border-radius:18px;padding:16px 18px;border:1px solid {{ h.borde }}">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                    <div style="font-family:Outfit;font-weight:800;font-size:clamp(17px,2vw,20px);line-height:1.2">{{ h.t }}</div>
+                    <sc-if value="{{ h.hayTag }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:6px;background:{{ h.c }};color:#fff">{{ h.tag }}</span></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
+                    <sc-for list="{{ h.items }}" as="i" hint-placeholder-count="3"><div style="font-size:14px;line-height:1.5;display:flex;gap:8px;opacity:.9"><span style="color:{{ h.c }};font-weight:800">·</span><span>{{ i }}</span></div></sc-for>
+                  </div>
+                  <sc-if value="{{ h.hayExito }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid {{ h.borde }};font-size:13px;line-height:1.5"><b style="color:{{ h.c }}">Éxito si:</b> {{ h.exito }}</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px">
+          <sc-for list="{{ lotes }}" as="l" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px 16px">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">{{ l.f }}</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:28px;letter-spacing:-.02em;margin-top:2px">{{ l.n }}</div>
+              <div style="font-size:12.5px;color:#6B7280;margin-top:2px">{{ l.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px">
+          <sc-for list="{{ retos }}" as="r" hint-placeholder-count="3">
+            <div style="border:1px solid #EEF0F4;border-top:5px solid {{ r.color }};border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-family:Outfit;font-weight:800;font-size:19px">{{ r.t }}</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ r.items }}" as="i" hint-placeholder-count="3"><div style="font-size:14px;line-height:1.5;color:#374151;display:flex;gap:8px"><span style="color:{{ r.color }};font-weight:800">·</span><span>{{ i }}</span></div></sc-for>
+              </div>
+              <div style="margin-top:auto;background:{{ r.bg }};border-radius:12px;padding:11px 13px;font-size:13.5px;line-height:1.5"><b style="color:{{ r.color }}">Cómo lo controlamos:</b> {{ r.ctrl }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 5 MERCADO -->
+    <sc-if value="{{ s.mercado }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#82B94F;margin-bottom:10px">MERCADO Y COMPETENCIA</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px">Una categoría que se está abriendo ahora.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:0">Todas las familias con hijos de 8 a 16 años: más de 4 millones de niños y adolescentes solo en España, y Europa después. Familias organizadas para retrasar el móvil e instituciones que legislan: el hueco está abierto.</p>
+        </div>
+        <div style="background:#111;color:#fff;border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;align-items:center">
+          <div><div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#B5DA8F;margin-bottom:8px">LA SEÑAL</div><div style="font-family:Outfit;font-weight:800;font-size:24px;line-height:1.2">Freckle valida la categoría.</div></div>
+          <div style="font-size:15px;line-height:1.6;opacity:.9">Lanzado en EE. UU. en septiembre de 2026 con la misma tesis —un móvil para niños diseñado para usarse menos— y con Seven Seven Six (Alexis Ohanian) detrás. Un inversor potente apostando por la categoría. Europa sigue libre.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ comp }}" as="c" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px 18px;border:1px solid #EEF0F4;border-radius:16px;padding:16px 18px">
+              <div><div style="font-family:Outfit;font-weight:800;font-size:16px">{{ c.t }}</div><div style="font-size:13px;color:#6B7280;margin-top:3px">{{ c.quien }}</div></div>
+              <div style="font-size:14px;line-height:1.5;color:#374151">{{ c.hace }}</div>
+              <div style="font-size:14px;line-height:1.5"><b style="color:#3068ED">BroS Life:</b> {{ c.bros }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 6 NEGOCIO -->
+    <sc-if value="{{ s.negocio }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#E56648;margin-bottom:10px">MODELO DE NEGOCIO</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">La marca vende, el software cumple, la comunidad recomienda.</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px">
+          <sc-for list="{{ ingresos }}" as="i" hint-placeholder-count="4">
+            <div style="border:1px solid #EEF0F4;border-top:5px solid {{ i.color }};border-radius:18px;padding:18px"><div style="font-family:Outfit;font-weight:800;font-size:18px">{{ i.t }}</div><div style="font-size:14px;line-height:1.5;color:#4B5563;margin-top:6px">{{ i.d }}</div></div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
+          <div style="background:#F4F6FB;border-radius:18px;padding:20px"><div style="font-family:Outfit;font-weight:800;font-size:17px;margin-bottom:8px">Go-to-market</div><div style="font-size:14px;line-height:1.6;color:#374151">Entramos donde se decide el primer dispositivo: vuelta al cole, comuniones y cumpleaños. Canales: colegios y AMPAs, redes para padres y boca a boca. Para conectar hay que estar juntos, así que cada Bro invita a sus amigos.</div></div>
+          <div style="background:#F4F6FB;border-radius:18px;padding:20px"><div style="font-family:Outfit;font-weight:800;font-size:17px;margin-bottom:8px">Ecosistema de partners</div><div style="font-size:14px;line-height:1.6;color:#374151">Finanzas, marcas, educación, instituciones, operadores y creadores, unidos por un mismo objetivo: transformar a nuestros niños de pasivos y consumidores a activos y creadores.</div></div>
+        </div>
+        <div style="font-size:15px;line-height:1.6;color:#374151">Expansión: <b>Madrid → España → Europa → global.</b></div>
+      </div>
+    </sc-if>
+
+    <!-- 6b BUSINESS ECONOMICS -->
+    <sc-if value="{{ s.economics }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:28px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#E56648;margin-bottom:10px">BUSINESS ECONOMICS</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">Cada familia es rentable desde el primer día.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:12px 0 0;text-wrap:pretty">El dispositivo paga la adquisición de la familia. La suscripción paga el servicio y deja margen cada mes. Las marcas y los nuevos dispositivos suman encima.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
+          <sc-for list="{{ eco.kpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid {{ k.c }};border-radius:18px;padding:18px">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#6B7280">{{ k.t }}</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:clamp(30px,4vw,40px);line-height:1.05;letter-spacing:-.02em;margin-top:6px;white-space:nowrap">{{ k.v }}</div>
+              <div style="font-size:13px;line-height:1.45;color:#6B7280;margin-top:6px">{{ k.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-radius:20px;padding:20px">
+            <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">Por familia, año 1</div>
+            <sc-for list="{{ eco.familia }}" as="f" hint-placeholder-count="6">
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #F0F2F6;font-size:14.5px">
+                <span style="color:{{ f.tx }};font-weight:{{ f.w }}">{{ f.t }}</span>
+                <span style="font-weight:{{ f.w }};white-space:nowrap;color:{{ f.tx }}">{{ f.v }}</span>
+              </div>
+            </sc-for>
+            <div style="font-size:12px;color:#6B7280;margin-top:10px">Precios sin IVA. Pack 350 € y 9,99 €/mes con IVA.</div>
+          </div>
+          <div style="background:#111;color:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-family:Outfit;font-weight:800;font-size:18px">Primeros 12 meses · caso base</div>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+              <sc-for list="{{ eco.anio }}" as="a" hint-placeholder-count="4">
+                <div style="background:rgba(255,255,255,.07);border-radius:14px;padding:12px">
+                  <div style="font-family:Outfit;font-weight:800;font-size:26px;white-space:nowrap">{{ a.v }}</div>
+                  <div style="font-size:12.5px;opacity:.75;margin-top:2px">{{ a.t }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12.5px;line-height:1.5;opacity:.7">Caso base del business plan v0.3, con equipo completo. El plan detallado, bajo NDA.</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">Dónde se mueve la aguja</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px">
+            <sc-for list="{{ eco.palancas }}" as="p" hint-placeholder-count="4">
+              <div style="border:1px solid #E4E7EE;border-left:4px solid {{ p.c }};border-radius:14px;padding:14px 16px;background:#fff">
+                <div style="font-weight:700;font-size:14.5px">{{ p.t }}</div>
+                <div style="font-size:13.5px;line-height:1.5;color:#374151;margin-top:4px">{{ p.d }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 6c PLAN DE MARKETING -->
+    <sc-if value="{{ s.marketing }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:28px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#82B94F;margin-bottom:10px">PLAN DE MARKETING</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">Entrar donde se decide el primer móvil.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:12px 0 0;text-wrap:pretty">El primer dispositivo se decide en tres momentos del año y en conversaciones entre padres. Ahí estamos, con una marca que el niño quiere y que los padres eligen.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+          <sc-for list="{{ mkt.audiencias }}" as="a" hint-placeholder-count="3">
+            <div style="background:{{ a.bg }};border-radius:20px;padding:20px">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:{{ a.c }}">{{ a.k }}</div>
+              <div style="font-family:Outfit;font-weight:800;font-size:22px;margin-top:6px;line-height:1.15">{{ a.t }}</div>
+              <div style="font-size:14px;line-height:1.5;color:#374151;margin-top:8px">{{ a.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">El año de BroS Life</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
+            <sc-for list="{{ mkt.momentos }}" as="m" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+                <span style="align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:{{ m.c }};padding:4px 9px;border-radius:6px">{{ m.f }}</span>
+                <div style="font-family:Outfit;font-weight:800;font-size:18px;line-height:1.2">{{ m.t }}</div>
+                <div style="font-size:13.5px;line-height:1.5;color:#374151">{{ m.d }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">Canales</div>
+          <div style="display:flex;flex-direction:column;gap:0;background:#fff;border:1px solid #E4E7EE;border-radius:20px;overflow:hidden">
+            <sc-for list="{{ mkt.canales }}" as="c" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:14px;padding:14px 18px;border-bottom:1px solid #F0F2F6;align-items:baseline">
+                <div style="font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.c }};flex:none"></span>{{ c.t }}</div>
+                <div style="font-size:14px;line-height:1.5;color:#374151">{{ c.d }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:#111;color:#fff;border-radius:20px;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+          <sc-for list="{{ mkt.motor }}" as="m" hint-placeholder-count="3">
+            <div>
+              <div style="font-family:Outfit;font-weight:800;font-size:clamp(26px,3.4vw,34px);line-height:1;letter-spacing:-.02em;color:{{ m.c }}">{{ m.t }}</div>
+              <div style="font-size:14px;line-height:1.5;opacity:.85;margin-top:8px">{{ m.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 7 EQUIPO -->
+    <sc-if value="{{ s.equipo }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">EQUIPO</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">Negocio, producto y go-to-market. Falta la pata tecnológica.</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px">
+          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-julio.png" alt="Julio Aguayo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Julio Aguayo</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">CEO</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Más de 15 años vendiendo tecnologías disruptivas en telecomunicaciones y retail.</div></div>
+          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-jesus.png" alt="Jesús Aspra" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Jesús Aspra</div><div style="font-size:13px;font-weight:700;color:#C2410C;margin-top:2px">CRO</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Director general en medios de referencia como Grupo Prisa. Actualmente, director general en Henneo.</div></div>
+          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-pilar.png" alt="Pilar Valcárcel" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Pilar Valcárcel</div><div style="font-size:13px;font-weight:700;color:#4E7D22;margin-top:2px">CSO</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Más de 20 años en adtech. Experta en go-to-market y escalado de empresas tecnológicas.</div></div>
+          <div style="border:2px dashed #C7D3F7;border-radius:20px;padding:22px;background:#F7F9FF"><div style="width:52px;height:52px;border-radius:50%;background:#fff;border:2px dashed #3068ED;color:#3068ED;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px">+</div><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">La pata tecnológica</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">Por incorporar</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Quien convierta lo que ya funciona en una plataforma para miles de familias.</div></div>
+        </div>
+        <div style="font-size:14px;color:#6B7280">Con el apoyo de advisors y partners del sector, que presentaremos en la reunión.</div>
+      </div>
+    </sc-if>
+
+    <!-- 8 POR QUÉ VOSOTROS -->
+    <sc-if value="{{ s.vosotros }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">POR QUÉ VOSOTROS</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px">BroS Life es tecnología y telecomunicaciones de principio a fin.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:0">Un dispositivo gestionado, una red de familias conectadas, IA, operadores y partners. Es el tipo de reto que solo resuelve quien ya lo ha hecho a gran escala.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px">
+          <div style="border:1px solid #EEF0F4;border-top:5px solid #3068ED;border-radius:20px;padding:22px">
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;margin-bottom:12px">Lo que lideraríais</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.5;color:#374151">
+              <div>· La arquitectura y la plataforma, de la familia de prueba a miles de dispositivos.</div>
+              <div>· La flota gestionada: Android Enterprise, actualizaciones y seguridad.</div>
+              <div>· Operadores, conectividad y el plan de telefonía.</div>
+              <div>· El equipo técnico y los partners: Google, fabricantes e IA.</div>
+            </div>
+          </div>
+          <div style="border:1px solid #EEF0F4;border-top:5px solid #82B94F;border-radius:20px;padding:22px">
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;margin-bottom:12px">Lo que encontraríais</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.5;color:#374151">
+              <div>· Un producto que ya funciona, no una idea en una hoja.</div>
+              <div>· Una carta de intenciones firmada con Google y patentes preparadas.</div>
+              <div>· Fundadores con experiencia comercial y de go-to-market.</div>
+              <div>· Una categoría nueva en Europa, con una misión que importa.</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#111;color:#fff;border-radius:22px;padding:24px;font-family:Outfit;font-weight:700;font-size:clamp(19px,2.6vw,24px);line-height:1.35;text-wrap:balance">Hemos construido la primera versión. Ahora necesitamos a quien sepa llevarla a millones de familias.</div>
+      </div>
+    </sc-if>
+
+    <!-- 8b VISIÓN DE LOS FOUNDERS -->
+    <sc-if value="{{ s.founders }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:34px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">VISIÓN DE LOS FOUNDERS</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">El móvil es solo el principio.</h2>
+        </div>
+
+        <div style="background:#111;color:#fff;border-radius:28px;padding:clamp(26px,5vw,52px);display:flex;flex-direction:column;gap:22px;position:relative;overflow:hidden">
+          <div style="display:flex;gap:5px"><span style="width:34px;height:6px;border-radius:3px;background:#3068ED"></span><span style="width:34px;height:6px;border-radius:3px;background:#E56648"></span><span style="width:34px;height:6px;border-radius:3px;background:#82B94F"></span><span style="width:34px;height:6px;border-radius:3px;background:#fff"></span></div>
+          <div style="font-family:Outfit;font-weight:800;font-size:clamp(24px,3.6vw,40px);line-height:1.2;letter-spacing:-.02em;text-wrap:balance">“We are committed to keep building the best-in-class products and services to help kids, teens, families, and our communities to build the future they deserve.”</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <img src="logo.png" alt="" style="width:40px;height:40px;background:#fff;border-radius:50%;padding:4px;box-sizing:border-box">
+            <div><div style="font-weight:700;font-size:15px">Julio Aguayo</div><div style="font-size:13px;opacity:.7">CEO &amp; Co-founder · BroS Life</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#E56648">EL FUTURO DE LA COMPAÑÍA</div>
+          <div style="font-family:Outfit;font-weight:800;font-size:clamp(40px,7vw,76px);line-height:.95;letter-spacing:-.04em">BroS Universal</div>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:6px 0 0;text-wrap:pretty">Un universo de experiencias físicas y digitales alrededor de cada Bro, para que crezca en todo lo que le importa: pensar, aprender, moverse, emprender y vivir.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:14px">
+          <sc-for list="{{ universal }}" as="u" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px;min-height:170px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="width:40px;height:7px;border-radius:4px;background:{{ u.c }}"></span>
+                <span style="font-family:Outfit;font-weight:800;font-size:14px;color:#9CA3AF">{{ u.n }}</span>
+              </div>
+              <div style="font-family:Outfit;font-weight:800;font-size:clamp(24px,3vw,30px);line-height:1.05;letter-spacing:-.02em;color:{{ u.c }}">{{ u.t }}</div>
+              <div style="font-size:14.5px;line-height:1.55;color:#374151">{{ u.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:12px 0;font-family:Outfit;font-weight:800;font-size:clamp(30px,5vw,54px);line-height:1.02;letter-spacing:-.03em">
+          <span style="color:#3068ED">Start protected.</span>
+          <span style="color:#E56648">Grow independent.</span>
+          <span style="color:#111111">Stay Bro.</span>
+          <img src="logo.png" alt="BroS Life" style="width:64px;height:64px;margin-top:18px">
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 9 HABLEMOS -->
+    <sc-if value="{{ s.hablemos }}" hint-placeholder-val="{{ false }}">
+      <div style="min-height:52vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;animation:sube .35s ease-out">
+        <img src="logo.png" alt="BroS Life" style="width:72px;height:72px">
+        <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-.03em;margin:0;max-width:720px;text-wrap:balance">¿Lo construimos juntos?</h2>
+        <p style="font-size:17px;line-height:1.55;color:#374151;margin:0;max-width:560px">Nos encantaría enseñaros el producto en vivo y escuchar cómo lo veis. Una hora, donde os venga bien.</p>
+        <a href="mailto:julio@thebros.life?subject=BroS%20Life%20%C2%B7%20Hablemos" style="display:inline-flex;align-items:center;height:56px;padding:0 28px;border-radius:16px;background:#3068ED;color:#fff;font-family:Outfit;font-weight:800;font-size:17px;text-decoration:none">Proponer una reunión</a>
+        <div style="display:flex;gap:6px;margin-top:8px"><span style="width:34px;height:6px;border-radius:3px;background:#3068ED"></span><span style="width:34px;height:6px;border-radius:3px;background:#E56648"></span><span style="width:34px;height:6px;border-radius:3px;background:#82B94F"></span><span style="width:34px;height:6px;border-radius:3px;background:#111"></span></div>
+        <div style="font-family:Outfit;font-weight:800;font-size:16px">Start protected. Grow independent. Stay Bro.</div>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid #EEF0F4">
+      <sc-if value="{{ hayPrev }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ prev }}" style="height:46px;padding:0 18px;border-radius:14px;background:#F4F5F9;font-weight:700;font-size:14px">← {{ prevT }}</button>
+      </sc-if>
+      <div style="flex:1"></div>
+      <sc-if value="{{ hayNext }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ next }}" style="height:46px;padding:0 20px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:15px">{{ nextT }} →</button>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="text-align:center;font-size:12px;color:#9CA3AF;padding:0 20px 24px">© BroS Life 2026 · Confidencial · No compartir sin autorización</div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CODIGO = 'BROS2026';
+const KEY = 'bros-dossier-ok';
+const SECS = [['vision', 'Misión'], ['real', 'Lo que ya funciona'], ['arq', 'Arquitectura'], ['retos', 'Roadmap y retos'], ['mercado', 'Mercado'], ['negocio', 'Negocio'], ['economics', 'Business economics'], ['marketing', 'Plan de marketing'], ['equipo', 'Equipo'], ['vosotros', 'Por qué vosotros'], ['founders', 'Visión de los founders'], ['hablemos', 'Hablemos']];
+const UNIVERSAL = [
+  ['BroS AI', 'Nuestra compañía para que la adopción de la IA en nuestra comunidad sea ética y segura para su desarrollo. Una misión desde el primer día.', '#3068ED'],
+  ['BroS Brain', 'Un gimnasio mental donde los Bros aprenden a potenciar su creatividad.', '#3068ED'],
+  ['BroS Academy', 'Academias en las que cada Bro mejora en lo que le gusta.', '#E56648'],
+  ['BroS Gym', 'Actividades deportivas para Bros.', '#82B94F'],
+  ['BroS Dreams', 'Ayudamos a convertir en un negocio real los proyectos con potencial.', '#111111'],
+  ['BroS School', 'La escuela definitiva para familias nómadas: el cole no tiene que estar siempre en el mismo sitio.', '#3068ED'],
+  ['BroS Summer Camps', 'Campamentos de verano para Bros.', '#E56648'],
+  ['BrutalBroS', 'Marca de moda para niños y adolescentes.', '#82B94F'],
+  ['BroFood', 'Una compañía de alimentación para ganar el comedor escolar y, desde el menú del cole, recomendar una alimentación adecuada en casa.', '#111111']
+];
+const A = '#3068ED', N = '#E56648', V = '#82B94F', K = '#111111';
+const REAL = [
+  ['Familia real conectada', 'Dos Bros y la app de los padres, con cuentas reales y sincronización en tiempo real.', A],
+  ['Bro AI real', 'IA europea open source (Mistral) con las reglas de Bro, filtro previo y límites por edad.', A],
+  ['Content real', 'Búsqueda en YouTube con SafeSearch estricto, solo autores originales y revisión por IA.', N],
+  ['Projects con IA', 'De la idea al plan en pasos, con Bro AI acompañando y el progreso guardado.', V],
+  ['Amigos por QR y mensajes', 'Amistad solo en persona, con edad verificada, y chat en tiempo real.', A],
+  ['Peticiones a los padres', 'Apps, canales y contenido: el Bro pide y los padres aprueban al momento.', N],
+  ['Primer encendido', 'Activación de cada Bro desde la app de padres, con su perfil limpio.', V],
+  ['Webs aprobadas', 'Webs curadas por edad dentro de Content, sin la maquinaria que engancha.', N],
+  ['Android Enterprise', 'Empresa creada y política del Bro lista para el launcher gestionado.', K],
+  ['Carta de intenciones con Google', 'Firmada.', K],
+  ['Patentes preparadas', 'Material de los 7 pilares del sistema, en español e inglés.', K],
+  ['Banco de pruebas', 'La familia entera en una pantalla para probar de principio a fin.', V]
+];
+const CAPAS = [
+  ['DISPOSITIVOS', 'Móvil y pulsera', ['Android certificado por Google', 'Launcher BroS Life en modo gestionado', 'Pulsera con Health Connect'], A],
+  ['SISTEMA', 'BroS Life OS', ['Interfaz web que se actualiza sola', 'Voz primero', 'Modo cole y modo descanso'], N],
+  ['PLATAFORMA', 'Backend único', ['Supabase: cuentas, base de datos y tiempo real', 'Funciones de servidor', 'Reglas familiares'], V],
+  ['INTELIGENCIA', 'IA y contenido', ['Mistral, IA europea', 'YouTube con filtros propios', 'Webs curadas'], A],
+  ['GESTIÓN', 'Flota y familia', ['Android Management API', 'App de padres', 'Consentimientos y registro'], K]
+];
+const HITOS = [
+  { cuando: 'HOY · OCT 2026', t: 'Familia de prueba', tag: 'EN MARCHA', c: V, items: ['Dos Bros y la app de padres conectados, con datos reales.', 'Bro AI con IA europea, Content con vídeos reales y backend en Supabase.', 'Empresa registrada en Android Enterprise.'] },
+  { cuando: 'NOV 2026', t: 'Bro Phone', c: A, items: ['Launcher BroS Life en móviles Android gestionados.', 'Pulsera con pasos y sueño reales en Aura.', 'Lo que decide la app de padres se aplica al instante en el móvil.', 'RFQ de hardware en China y despacho de compliance con el alcance.'] },
+  { cuando: 'DIC 2026', t: 'Preparar el test', c: A, items: ['Primeras 30 unidades en España.', 'Evaluación de impacto (EIPD) y consentimientos verificados.', 'Red-teaming de Bro AI con especialistas.', 'Selección de las 20 familias.'] },
+  { cuando: 'ENE 2027', t: 'Test con 20 familias', tag: 'HITO', c: N, items: ['4 semanas en casa con el día a día completo: comunidades, proyectos, content, rewards y app de padres.', 'Seguimiento semanal y correcciones a distancia.'], exito: '0 incidentes de seguridad, ≥ 15 de 20 familias lo recomiendan y ≥ 2 proyectos por Bro.' },
+  { cuando: 'FEB – MAR 2027', t: 'Versión 1 y colegio', c: A, items: ['Versión 1 con lo aprendido del test.', 'Carta de interés del colegio y financiación de una institución.', 'Lote de 300 unidades para el piloto y la preventa.'] },
+  { cuando: 'ABR – MAY 2027', t: 'Piloto oficial en un colegio', tag: 'HITO', c: N, items: ['Una clase de 5.º–6.º de primaria, 8 semanas, siempre fuera del aula.', 'Charla a familias, soporte dedicado y panel con datos agregados para el colegio.', 'Informe final de impacto.'], exito: 'más actividad física, más tiempo creando que consumiendo, menos conflictos en casa y ≥ 50 % de familias quieren seguir.' },
+  { cuando: 'JUN – AGO 2027', t: 'Preparar el lanzamiento', c: A, items: ['Resultados del piloto como aval ante colegios, AMPAs e instituciones.', 'Preventa abierta y lote de 1.000 unidades.', 'Logística, soporte y campaña de vuelta al cole.'] },
+  { cuando: 'SEP 2027', t: 'Lanzamiento oficial · vuelta al cole', tag: 'LANZAMIENTO', c: K, dark: true, items: ['Venta abierta en España.', 'Colegios y AMPAs como canal principal; clases que entran juntas.', 'Objetivo: 5.000 Bros en 2027.'] }
+];
+const LOTES = [
+  { f: 'DIC 2026', n: '30', d: 'test con 20 familias' },
+  { f: 'FEB 2027', n: '300', d: 'colegio y preventa' },
+  { f: 'JUL 2027', n: '1.000', d: 'lanzamiento' },
+  { f: 'TOTAL 2027', n: '5.000', d: 'Bros en manos de familias' }
+];
+const RETOS = [
+  ['Tecnología', ['IA segura para menores, probada antes de hablar con un niño.', 'Flota gestionada a escala con actualizaciones y seguridad.', 'Coste de la IA por mensaje sostenible.'], 'IA europea con reglas y filtro previo, red-teaming con especialistas y un backend único que ya está en marcha.', A, '#EEF3FE'],
+  ['Hardware', ['Certificación de Google en el fabricante.', 'Marcado CE y RED con la marca BroS Life.', 'Pedido mínimo, plazos y logística.'], 'Petición de oferta (RFP) activada con nuestro representante en China, con la certificación de Google como primer filtro.', N, '#FDF0EC'],
+  ['Compliance', ['Datos de menores: RGPD, evaluación de impacto y DPO.', 'Reglamento europeo de IA y DSA.', 'Publicidad de marcas a menores.'], 'Despacho especializado esperando nuestro alcance para enviar su propuesta. Privacidad y consentimientos ya diseñados en el producto.', V, '#EEF6E6']
+];
+const COMP = [
+  ['Freckle', 'EE. UU. · Seven Seven Six', 'Móvil para explorar fuera, de 7 a 13 años.', 'Ecosistema para crear hasta los 16, con pulsera, rewards y Europa.'],
+  ['Pinwheel · Gabb · Bark Phone · Troomi', 'EE. UU.', 'Móviles restringidos con control parental.', 'No limitamos un móvil de adulto: construimos uno para su edad.'],
+  ['HMD Fusion X1', 'Europa', 'Móvil Android con controles para familias.', 'Un sistema propio con IA, comunidad y app de padres en un solo backend.'],
+  ['Xplora · SaveFamily', 'Europa · España', 'Relojes con llamadas y localización para los más pequeños.', 'Acompañamos más allá del reloj, de los 8 a los 16.'],
+  ['Qustodio · Family Link · Screen Time', 'Global', 'Control parental sobre el móvil de siempre.', 'La protección está en el diseño, no en una capa encima.']
+];
+const DATOS = [
+  ['10,9 años', 'edad media del primer móvil en España.', 'UNICEF España, 2021'],
+  ['95 %', 'de los chicos de 15 años ya tiene móvil; a los 12, el 69 %.', 'INE, Encuesta TIC en los Hogares, 2025'],
+  ['1 de cada 3', 'adolescentes hace un uso problemático de internet y redes.', 'UNICEF España, 2021'],
+  ['×2', 'riesgo de depresión y ansiedad con más de 3 horas al día en redes.', 'U.S. Surgeon General, 2023'],
+  ['1 de cada 10', 'ha recibido una proposición sexual de un adulto por internet.', 'UNICEF España, 2021'],
+  ['6 de cada 10', 'duermen con el móvil.', 'UNICEF España, 2021']
+];
+const PILARES = [
+  ['Connect', 'COMMUNITIES', '#3068ED', 'Amigos de verdad, solo en persona, por QR con la edad verificada. Sin seguidores ni desconocidos.'],
+  ['Enjoy safe', 'CURATED CONTENT', '#FF0000', 'Vídeos, webs y lectura curados para su edad. Sin feed ni autoplay.'],
+  ['Build', 'PROJECTS', '#82B94F', 'Sus ideas, hechas realidad: un periódico, un plan con amigos, su propio videojuego. Bro AI le ayuda a avanzar.'],
+  ['Achieve', 'REWARDS', '#E56648', 'Primero el logro. A veces, con un reward real de la familia o de una marca, y una promesa que se cumple.']
+];
+const ECO = {
+  kpis: [
+    { t: 'PACK (MÓVIL + PULSERA)', v: '350 €', d: '≈ 289 € neto · se cobra al comprar', c: A },
+    { t: 'SUSCRIPCIÓN', v: '9,99 €/mes', d: '≈ 8,26 € neto · ingreso recurrente', c: N },
+    { t: 'MARGEN BRUTO', v: '≈ 61 %', d: 'Mezcla de pack y suscripción, año 1', c: V },
+    { t: 'ACTIVAN SUSCRIPCIÓN', v: '≈ 70 %', d: 'Hipótesis caso base', c: K }
+  ],
+  familia: [
+    { t: 'Pack, neto', v: '289 €' },
+    { t: 'Suscripción, 12 meses neto', v: '≈ 99 €' },
+    { t: 'Ingreso por familia', v: '≈ 388 €', w: 800 },
+    { t: 'Coste de móvil, pulsera, envío y pago', v: '≈ −145 €', tx: '#6B7280' },
+    { t: 'Servicio (servidor e IA), 12 meses', v: '≈ −32 €', tx: '#6B7280' },
+    { t: 'Contribución por familia, año 1', v: '≈ 210 €', w: 800 }
+  ],
+  anio: [
+    { v: '≈ 9.500', t: 'familias' },
+    { v: '≈ 3 M€', t: 'ingresos netos' },
+    { v: '≈ 6.300', t: 'suscripciones activas' },
+    { v: 'EBITDA +', t: 'positivo en el año 1' }
+  ],
+  palancas: [
+    { t: 'Coste de la IA por mensaje', d: 'Modelo europeo pequeño, respuestas guardadas y límite diario: ≈ 0,001 € por mensaje.', c: A },
+    { t: 'Retención de la suscripción', d: 'Un niño que crea proyectos y tiene amigos en BroS Life no se va. Cada punto de churn mensual pesa más que el precio.', c: N },
+    { t: 'Coste de adquisición', d: 'Colegios, AMPAs y boca a boca abaratan cada familia frente a la publicidad pagada.', c: V },
+    { t: 'Ingresos de marcas y dispositivos', d: 'Rewards de marcas y nuevos dispositivos (reloj, tablet) suben el valor de cada familia con los años.', c: K }
+  ]
+};
+const MKT = {
+  audiencias: [
+    { k: 'QUIEN DECIDE', t: 'Madres y padres de 8 a 16 años', d: 'Buscan tranquilidad sin vigilancia. Les hablamos de salud, de independencia y de un móvil hecho para su edad.', c: A, bg: '#EEF3FE' },
+    { k: 'QUIEN LO QUIERE', t: 'El niño y el adolescente', d: 'Una marca deseable, no infantil: amigos de verdad, crear cosas y conseguir rewards reales.', c: N, bg: '#FDF0EC' },
+    { k: 'QUIEN PRESCRIBE', t: 'Colegios, AMPAs e instituciones', d: 'El aval que convierte una compra en una decisión de grupo: toda la clase con el mismo móvil.', c: V, bg: '#EEF6E6' }
+  ],
+  momentos: [
+    { f: 'SEP', t: 'Vuelta al cole', d: 'Lanzamiento oficial en septiembre de 2027. Paso a 1.º de ESO y primer móvil: presentaciones en AMPAs y clases que entran juntas.', c: A },
+    { f: 'MAR – MAY', t: 'Comuniones', d: 'El primer móvil como regalo. A partir de 2028, segunda gran campaña del año.', c: N },
+    { f: 'TODO EL AÑO', t: 'Cumpleaños', d: 'Del grupo de amigos al regalo. Cada Bro invita a los suyos por QR.', c: V },
+    { f: 'DIC', t: 'Navidad', d: 'Pack regalo y dispositivos nuevos del ecosistema.', c: K }
+  ],
+  canales: [
+    { t: 'Colegios y AMPAs', d: 'Charlas a familias, piloto con colegios y grupos de clase que entran juntos.', c: V },
+    { t: 'Instituciones', d: 'Consejerías, ayuntamientos y fundaciones que financian pilotos y dan aval público.', c: V },
+    { t: 'Boca a boca entre padres', d: 'Grupos de WhatsApp, familias del piloto y programa de partners que recomiendan.', c: A },
+    { t: 'Redes sociales para padres', d: 'Instagram y TikTok con contenido útil sobre el primer móvil, no anuncios.', c: A },
+    { t: 'Marcas aliadas', d: 'Casa del Libro, deporte y aprendizaje: rewards que dan visibilidad conjunta.', c: N },
+    { t: 'Prensa y voces expertas', d: 'Psicólogos, pediatras y educadores que explican por qué BroS Life es distinto.', c: K }
+  ],
+  motor: [
+    { t: 'La marca vende', d: 'Deseable para el niño y tranquilidad para los padres.', c: '#6E95F3' },
+    { t: 'El software cumple', d: 'Menos consumo pasivo, más proyectos y comunidades reales.', c: '#9BD36A' },
+    { t: 'La comunidad recomienda', d: 'Para conectar hay que estar juntos: cada Bro trae a sus amigos.', c: '#FF8A6B' }
+  ]
+};
+const INGRESOS = [
+  ['Dispositivos', 'Móvil y pulsera, con margen desde la primera unidad.', A],
+  ['Suscripción', 'Servicio, contenido y seguridad. Ingreso recurrente.', N],
+  ['Rewards de marcas', 'Retos con propósito desde un panel de autoservicio.', V],
+  ['Ecosistema', 'Reloj, tablet y ordenador con los años.', K]
+];
+class Component extends DCLogic {
+  state = { ok: false, codigo: '', error: false, i: 0 };
+  componentDidMount() {
+    try { if (sessionStorage.getItem(KEY) === '1') this.setState({ ok: true }); } catch (e) {}
+    const h = (location.hash || '').slice(1), j = SECS.findIndex(x => x[0] === h);
+    if (j >= 0) this.setState({ i: j });
+  }
+  ir(j) { this.setState({ i: j }); try { history.replaceState(null, '', '#' + SECS[j][0]); } catch (e) {} window.scrollTo(0, 0); }
+  entrar() {
+    if ((this.state.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} this.setState({ ok: true, error: false }); }
+    else this.setState({ error: true });
+  }
+  renderVals() {
+    const st = this.state, i = st.i, s = {};
+    SECS.forEach(([k], j) => s[k] = j === i);
+    return {
+      bloqueado: !st.ok, abierto: st.ok,
+      codigo: st.codigo, error: st.error, bordeCodigo: st.error ? '#F97316' : '#E4E7EE',
+      onCodigo: e => this.setState({ codigo: e.target.value, error: false }),
+      onKey: e => { if (e.key === 'Enter') this.entrar(); },
+      entrar: () => this.entrar(),
+      irInicio: () => this.ir(0),
+      nav: SECS.map(([k, t], j) => ({ t, onClick: () => this.ir(j), peso: j === i ? 800 : 600, color: j === i ? '#111' : '#6B7280', linea: j === i ? '#3068ED' : 'transparent' })),
+      s,
+      hayPrev: i > 0, prevT: i > 0 ? SECS[i - 1][1] : '', prev: () => this.ir(Math.max(0, i - 1)),
+      hayNext: i < SECS.length - 1, nextT: i < SECS.length - 1 ? SECS[i + 1][1] : '', next: () => this.ir(Math.min(SECS.length - 1, i + 1)),
+      real: REAL.map(([t, d, c]) => ({ t, d, c, bg: c === K ? '#F0F1F3' : c + '1A' })),
+      capas: CAPAS.map(([k, t, items, color]) => ({ k, t, items, color })),
+      hitos: HITOS.map((h, i) => ({ ...h, hayTag: !!h.tag, tag: h.tag || '', hayExito: !!h.exito, exito: h.exito || '',
+        bg: h.dark ? '#111' : h.tag === 'HITO' ? '#FDF0EC' : '#fff', tx: h.dark ? '#fff' : '#111', borde: h.dark ? '#111' : h.tag === 'HITO' ? '#F7D3C8' : '#E4E7EE',
+        punto: h.tag ? '16px' : '12px', halo: h.c + '22', lineaArriba: i === 0 ? 'transparent' : '#E4E7EE', lineaAbajo: i === HITOS.length - 1 ? 'transparent' : '#E4E7EE' })),
+      lotes: LOTES,
+      retos: RETOS.map(([t, items, ctrl, color, bg]) => ({ t, items, ctrl, color, bg })),
+      comp: COMP.map(([t, quien, hace, bros]) => ({ t, quien, hace, bros })),
+      eco: { ...ECO, familia: ECO.familia.map(f => ({ ...f, w: f.w || 500, tx: f.tx || '#111' })) },
+      mkt: MKT,
+      universal: UNIVERSAL.map(([t, d, c], i) => ({ t, d, c, n: String(i + 1).padStart(2, '0') })),
+      pilares: PILARES.map(([v, n, color, d]) => ({ v, n, color, d })),
+      datos: DATOS.map(([b, txt, src]) => { const m = b.match(/^(\d+ de cada) (\d+)$/); return { pre: m ? m[1] : '', big: m ? m[2] : b, txt, src }; }),
+      ingresos: INGRESOS.map(([t, d, color]) => ({ t, d, color }))
+    };
+  }
+}
+</script>
 </body>
 </html>
