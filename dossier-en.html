@@ -21,17 +21,40 @@
     <div style="width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
       <img src="logo.png" alt="BroS Life" style="width:64px;height:64px">
       <div style="font-family:Outfit;font-weight:800;font-size:26px;letter-spacing:-.02em">BroS Life</div>
-      <div style="font-size:14px;line-height:1.5;color:#6B7280">Confidential dossier. Enter the access code we sent you.</div>
+      <div style="font-size:14px;line-height:1.5;color:#6B7280">Confidential dossier. Enter the code we sent you and your details. Enter the access code we sent you.</div>
       <div style="display:flex;gap:4px;background:#F4F5F9;border-radius:12px;padding:4px;width:100%;box-sizing:border-box">
         <button onClick="{{ setEs }}" style="flex:1;height:38px;border-radius:9px;font-weight:700;font-size:14px;background:{{ esBg }};color:{{ esTx }}">Español</button>
         <button onClick="{{ setEn }}" style="flex:1;height:38px;border-radius:9px;font-weight:700;font-size:14px;background:{{ enBg }};color:{{ enTx }}">English</button>
       </div>
       <input value="{{ codigo }}" onChange="{{ onCodigo }}" onKeyDown="{{ onKey }}" placeholder="Access code" autocomplete="off" style="width:100%;box-sizing:border-box;height:52px;border-radius:14px;border:1px solid {{ bordeCodigo }};padding:0 16px;font-size:16px;text-align:center;letter-spacing:.08em;outline:none">
+      <input value="{{ nombre }}" onChange="{{ onNombre }}" placeholder="Full name" type="text" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="Email" type="email" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <input value="{{ empresa }}" onChange="{{ onEmpresa }}" placeholder="Company" type="text" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <label style="display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:13.5px;line-height:1.45;color:#374151;width:100%;cursor:pointer"><input type="checkbox" checked="{{ acepto }}" onChange="{{ onAcepto }}" style="width:20px;height:20px;margin:0;flex:none;accent-color:#3068ED"><span>I have read and accept the <button onClick="{{ abrirNda }}" style="padding:0;font-size:13.5px;font-weight:700;color:#3068ED;text-decoration:underline;background:none">confidentiality agreement</button>.</span></label>
+      <sc-if value="{{ errDatos }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Please enter your name and a valid email.</div></sc-if>
+      <sc-if value="{{ errNda }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">To enter you need to accept the confidentiality agreement.</div></sc-if>
       <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">That code is not correct.</div></sc-if>
       <button onClick="{{ entrar }}" style="width:100%;height:52px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">Enter</button>
       <div style="display:flex;gap:5px;margin-top:6px"><span style="width:26px;height:5px;border-radius:3px;background:#3068ED"></span><span style="width:26px;height:5px;border-radius:3px;background:#E56648"></span><span style="width:26px;height:5px;border-radius:3px;background:#82B94F"></span><span style="width:26px;height:5px;border-radius:3px;background:#111"></span></div>
     </div>
   </div>
+
+  <sc-if value="{{ verNda }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;background:rgba(17,17,17,.55);display:grid;place-items:center;padding:16px;box-sizing:border-box">
+      <div style="width:100%;max-width:560px;max-height:calc(100dvh - 32px);overflow-y:auto;background:#fff;border-radius:22px;padding:24px;box-sizing:border-box;text-align:left">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="logo.png" alt="" style="width:26px;height:26px"><div style="font-family:Outfit;font-weight:800;font-size:20px">Confidentiality agreement</div></div>
+        <div style="font-size:12px;color:#6B7280;margin-bottom:14px">Version 1.0 · October 2026</div>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 12px">By ticking «I accept» and entering this dossier, you accept this agreement with <b>Bros Ecosystems SL (in formation)</b>, represented by <b>Julio Aguayo, CEO and co-founder</b> («BroS Life»).</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>1. What is confidential.</b> Everything BroS Life shows you in this dossier and in related conversations: product, technology, business plans, figures, partners and strategy.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>2. What you agree to do.</b> To use this information only to assess a possible collaboration with BroS Life, and not to share it with third parties without our permission. You may share it with your team or advisers if they need it for that assessment and keep it equally confidential.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>3. What is not confidential.</b> Information that is already public, that you already knew, that you lawfully receive from another source, or that an authority requires by law.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>4. No other commitments.</b> This agreement does not oblige you to invest, collaborate or sign anything else, and gives you no rights over BroS Life’s information.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>5. Term.</b> 2 years from your acceptance.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>6. Governing law.</b> Spanish law.</p>
+        <button onClick="{{ cerrarNda }}" style="margin-top:10px;width:100%;height:48px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:15px">Close</button>
+      </div>
+    </div>
+  </sc-if>
 </sc-if>
 
 <sc-if value="{{ abierto }}" hint-placeholder-val="{{ true }}">
@@ -381,6 +404,67 @@
       </div>
     </sc-if>
 
+    <!-- 6d GROWTH PLAN -->
+    <sc-if value="{{ s.growth }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:28px;animation:sube .35s ease-out">
+        <div style="max-width:760px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#3068ED;margin-bottom:10px">GROWTH PLAN</div>
+          <h2 style="font-family:Outfit;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0">Validate before scaling.</h2>
+          <p style="font-size:16px;line-height:1.6;color:#374151;margin:12px 0 0;text-wrap:pretty">We launch in phases, with a decision gate at the end of each one. Media investment is released only when the product and the results justify it.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid #6E95F3;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">PHASE 0 · NOV – DEC 2026</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;line-height:1.2">Preparation</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#374151">Messaging, waitlist website, video, analytics and materials for schools and partners.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid #3068ED;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">PHASE 1 · JAN – MAR 2027</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;line-height:1.2">Validation</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#374151">First families using BroS Life, message testing and first letters of intent from schools.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid #82B94F;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">PHASE 2 · APR – JUN 2027</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;line-height:1.2">School pilot</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#374151">Official pilot in a school with institutional support, impact report and PR.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid #E56648;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">PHASE 3 · JUL – AUG 2027</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;line-height:1.2">Pre-launch</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#374151">Pre-sale to the waitlist, creators and brand partnerships announced.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:5px solid #111111;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#6B7280">PHASE 4 · SEP 2027</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:19px;line-height:1.2">Launch</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#374151">Back-to-school campaign, launch event and presence in schools and parents’ associations.</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">Three growth paths</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+            <div style="background:#EEF3FE;border-radius:20px;padding:20px"><div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.15">Families</div><div style="font-size:14px;line-height:1.5;color:#374151;margin-top:8px">Direct sale of the pack with subscription, at the moments when the first phone is chosen.</div></div>
+            <div style="background:#EEF6E6;border-radius:20px;padding:20px"><div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.15">Schools and institutions</div><div style="font-size:14px;line-height:1.5;color:#374151;margin-top:8px">Schools, parents’ associations, regional governments and foundations that enable or fund access.</div></div>
+            <div style="background:#FDF0EC;border-radius:20px;padding:20px"><div style="font-family:Outfit;font-weight:800;font-size:20px;line-height:1.15">Brands and partners</div><div style="font-size:14px;line-height:1.5;color:#374151;margin-top:8px">Purpose-driven rewards, youth banking, telecoms and distribution.</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:Outfit;font-weight:800;font-size:18px;margin-bottom:12px">Channels by phase</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">Schools and parents’ associations</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">From phase 1</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">LinkedIn and B2B outreach</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">From phase 0</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">Meta Ads for parents</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">From phase 1</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">PR and media</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">From phase 2</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">Adult creators and family media</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">From phase 3</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #E4E7EE;border-radius:14px;padding:12px 14px"><span style="font-weight:700;font-size:14px">Google Search and event</span><span style="font-size:12.5px;color:#6B7280;white-space:nowrap">Phase 4</span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <div style="flex:1 1 320px;background:#111;color:#fff;border-radius:18px;padding:18px 20px;font-size:15px;line-height:1.55"><b>Golden rule:</b> all advertising is aimed at adults. We never target or profile minors.</div>
+          <div style="flex:0 1 240px;background:#F4F5F9;border-radius:18px;padding:18px 20px;font-size:15px;font-weight:700;display:flex;align-items:center">Budget per phase: TBD.</div>
+        </div>
+      </div>
+    </sc-if>
+
     <!-- 7 EQUIPO -->
     <sc-if value="{{ s.equipo }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:26px;animation:sube .35s ease-out">
@@ -391,7 +475,7 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px">
           <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-julio.png" alt="Julio Aguayo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Julio Aguayo</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">CEO · Chief Executive Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">More than 15 years selling disruptive technologies in telecoms and retail.</div></div>
           <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-jesus.png" alt="Jesús Aspra" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Jesús Aspra</div><div style="font-size:13px;font-weight:700;color:#C2410C;margin-top:2px">CRO · Chief Revenue Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">General manager at leading media groups such as Grupo Prisa. Currently general manager at Henneo.</div></div>
-          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-pilar.png" alt="Pilar Valcárcel" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Pilar Valcárcel</div><div style="font-size:13px;font-weight:700;color:#4E7D22;margin-top:2px">CBO · Chief Business Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">More than 20 years in adtech. Expert in go-to-market and scaling technology companies.</div></div>
+          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-pilar.png" alt="Pilar Valcárcel" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Pilar Valcárcel</div><div style="font-size:13px;font-weight:700;color:#4E7D22;margin-top:2px">CGO · Chief Growth Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">More than 20 years in adtech. Expert in go-to-market and scaling technology companies.</div></div>
           <div style="border:2px dashed #C7D3F7;border-radius:20px;padding:22px;background:#F7F9FF"><div style="width:52px;height:52px;border-radius:50%;background:#fff;border:2px dashed #3068ED;color:#3068ED;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px">+</div><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">The technology leg</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">To be appointed</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Someone to turn what already works into a platform for thousands of families.</div></div>
         </div>
         <div style="font-size:14px;color:#6B7280">Supported by industry advisors and partners, whom we will introduce at the meeting.</div>
@@ -507,7 +591,7 @@ const CODIGO = 'BROS2026';
 const KEY = 'bros-dossier-ok';
 const LANG = 'en';
 const DESTINO = l => /\.dc\.html$/.test(decodeURIComponent(location.pathname)) ? (l === 'en' ? 'Dossier Tecnologico EN.dc.html' : 'Dossier Tecnologico.dc.html') : (l === 'en' ? 'dossier-en.html' : 'dossier.html');
-const SECS = [['vision', 'Mission'], ['real', 'What already works'], ['arq', 'Architecture'], ['retos', 'Roadmap and challenges'], ['mercado', 'Market'], ['negocio', 'Business'], ['economics', 'Business economics'], ['marketing', 'Marketing plan'], ['equipo', 'Team'], ['vosotros', 'Why you'], ['founders', 'Founders’ vision'], ['hablemos', 'Let’s talk']];
+const SECS = [['vision', 'Mission'], ['real', 'What already works'], ['arq', 'Architecture'], ['retos', 'Roadmap and challenges'], ['mercado', 'Market'], ['negocio', 'Business'], ['economics', 'Business economics'], ['marketing', 'Marketing plan'], ['growth', 'Growth plan'], ['equipo', 'Team'], ['vosotros', 'Why you'], ['founders', 'Founders’ vision'], ['hablemos', 'Let’s talk']];
 const UNIVERSAL = [
   ['BroS AI', 'Our company to make AI adoption in our community ethical and safe for their development. A mission from day one.', '#3068ED'],
   ['BroS Brain', 'A mental gym where Bros learn to boost their creativity.', '#3068ED'],
@@ -652,7 +736,11 @@ class Component extends DCLogic {
   }
   ir(j) { this.setState({ i: j }); try { history.replaceState(null, '', '#' + SECS[j][0]); } catch (e) {} window.scrollTo(0, 0); }
   entrar() {
-    if ((this.state.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} if (this.state.lang !== LANG) { location.href = DESTINO(this.state.lang) + (location.hash || ''); return; } this.setState({ ok: true, error: false }); }
+    const st = this.state, nombre = (st.nombre || '').trim(), email = (st.email || '').trim();
+    if (!nombre || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return this.setState({ errDatos: true });
+    if (!st.acepto) return this.setState({ errNda: true });
+    if ((st.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) {
+      try { fetch('https://nxdkjayuonzrqwjokfyu.supabase.co/rest/v1/nda_aceptaciones', { method: 'POST', keepalive: true, headers: { apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg', 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify({ nombre, email, empresa: (st.empresa || '').trim(), dossier: 'tecnologico', idioma: st.lang || LANG, version: '1.0', user_agent: navigator.userAgent.slice(0, 300) }) }).catch(() => {}); } catch (e) {} try { sessionStorage.setItem(KEY, '1'); } catch (e) {} if (this.state.lang !== LANG) { location.href = DESTINO(this.state.lang) + (location.hash || ''); return; } this.setState({ ok: true, error: false }); }
     else this.setState({ error: true });
   }
   renderVals() {
@@ -663,6 +751,14 @@ class Component extends DCLogic {
       codigo: st.codigo, error: st.error, bordeCodigo: st.error ? '#F97316' : '#E4E7EE',
       onCodigo: e => this.setState({ codigo: e.target.value, error: false }),
       onKey: e => { if (e.key === 'Enter') this.entrar(); },
+      nombre: st.nombre || '', email: st.email || '', empresa: st.empresa || '', acepto: !!st.acepto,
+      onNombre: e => this.setState({ nombre: e.target.value, errDatos: false }),
+      onEmail: e => this.setState({ email: e.target.value, errDatos: false }),
+      onEmpresa: e => this.setState({ empresa: e.target.value }),
+      onAcepto: e => this.setState({ acepto: e.target.checked, errNda: false }),
+      errDatos: !!st.errDatos, errNda: !!st.errNda, verNda: !!st.verNda,
+      abrirNda: e => { if (e) e.preventDefault(); this.setState({ verNda: true }); },
+      cerrarNda: () => this.setState({ verNda: false }),
       entrar: () => this.entrar(),
       irInicio: () => this.ir(0),
       setEs: () => this.setState({ lang: 'es' }), setEn: () => this.setState({ lang: 'en' }),
