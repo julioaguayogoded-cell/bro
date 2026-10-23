@@ -21,17 +21,40 @@
     <div style="width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
       <img src="logo.png" alt="BroS Life" style="width:64px;height:64px">
       <div style="font-family:Outfit;font-weight:800;font-size:26px;letter-spacing:-.02em">BroS Life</div>
-      <div style="font-size:14px;line-height:1.5;color:#6B7280">Dossier confidencial. Escribe el código de acceso que te hemos enviado.</div>
+      <div style="font-size:14px;line-height:1.5;color:#6B7280">Dossier confidencial. Escribe el código que te hemos enviado y tus datos.</div>
       <div style="display:flex;gap:4px;background:#F4F5F9;border-radius:12px;padding:4px;width:100%;box-sizing:border-box">
         <button onClick="{{ setEs }}" style="flex:1;height:38px;border-radius:9px;font-weight:700;font-size:14px;background:{{ esBg }};color:{{ esTx }}">Español</button>
         <button onClick="{{ setEn }}" style="flex:1;height:38px;border-radius:9px;font-weight:700;font-size:14px;background:{{ enBg }};color:{{ enTx }}">English</button>
       </div>
       <input value="{{ codigo }}" onChange="{{ onCodigo }}" onKeyDown="{{ onKey }}" placeholder="Código de acceso" autocomplete="off" style="width:100%;box-sizing:border-box;height:52px;border-radius:14px;border:1px solid {{ bordeCodigo }};padding:0 16px;font-size:16px;text-align:center;letter-spacing:.08em;outline:none">
+      <input value="{{ nombre }}" onChange="{{ onNombre }}" placeholder="Nombre y apellidos" type="text" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="Email" type="email" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <input value="{{ empresa }}" onChange="{{ onEmpresa }}" placeholder="Empresa" type="text" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none">
+      <label style="display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:13.5px;line-height:1.45;color:#374151;width:100%;cursor:pointer"><input type="checkbox" checked="{{ acepto }}" onChange="{{ onAcepto }}" style="width:20px;height:20px;margin:0;flex:none;accent-color:#3068ED"><span>He leído y acepto el <button onClick="{{ abrirNda }}" style="padding:0;font-size:13.5px;font-weight:700;color:#3068ED;text-decoration:underline;background:none">acuerdo de confidencialidad</button>.</span></label>
+      <sc-if value="{{ errDatos }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Escribe tu nombre y un email válido.</div></sc-if>
+      <sc-if value="{{ errNda }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Para entrar tienes que aceptar el acuerdo de confidencialidad.</div></sc-if>
       <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Ese código no es correcto.</div></sc-if>
       <button onClick="{{ entrar }}" style="width:100%;height:52px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:16px">Entrar</button>
       <div style="display:flex;gap:5px;margin-top:6px"><span style="width:26px;height:5px;border-radius:3px;background:#3068ED"></span><span style="width:26px;height:5px;border-radius:3px;background:#E56648"></span><span style="width:26px;height:5px;border-radius:3px;background:#82B94F"></span><span style="width:26px;height:5px;border-radius:3px;background:#111"></span></div>
     </div>
   </div>
+
+  <sc-if value="{{ verNda }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;background:rgba(17,17,17,.55);display:grid;place-items:center;padding:16px;box-sizing:border-box">
+      <div style="width:100%;max-width:560px;max-height:calc(100dvh - 32px);overflow-y:auto;background:#fff;border-radius:22px;padding:24px;box-sizing:border-box;text-align:left">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="logo.png" alt="" style="width:26px;height:26px"><div style="font-family:Outfit;font-weight:800;font-size:20px">Acuerdo de confidencialidad</div></div>
+        <div style="font-size:12px;color:#6B7280;margin-bottom:14px">Versión 1.0 · Octubre 2026</div>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 12px">Al marcar «Acepto» y entrar en este dossier, aceptas este acuerdo con <b>Bros Ecosystems SL (en constitución)</b>, representada por <b>Julio Aguayo, CEO y cofundador</b> («BroS Life»).</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>1. Qué es confidencial.</b> Todo lo que BroS Life te muestra en este dossier y en las conversaciones relacionadas: producto, tecnología, planes de negocio, cifras, partners y estrategia.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>2. Qué te comprometes a hacer.</b> A usar esta información solo para valorar una posible colaboración con BroS Life, y a no compartirla con terceros sin nuestro permiso. Puedes compartirla con tu equipo o tus asesores si la necesitan para esa valoración y guardan la misma confidencialidad.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>3. Qué no es confidencial.</b> La información que ya sea pública, que ya conocieras antes, que recibas legítimamente de otra fuente o que te pida una autoridad por ley.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>4. Sin otros compromisos.</b> Este acuerdo no te obliga a invertir, colaborar ni firmar nada más, y no te da ningún derecho sobre la información de BroS Life.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>5. Duración.</b> 2 años desde que lo aceptas.</p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px"><b>6. Ley aplicable.</b> Ley española.</p>
+        <button onClick="{{ cerrarNda }}" style="margin-top:10px;width:100%;height:48px;border-radius:14px;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:15px">Cerrar</button>
+      </div>
+    </div>
+  </sc-if>
 </sc-if>
 
 <sc-if value="{{ abierto }}" hint-placeholder-val="{{ true }}">
@@ -452,7 +475,7 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px">
           <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-julio.png" alt="Julio Aguayo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Julio Aguayo</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">CEO · Chief Executive Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Más de 15 años vendiendo tecnologías disruptivas en telecomunicaciones y retail.</div></div>
           <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-jesus.png" alt="Jesús Aspra" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Jesús Aspra</div><div style="font-size:13px;font-weight:700;color:#C2410C;margin-top:2px">CRO · Chief Revenue Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Director general en medios de referencia como Grupo Prisa. Actualmente, director general en Henneo.</div></div>
-          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-pilar.png" alt="Pilar Valcárcel" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Pilar Valcárcel</div><div style="font-size:13px;font-weight:700;color:#4E7D22;margin-top:2px">CBO · Chief Business Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Más de 20 años en adtech. Experta en go-to-market y escalado de empresas tecnológicas.</div></div>
+          <div style="border:1px solid #EEF0F4;border-radius:20px;padding:22px"><img src="equipo-pilar.png" alt="Pilar Valcárcel" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block"><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">Pilar Valcárcel</div><div style="font-size:13px;font-weight:700;color:#4E7D22;margin-top:2px">CGO · Chief Growth Officer</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Más de 20 años en adtech. Experta en go-to-market y escalado de empresas tecnológicas.</div></div>
           <div style="border:2px dashed #C7D3F7;border-radius:20px;padding:22px;background:#F7F9FF"><div style="width:52px;height:52px;border-radius:50%;background:#fff;border:2px dashed #3068ED;color:#3068ED;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:22px">+</div><div style="font-family:Outfit;font-weight:800;font-size:20px;margin-top:14px">La pata tecnológica</div><div style="font-size:13px;font-weight:700;color:#3068ED;margin-top:2px">Por incorporar</div><div style="font-size:14px;line-height:1.55;color:#4B5563;margin-top:8px">Quien convierta lo que ya funciona en una plataforma para miles de familias.</div></div>
         </div>
         <div style="font-size:14px;color:#6B7280">Con el apoyo de advisors y partners del sector, que presentaremos en la reunión.</div>
@@ -713,7 +736,11 @@ class Component extends DCLogic {
   }
   ir(j) { this.setState({ i: j }); try { history.replaceState(null, '', '#' + SECS[j][0]); } catch (e) {} window.scrollTo(0, 0); }
   entrar() {
-    if ((this.state.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} if (this.state.lang !== LANG) { location.href = DESTINO(this.state.lang) + (location.hash || ''); return; } this.setState({ ok: true, error: false }); }
+    const st = this.state, nombre = (st.nombre || '').trim(), email = (st.email || '').trim();
+    if (!nombre || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return this.setState({ errDatos: true });
+    if (!st.acepto) return this.setState({ errNda: true });
+    if ((st.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) {
+      try { fetch('https://nxdkjayuonzrqwjokfyu.supabase.co/rest/v1/nda_aceptaciones', { method: 'POST', keepalive: true, headers: { apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg', 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify({ nombre, email, empresa: (st.empresa || '').trim(), dossier: 'tecnologico', idioma: st.lang || LANG, version: '1.0', user_agent: navigator.userAgent.slice(0, 300) }) }).catch(() => {}); } catch (e) {} try { sessionStorage.setItem(KEY, '1'); } catch (e) {} if (this.state.lang !== LANG) { location.href = DESTINO(this.state.lang) + (location.hash || ''); return; } this.setState({ ok: true, error: false }); }
     else this.setState({ error: true });
   }
   renderVals() {
@@ -724,6 +751,14 @@ class Component extends DCLogic {
       codigo: st.codigo, error: st.error, bordeCodigo: st.error ? '#F97316' : '#E4E7EE',
       onCodigo: e => this.setState({ codigo: e.target.value, error: false }),
       onKey: e => { if (e.key === 'Enter') this.entrar(); },
+      nombre: st.nombre || '', email: st.email || '', empresa: st.empresa || '', acepto: !!st.acepto,
+      onNombre: e => this.setState({ nombre: e.target.value, errDatos: false }),
+      onEmail: e => this.setState({ email: e.target.value, errDatos: false }),
+      onEmpresa: e => this.setState({ empresa: e.target.value }),
+      onAcepto: e => this.setState({ acepto: e.target.checked, errNda: false }),
+      errDatos: !!st.errDatos, errNda: !!st.errNda, verNda: !!st.verNda,
+      abrirNda: e => { if (e) e.preventDefault(); this.setState({ verNda: true }); },
+      cerrarNda: () => this.setState({ verNda: false }),
       entrar: () => this.entrar(),
       irInicio: () => this.ir(0),
       setEs: () => this.setState({ lang: 'es' }), setEn: () => this.setState({ lang: 'en' }),
