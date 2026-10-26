@@ -76,7 +76,7 @@
             <sc-for list="{{ x.owners }}" as="o" hint-placeholder-count="3">
               <button onClick="{{ o.onClick }}" style="height:30px;padding:0 11px;border-radius:999px;font-weight:700;font-size:12.5px;background:{{ o.bg }};color:{{ o.tx }};border:1px solid {{ o.borde }}">{{ o.n }}</button>
             </sc-for>
-            <input type="date" value="{{ x.deadline }}" onChange="{{ x.onFecha }}" style="height:30px;border-radius:9px;border:1px solid {{ x.fechaBorde }};padding:0 8px;font-size:12.5px;color:{{ x.fechaTx }}">
+            <label style="position:relative;display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:9px;background:{{ x.fechaBg }};color:{{ x.fechaPill }};border:1px solid {{ x.fechaBorde }};font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap">{{ x.fechaTxt }}<input type="date" value="{{ x.deadline }}" onChange="{{ x.onFecha }}" aria-label="Cambiar deadline" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0"></label>
             <span style="font-size:11.5px;color:#9CA3AF">{{ x.firma }}</span>
             <div style="flex:1"></div>
             <button onClick="{{ x.borrar }}" aria-label="Borrar" style="height:30px;padding:0 10px;border-radius:9px;font-size:12.5px;color:#9CA3AF;font-weight:600">Borrar</button>
@@ -161,13 +161,18 @@ class Component extends DCLogic {
     const orden = (a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999');
     const lista = vivas.filter(pasa).sort(orden).map(x => {
       const tarde = !x.hecha && x.deadline && x.deadline < H;
+      const M = new Date(Date.now() + 864e5).toISOString().slice(0, 10);
+      const fechaTxt = !x.deadline ? 'Sin fecha' : x.deadline === H ? 'Hoy' : x.deadline === M ? 'Mañana'
+        : (tarde ? 'Vencida · ' : '') + new Date(x.deadline + 'T12:00:00').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\./g, '');
+      const fechaBg = tarde ? '#FDF0EC' : x.deadline === H ? '#111' : x.deadline === M ? '#EEF3FE' : '#F4F5F9';
+      const fechaPill = tarde ? '#B4442B' : x.deadline === H ? '#fff' : x.deadline === M ? '#2452C4' : '#374151';
       return {
         ...x, objetivo: x.objetivo || '', hayObj: !!x.objetivo, deadline: x.deadline || '',
         borde: x.hecha ? '#E4E7EE' : tarde ? '#F2C6B8' : !x.owner || !x.deadline ? '#F4E0B8' : '#E4E7EE',
         chk: x.hecha ? '✓' : '', chkBg: x.hecha ? '#82B94F' : '#fff', chkBorde: x.hecha ? '#82B94F' : '#D5DAE3',
         tachado: x.hecha ? 'line-through' : 'none', tituloTx: x.hecha ? '#9CA3AF' : '#111',
         fechaBorde: tarde ? '#E56648' : x.deadline ? '#E4E7EE' : '#E8B04B', fechaTx: tarde ? '#B4442B' : '#111',
-        firma: x.creado_por ? 'creada por ' + x.creado_por : '',
+        firma: x.creado_por ? 'creada por ' + x.creado_por : '', fechaTxt, fechaBg, fechaPill,
         toggle: () => this.cambiar(x.id, { hecha: !x.hecha }),
         borrar: () => { this.cambiar(x.id, { borrada: true }); this.avisar('Movida a la papelera'); },
         onFecha: e => this.cambiar(x.id, { deadline: e.target.value || null }),
