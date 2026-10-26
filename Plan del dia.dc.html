@@ -36,6 +36,69 @@
     </div>
   </sc-if>
 
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+      <div style="font-family:Outfit;font-weight:800;font-size:18px">Las 3 vitales</div>
+      <div style="font-size:12.5px;color:#6B7280">Lo que más acelera la empresa ahora</div>
+    </div>
+    <sc-for list="{{ vitales }}" as="v" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid #E4E7EE;border-left:5px solid {{ v.color }};border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+        <button onClick="{{ v.toggle }}" style="display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%">
+          <div style="width:30px;height:30px;border-radius:10px;flex:none;background:{{ v.color }};color:#fff;display:grid;place-items:center;font-family:Outfit;font-weight:800;font-size:15px">{{ v.n }}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:Outfit;font-weight:800;font-size:16.5px;line-height:1.25">{{ v.titulo }}</div>
+            <div style="font-size:12.5px;color:#6B7280;margin-top:3px;line-height:1.4">{{ v.siguiente }}</div>
+          </div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+            <span style="height:26px;padding:0 10px;border-radius:8px;display:inline-flex;align-items:center;font-size:12px;font-weight:700;background:{{ v.fBg }};color:{{ v.fTx }};white-space:nowrap">{{ v.fTxt }}</span>
+            <span style="font-size:11.5px;font-weight:700;color:#6B7280">{{ v.progTxt }}</span>
+          </div>
+        </button>
+        <div style="height:6px;border-radius:99px;background:#F0F2F6;overflow:hidden"><div style="height:100%;border-radius:99px;background:{{ v.color }};width:{{ v.pct }}"></div></div>
+        <sc-if value="{{ v.abierto }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <sc-if value="{{ v.hayPorQue }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12.5px;color:#374151;line-height:1.45;margin-bottom:4px"><b>Por qué:</b> {{ v.por_que }}</div>
+            </sc-if>
+            <sc-for list="{{ v.hitos }}" as="h" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #F0F2F6">
+                <button onClick="{{ h.toggle }}" aria-label="Hito hecho" style="width:24px;height:24px;border-radius:8px;flex:none;display:grid;place-items:center;background:{{ h.chkBg }};border:2px solid {{ h.chkBorde }};box-sizing:border-box;color:#fff;font-weight:800;font-size:13px">{{ h.chk }}</button>
+                <div style="flex:1;min-width:0;font-size:13.5px;line-height:1.4;text-decoration:{{ h.tachado }};color:{{ h.tx }}">{{ h.titulo }}</div>
+                <label style="position:relative;flex:none;display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:8px;background:{{ h.fBg }};color:{{ h.fTx }};font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap">{{ h.fTxt }}<input type="date" value="{{ h.deadline }}" onChange="{{ h.onFecha }}" aria-label="Deadline del hito" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0"></label>
+                <button onClick="{{ h.borrar }}" aria-label="Borrar hito" style="flex:none;width:24px;height:24px;font-size:15px;color:#9CA3AF">×</button>
+              </div>
+            </sc-for>
+            <div style="display:flex;gap:8px;margin-top:4px">
+              <input value="{{ v.nuevoHito }}" onChange="{{ v.onNuevoHito }}" onKeyDown="{{ v.onKeyHito }}" placeholder="Nuevo hito" style="flex:1;min-width:0;height:38px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:13.5px;outline:none">
+              <input type="date" value="{{ v.nuevoHitoF }}" onChange="{{ v.onNuevoHitoF }}" style="flex:none;height:38px;border-radius:10px;border:1px solid #E4E7EE;padding:0 8px;font-size:13px">
+              <button onClick="{{ v.addHito }}" style="flex:none;height:38px;padding:0 14px;border-radius:10px;background:#111;color:#fff;font-weight:700;font-size:13.5px">Añadir</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px">
+              <label style="position:relative;display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:9px;border:1px solid #E4E7EE;font-size:12.5px;font-weight:700;cursor:pointer">Deadline: {{ v.fTxt }}<input type="date" value="{{ v.deadline }}" onChange="{{ v.onFecha }}" aria-label="Deadline de la vital" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0"></label>
+              <div style="flex:1"></div>
+              <button onClick="{{ v.completar }}" style="height:32px;padding:0 13px;border-radius:9px;background:{{ v.compBg }};color:{{ v.compTx }};font-weight:700;font-size:12.5px">{{ v.compTxt }}</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+    <sc-if value="{{ hayHueco }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px dashed #D5DAE3;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-weight:700;font-size:14px">Nueva vital ({{ nVitales }} de 3)</div>
+        <input value="{{ nvT }}" onChange="{{ onNvT }}" placeholder="Qué tiene que conseguirse" style="height:42px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:14px;outline:none">
+        <input value="{{ nvP }}" onChange="{{ onNvP }}" placeholder="Por qué es vital (opcional)" style="height:40px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:13.5px;outline:none">
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="date" value="{{ nvF }}" onChange="{{ onNvF }}" style="height:38px;border-radius:10px;border:1px solid #E4E7EE;padding:0 8px;font-size:13px">
+          <div style="flex:1"></div>
+          <button onClick="{{ crearVital }}" style="height:40px;padding:0 16px;border-radius:10px;background:#111;color:#fff;font-weight:700;font-size:14px">Crear vital</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ hayCompletadas }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:12.5px;color:#6B7280">Completadas: {{ completadasTxt }}</div>
+    </sc-if>
+  </div>
+
   <div style="background:#fff;border:1px solid #E4E7EE;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px">
     <div style="font-family:Outfit;font-weight:800;font-size:16px">Nueva tarea</div>
     <input value="{{ nT }}" onChange="{{ onNT }}" placeholder="Qué hay que hacer" style="height:46px;border-radius:12px;border:1px solid #E4E7EE;padding:0 14px;font-size:15px;outline:none">
@@ -116,6 +179,12 @@ const PERSONAS = [['Julio', '#3068ED'], ['Jesús', '#E56648'], ['Pilar', '#82B94
 const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation', ...(opts.headers || {}) } });
 const color = n => (PERSONAS.find(p => p[0] === n) || [0, '#111'])[1];
 const hoy = () => new Date().toISOString().slice(0, 10);
+const VCOL = ['#3068ED', '#E56648', '#82B94F'];
+const fFecha = (d, hecho) => {
+  const H = hoy(), M = new Date(Date.now() + 864e5).toISOString().slice(0, 10), tarde = !hecho && d && d < H;
+  const txt = !d ? 'Sin fecha' : d === H ? 'Hoy' : d === M ? 'Mañana' : (tarde ? 'Vencida · ' : '') + new Date(d + 'T12:00:00').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\./g, '');
+  return { txt, bg: hecho ? '#EEF6E6' : tarde ? '#FDF0EC' : d === H ? '#111' : d === M ? '#EEF3FE' : '#F4F5F9', tx: hecho ? '#3D6B1F' : tarde ? '#B4442B' : d === H ? '#fff' : d === M ? '#2452C4' : '#374151' };
+};
 class Component extends DCLogic {
   state = (() => {
     let yo = null; try { yo = localStorage.getItem(YO_KEY); } catch (e) {}
@@ -126,9 +195,9 @@ class Component extends DCLogic {
   async cargar() {
     if (this.editando) return;
     try {
-      const r = await sb('bro_tareas?select=*&order=creado.asc');
+      const [r, rv, rh] = await Promise.all([sb('bro_tareas?select=*&order=creado.asc'), sb('bro_vitales?select=*&order=orden.asc,creado.asc'), sb('bro_hitos?select=*&order=orden.asc,creado.asc')]);
       if (!r.ok) throw new Error(r.status);
-      this.setState({ tareas: await r.json(), cargando: false, sync: 'ok' });
+      this.setState({ tareas: await r.json(), vitales: rv.ok ? await rv.json() : [], hitos: rh.ok ? await rh.json() : [], cargando: false, sync: 'ok' });
     } catch (e) { this.setState({ cargando: false, sync: 'error' }); }
   }
   avisar(t) { this.setState({ aviso: t }); clearTimeout(this.ta); this.ta = setTimeout(() => this.setState({ aviso: '' }), 2200); }
@@ -152,6 +221,39 @@ class Component extends DCLogic {
       this.setState(st => ({ tareas: [...st.tareas, nueva], nT: '', nObj: '', nF: '', sync: 'ok' }));
       this.avisar('Tarea añadida');
     } catch (e) { this.setState({ sync: 'error' }); this.avisar('No se pudo guardar'); }
+  }
+  async guardar(tabla, id, cambios, clave) {
+    this.editando = true;
+    this.setState(s => ({ [clave]: (s[clave] || []).map(x => x.id === id ? { ...x, ...cambios } : x) }));
+    try { const r = await sb(tabla + '?id=eq.' + id, { method: 'PATCH', body: JSON.stringify(cambios) }); if (!r.ok) throw new Error(r.status); this.setState({ sync: 'ok' }); }
+    catch (e) { this.setState({ sync: 'error' }); this.avisar('Sin conexión: no se ha guardado'); }
+    this.editando = false;
+  }
+  async borrarHito(id) {
+    this.setState(s => ({ hitos: s.hitos.filter(x => x.id !== id) }));
+    try { await sb('bro_hitos?id=eq.' + id, { method: 'DELETE' }); } catch (e) { this.avisar('No se pudo borrar'); }
+  }
+  async addHito(v) {
+    const d = (this.state.borr || {})[v.id] || {}, titulo = (d.t || '').trim();
+    if (!titulo) return this.avisar('Escribe el hito');
+    const orden = (this.state.hitos || []).filter(h => h.vital_id === v.id).length + 1;
+    try {
+      const r = await sb('bro_hitos', { method: 'POST', body: JSON.stringify({ vital_id: v.id, titulo, deadline: d.f || null, orden }) });
+      if (!r.ok) throw new Error(r.status);
+      const [h] = await r.json();
+      this.setState(s => ({ hitos: [...(s.hitos || []), h], borr: { ...s.borr, [v.id]: {} } }));
+    } catch (e) { this.avisar('No se pudo guardar'); }
+  }
+  async crearVital() {
+    const s = this.state, titulo = (s.nvT || '').trim();
+    if (!titulo) return this.avisar('Escribe la vital');
+    if ((s.vitales || []).filter(v => !v.completada).length >= 3) return this.avisar('Ya hay 3 vitales: completa una antes');
+    try {
+      const r = await sb('bro_vitales', { method: 'POST', body: JSON.stringify({ titulo, por_que: (s.nvP || '').trim() || null, deadline: s.nvF || null, owner: s.yo || null, orden: Date.now() % 100000 }) });
+      if (!r.ok) throw new Error(r.status);
+      const [v] = await r.json();
+      this.setState(st => ({ vitales: [...(st.vitales || []), v], nvT: '', nvP: '', nvF: '', abiertaV: v.id }));
+    } catch (e) { this.avisar('No se pudo guardar'); }
   }
   ser(n) { try { localStorage.setItem(YO_KEY, n); } catch (e) {} this.setState({ yo: n, filtro: n, nOwner: n }); }
   renderVals() {
@@ -185,7 +287,34 @@ class Component extends DCLogic {
       return { t: `${n} · ${cuenta(n)}`, bg: on ? c : '#fff', tx: on ? '#fff' : '#111', borde: on ? c : '#E4E7EE', onClick: () => this.setState({ filtro: n }) };
     });
     const papelera = s.tareas.filter(x => x.borrada).map(x => ({ titulo: x.titulo, recuperar: () => this.cambiar(x.id, { borrada: false }) }));
+    const activas = (s.vitales || []).filter(v => !v.completada);
+    const vitales = activas.slice(0, 3).map((v, i) => {
+      const hs = (s.hitos || []).filter(h => h.vital_id === v.id).sort((a, b) => (a.orden - b.orden) || (a.deadline || '9999').localeCompare(b.deadline || '9999'));
+      const hechos = hs.filter(h => h.hecho).length, sig = hs.find(h => !h.hecho), f = fFecha(v.deadline, false), todo = hs.length > 0 && hechos === hs.length;
+      const d = (s.borr || {})[v.id] || {}, setB = c => this.setState(st => ({ borr: { ...st.borr, [v.id]: { ...((st.borr || {})[v.id] || {}), ...c } } }));
+      return {
+        ...v, n: i + 1, color: VCOL[i], por_que: v.por_que || '', hayPorQue: !!v.por_que, deadline: v.deadline || '',
+        fTxt: f.txt, fBg: f.bg, fTx: f.tx,
+        siguiente: sig ? `Siguiente: ${sig.titulo} · ${fFecha(sig.deadline, false).txt}` : hs.length ? 'Todos los hitos hechos' : 'Añade el primer hito',
+        progTxt: `${hechos}/${hs.length} hitos`, pct: (hs.length ? Math.round(hechos / hs.length * 100) : 0) + '%',
+        abierto: s.abiertaV === v.id, toggle: () => this.setState({ abiertaV: s.abiertaV === v.id ? null : v.id }),
+        hitos: hs.map(h => { const fh = fFecha(h.deadline, h.hecho); return { ...h, deadline: h.deadline || '', fTxt: fh.txt, fBg: fh.bg, fTx: fh.tx, chk: h.hecho ? '✓' : '', chkBg: h.hecho ? '#82B94F' : '#fff', chkBorde: h.hecho ? '#82B94F' : '#D5DAE3', tachado: h.hecho ? 'line-through' : 'none', tx: h.hecho ? '#9CA3AF' : '#111',
+          toggle: () => this.guardar('bro_hitos', h.id, { hecho: !h.hecho }, 'hitos'), onFecha: e => this.guardar('bro_hitos', h.id, { deadline: e.target.value || null }, 'hitos'), borrar: () => this.borrarHito(h.id) }; }),
+        nuevoHito: d.t || '', nuevoHitoF: d.f || '',
+        onNuevoHito: e => setB({ t: e.target.value }), onNuevoHitoF: e => setB({ f: e.target.value }),
+        onKeyHito: e => { if (e.key === 'Enter') this.addHito(v); }, addHito: () => this.addHito(v),
+        onFecha: e => this.guardar('bro_vitales', v.id, { deadline: e.target.value || null }, 'vitales'),
+        compTxt: todo ? 'Completar vital' : 'Dar por completada', compBg: todo ? '#82B94F' : '#F4F5F9', compTx: todo ? '#fff' : '#6B7280',
+        completar: () => { this.guardar('bro_vitales', v.id, { completada: true }, 'vitales'); this.avisar('Vital completada: ya puedes crear otra'); }
+      };
+    });
+    const completadas = (s.vitales || []).filter(v => v.completada);
     return {
+      vitales, nVitales: activas.length + 1, hayHueco: !s.cargando && activas.length < 3,
+      nvT: s.nvT || '', nvP: s.nvP || '', nvF: s.nvF || '',
+      onNvT: e => this.setState({ nvT: e.target.value }), onNvP: e => this.setState({ nvP: e.target.value }), onNvF: e => this.setState({ nvF: e.target.value }),
+      crearVital: () => this.crearVital(),
+      hayCompletadas: completadas.length > 0, completadasTxt: completadas.map(v => v.titulo).join(' · '),
       syncTxt: s.sync === 'ok' ? 'EN DIRECTO' : s.sync === 'error' ? 'SIN CONEXIÓN' : 'CARGANDO',
       syncBg: s.sync === 'ok' ? '#EEF6E6' : s.sync === 'error' ? '#FDF0EC' : '#F0F2F6',
       syncTx: s.sync === 'ok' ? '#3D6B1F' : s.sync === 'error' ? '#B4442B' : '#6B7280',
