@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>doc-page:not(:defined){visibility:hidden} body{margin:0;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-text-size-adjust:100%} a{color:#3068ED} a:hover{color:#1f4fc0}</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<sc-if value="{{ bloqueado }}" hint-placeholder-val="{{ true }}">
+  <div style="min-height:100dvh;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#F4F5F9">
+    <div style="width:100%;max-width:380px;background:#fff;border:1px solid #E4E7EE;border-radius:22px;padding:28px 24px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <img src="logo.png" alt="BroS Life" style="width:48px;height:48px">
+      <div style="font-family:Outfit;font-weight:800;font-size:22px">Documento muy confidencial</div>
+      <div style="font-size:14px;line-height:1.5;color:#6B7280">Solo para los socios de BroS Life. Escribe el código de acceso.</div>
+      <input value="{{ codigo }}" onChange="{{ onCodigo }}" onKeyDown="{{ onKey }}" type="password" placeholder="Código" style="width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1px solid #E4E7EE;padding:0 16px;font-size:15px;outline:none;text-align:center;letter-spacing:.1em">
+      <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#C2410C">Código incorrecto.</div></sc-if>
+      <button onClick="{{ entrar }}" style="width:100%;height:48px;border-radius:14px;border:0;background:#111;color:#fff;font-family:Outfit;font-weight:800;font-size:15px;cursor:pointer">Entrar</button>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ abierto }}" hint-placeholder-val="{{ false }}">
+<doc-page size="a4" margin="0.7in">
+  <div slot="footer" style="display:flex;justify-content:space-between;align-items:center;font-size:9pt;color:#6B7280;border-top:1px solid #E4E7EE;padding-top:8px">
+    <span style="display:flex;align-items:center;gap:6px"><img src="logo.png" alt="" style="width:14px;height:14px">BroS Life · Valoración pre-seed</span>
+    <span>Uso interno · Octubre 2026</span>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="BroS Life" style="width:34px;height:34px"><span style="font-family:Outfit;font-weight:800;font-size:20px;letter-spacing:-.02em">BroS Life</span></div>
+    <div style="display:flex;gap:4px"><span style="width:28px;height:6px;border-radius:3px;background:#3068ED"></span><span style="width:28px;height:6px;border-radius:3px;background:#E56648"></span><span style="width:28px;height:6px;border-radius:3px;background:#82B94F"></span><span style="width:28px;height:6px;border-radius:3px;background:#111"></span></div>
+  </div>
+
+  <div style="font-size:10pt;font-weight:700;letter-spacing:.08em;color:#3068ED;margin-bottom:8px">FINANZAS · PREPARACIÓN DE REUNIONES CON INVERSORES</div>
+  <h1 style="font-family:Outfit;font-weight:800;font-size:32px;line-height:1.08;letter-spacing:-.02em;margin:0 0 10px">¿Cuánto vale BroS Life hoy? Una valoración que aguante cualquier pregunta</h1>
+  <p style="font-size:12.5pt;line-height:1.55;color:#374151;margin:0 0 6px;text-wrap:pretty">Cuatro métodos estándar de pre-seed, aplicados con criterio exigente, contrastados con el mercado español y europeo, y con la respuesta preparada a cada objeción.</p>
+  <div style="font-size:10pt;color:#6B7280;margin-bottom:22px">26 de octubre de 2026 · Versión 1.0 · Bros Ecosystems SL (en constitución) · Validar la estructura con el despacho antes de firmar nada</div>
+
+  <div style="background:#111;color:#fff;border-radius:14px;padding:18px 22px;margin-bottom:24px;break-inside:avoid">
+    <div style="font-family:Outfit;font-weight:700;font-size:15px;margin-bottom:8px">Conclusión</div>
+    <ul style="margin:0;padding-left:18px;font-size:11pt;line-height:1.6">
+      <li><b>Valoración pre-money defendible hoy: 1,2 – 1,5 M€.</b> Pedimos <b>1,5 M€</b> y no bajamos de <b>1,2 M€</b>.</li>
+      <li><b>Ronda pre-seed (200.000 €):</b> para hacer los dos MVP con garantías: el test con 20 familias y el piloto oficial en un colegio. Nota convertible con <b>techo de 1,5 M€</b> y un 20 % de descuento → los inversores reciben como máximo un <b>11,8 %</b>.</li>
+      <li><b>Segunda ronda (800.000 €):</b> para el lanzamiento en la vuelta al cole de 2027, a <b>3,5 – 4,5 M€</b> pre-money, con los dos MVP medidos y el CTO dentro. Las unidades de negocio se explican en las segundas reuniones.</li>
+      <li><b>Lo que no defendemos hoy:</b> 2 M€ o más. Sin CTO, sin ingresos y con hardware de por medio, un inversor exigente lo va a desmontar, y nos hace perder credibilidad.</li>
+    </ul>
+  </div>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 4px">1. Dónde está el mercado</h2>
+  <p style="font-size:10pt;color:#6B7280;margin:0 0 10px">La valoración de partida no es la que queremos, es la que paga el mercado por una empresa en nuestra fase.</p>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;line-height:1.5;margin-bottom:10px">
+    <thead><tr style="text-align:left;border-bottom:2px solid #111"><th style="padding:6px 8px 6px 0">Referencia</th><th style="padding:6px 8px;text-align:right;width:22%">Pre-money</th><th style="padding:6px 0 6px 8px;width:34%">Lectura</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0">Europa, mediana pre-seed (PitchBook, Q1 2025)</td><td style="padding:6px 8px;text-align:right;font-weight:700">2,4 M€</td><td style="padding:6px 0 6px 8px">Mediana a largo plazo: 1,8 M€. Muestra pequeña.</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0">Europa, rango sano pre-seed (Startkeel, datos 2024)</td><td style="padding:6px 8px;text-align:right;font-weight:700">2 – 4 M€</td><td style="padding:6px 0 6px 8px">Señal de alarma por encima de 7 M€ sin tracción.</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0">España, rango habitual (Nexen Capital)</td><td style="padding:6px 8px;text-align:right;font-weight:700">0,9 – 3 M€</td><td style="padding:6px 0 6px 8px">Según sector y momento.</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0">España, pre-seed tech con MVP (premoney.es, 2026)</td><td style="padding:6px 8px;text-align:right;font-weight:700">1 – 2,5 M€</td><td style="padding:6px 0 6px 8px">Lo que esperan ver los business angels españoles.</td></tr>
+      <tr style="vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0">España, pre-seed de business angels (Angels Capital, histórico)</td><td style="padding:6px 8px;text-align:right;font-weight:700">0,8 M€</td><td style="padding:6px 0 6px 8px">Estudio antiguo: lo usamos como suelo.</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10pt;line-height:1.55;color:#374151;margin:0 0 24px"><b>Dos ajustes en nuestra contra:</b> España valora por debajo de la media europea, y las empresas de consumo y hardware valoran por debajo del software puro y de la IA. <b>Punto de partida que usamos: 1,5 M€</b>, la mediana española razonable para un pre-seed con prototipo.</p>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 4px">2. Método Berkus</h2>
+  <p style="font-size:10pt;color:#6B7280;margin:0 0 10px">Hasta 500.000 € por cada riesgo que hemos reducido. Es el método que más usan los business angels en España para empresas sin ingresos.</p>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;line-height:1.5;margin-bottom:24px">
+    <thead><tr style="text-align:left;border-bottom:2px solid #111"><th style="padding:6px 8px 6px 0;width:26%">Factor</th><th style="padding:6px 8px">Por qué esta nota</th><th style="padding:6px 0 6px 8px;text-align:right;width:14%">Valor</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Idea y mercado</td><td style="padding:6px 8px">Problema grave, documentado y con viento regulatorio a favor (ley de menores en el Congreso). Más de 4 M de niños de 10 a 17 años en España.</td><td style="padding:6px 0 6px 8px;text-align:right">400 k€</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Prototipo y tecnología</td><td style="padding:6px 8px">Prototipo completo y piezas reales: Bro AI con Mistral, Content con YouTube, amigos por QR y app de padres conectada. Pero aún no en un móvil gestionado.</td><td style="padding:6px 0 6px 8px;text-align:right">300 k€</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Equipo</td><td style="padding:6px 8px">Tres fundadores senior en telecomunicaciones, medios y adtech. <b>Penaliza no tener CTO:</b> es la primera pregunta de cualquier inversor.</td><td style="padding:6px 0 6px 8px;text-align:right">350 k€</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Relaciones estratégicas</td><td style="padding:6px 8px">LOI de Google, interés de una entidad financiera, conversaciones con Casa del Libro y El Corte Inglés. Ningún contrato comercial firmado.</td><td style="padding:6px 0 6px 8px;text-align:right">250 k€</td></tr>
+      <tr style="border-bottom:2px solid #111;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Ventas y usuarios</td><td style="padding:6px 8px">Sin ingresos, sin usuarios reales y sin preventa.</td><td style="padding:6px 0 6px 8px;text-align:right">50 k€</td></tr>
+      <tr><td style="padding:8px 8px 8px 0;font-family:Outfit;font-weight:800">Total Berkus</td><td></td><td style="padding:8px 0 8px 8px;text-align:right;font-family:Outfit;font-weight:800">1,35 M€</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 4px">3. Método Scorecard</h2>
+  <p style="font-size:10pt;color:#6B7280;margin:0 0 10px">Comparamos BroS Life con una empresa media de su fase (100 % = igual que la media), sobre la base de 1,5 M€.</p>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;line-height:1.5;margin-bottom:24px">
+    <thead><tr style="text-align:left;border-bottom:2px solid #111"><th style="padding:6px 8px 6px 0;width:24%">Factor</th><th style="padding:6px 8px;text-align:right;width:9%">Peso</th><th style="padding:6px 8px;text-align:right;width:12%">Frente a la media</th><th style="padding:6px 8px">Justificación</th><th style="padding:6px 0 6px 8px;text-align:right;width:10%">Aporte</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Equipo</td><td style="padding:6px 8px;text-align:right">30 %</td><td style="padding:6px 8px;text-align:right">110 %</td><td style="padding:6px 8px">Muy fuerte en negocio; incompleto en tecnología.</td><td style="padding:6px 0 6px 8px;text-align:right">0,330</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Tamaño de la oportunidad</td><td style="padding:6px 8px;text-align:right">25 %</td><td style="padding:6px 8px;text-align:right">125 %</td><td style="padding:6px 8px">Categoría nueva, Europa sin competidor y varios ingresos posibles.</td><td style="padding:6px 0 6px 8px;text-align:right">0,313</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Producto y tecnología</td><td style="padding:6px 8px;text-align:right">15 %</td><td style="padding:6px 8px;text-align:right">85 %</td><td style="padding:6px 8px">Prototipo, no producto. Dependemos del hardware de terceros.</td><td style="padding:6px 0 6px 8px;text-align:right">0,128</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Competencia</td><td style="padding:6px 8px;text-align:right">10 %</td><td style="padding:6px 8px;text-align:right">90 %</td><td style="padding:6px 8px">Freckle financiado en EE. UU.; Apple y Google tienen control parental de serie.</td><td style="padding:6px 0 6px 8px;text-align:right">0,090</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Canales y marketing</td><td style="padding:6px 8px;text-align:right">10 %</td><td style="padding:6px 8px;text-align:right">110 %</td><td style="padding:6px 8px">Colegios, retail, banca e instituciones con puertas abiertas.</td><td style="padding:6px 0 6px 8px;text-align:right">0,110</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Necesidad de más capital</td><td style="padding:6px 8px;text-align:right">5 %</td><td style="padding:6px 8px;text-align:right">70 %</td><td style="padding:6px 8px">El hardware consume caja: habrá más rondas pronto.</td><td style="padding:6px 0 6px 8px;text-align:right">0,035</td></tr>
+      <tr style="border-bottom:2px solid #111;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Otros (regulación, marca)</td><td style="padding:6px 8px;text-align:right">5 %</td><td style="padding:6px 8px;text-align:right">105 %</td><td style="padding:6px 8px">La ley va a nuestro favor, pero los datos de menores exigen mucho.</td><td style="padding:6px 0 6px 8px;text-align:right">0,053</td></tr>
+      <tr><td style="padding:8px 8px 8px 0;font-family:Outfit;font-weight:800">Total</td><td></td><td></td><td style="padding:8px">1,058 × 1,5 M€</td><td style="padding:8px 0 8px 8px;text-align:right;font-family:Outfit;font-weight:800">1,59 M€</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 4px">4. Suma de factores de riesgo</h2>
+  <p style="font-size:10pt;color:#6B7280;margin:0 0 10px">12 riesgos, cada punto suma o resta 250.000 € a la base de 1,5 M€. Es el método más duro: el que usará un inversor escéptico.</p>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;font-size:10pt;line-height:1.45;margin-bottom:10px;break-inside:avoid">
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Equipo y gestión (sin CTO)</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Etapa (sin ingresos ni usuarios)</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Legislación (ley de menores)</span><b style="color:#3D6B1F">+1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Fabricación (móvil de terceros, ruta A)</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Ventas y marketing</span><b>0</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Necesidad de financiación</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Competencia</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Tecnología</span><b>0</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Datos de menores y litigios</span><b style="color:#B4442B">−1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Europa (ventana libre)</span><b style="color:#3D6B1F">+1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Reputación y misión</span><b style="color:#3D6B1F">+1</b></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #E4E7EE;padding:5px 0"><span>Potencial de salida (compradores claros)</span><b style="color:#3D6B1F">+1</b></div>
+  </div>
+  <p style="font-size:10.5pt;line-height:1.55;margin:0 0 24px"><b>Resultado: −2 → 1,5 M€ − 0,5 M€ = 1,0 M€.</b> Es nuestro suelo realista: por debajo de esta cifra no se justifica con ningún método.</p>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 4px">5. Método VC (desde la salida)</h2>
+  <p style="font-size:10pt;color:#6B7280;margin:0 0 10px">Lo que vale hoy si un inversor quiere multiplicar su dinero en una salida dentro de 5–7 años.</p>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;line-height:1.5;margin-bottom:10px;break-inside:avoid">
+    <tbody>
+      <tr style="border-bottom:1px solid #E4E7EE"><td style="padding:6px 8px 6px 0">Ingresos en el año 5 (hipótesis prudente: ≈ 40.000 familias activas)</td><td style="padding:6px 0 6px 8px;text-align:right;font-weight:700">≈ 12 M€</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE"><td style="padding:6px 8px 6px 0">Múltiplo de salida (consumo con hardware y suscripción)</td><td style="padding:6px 0 6px 8px;text-align:right;font-weight:700">2,5× ingresos</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE"><td style="padding:6px 8px 6px 0">Valor de salida</td><td style="padding:6px 0 6px 8px;text-align:right;font-weight:700">≈ 30 M€</td></tr>
+      <tr style="border-bottom:1px solid #E4E7EE"><td style="padding:6px 8px 6px 0">Lo que conserva el inversor de hoy tras seed y Serie A</td><td style="padding:6px 0 6px 8px;text-align:right;font-weight:700">50 %</td></tr>
+      <tr style="border-bottom:2px solid #111"><td style="padding:6px 8px 6px 0">Múltiplo que exige un business angel en pre-seed</td><td style="padding:6px 0 6px 8px;text-align:right;font-weight:700">10× – 15×</td></tr>
+      <tr><td style="padding:8px 8px 8px 0;font-family:Outfit;font-weight:800">Post-money hoy = 30 M€ × 50 % ÷ 10–15×</td><td style="padding:8px 0 8px 8px;text-align:right;font-family:Outfit;font-weight:800">1,0 – 1,5 M€</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10pt;line-height:1.55;color:#6B7280;margin:0 0 24px">Pre-money (restando los 200.000 € de la ronda): <b>0,8 – 1,3 M€</b>. No usamos las cifras del business plan (≈ 3 M€ de ingresos en el año 1) porque aún no están validadas: un inversor las descontaría igual.</p>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 10px">6. Resultado combinado</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px;break-inside:avoid">
+    <div style="border:1px solid #E4E7EE;border-top:4px solid #3068ED;border-radius:12px;padding:12px"><div style="font-size:9pt;font-weight:700;color:#6B7280">BERKUS</div><div style="font-family:Outfit;font-weight:800;font-size:22px">1,35 M€</div></div>
+    <div style="border:1px solid #E4E7EE;border-top:4px solid #82B94F;border-radius:12px;padding:12px"><div style="font-size:9pt;font-weight:700;color:#6B7280">SCORECARD</div><div style="font-family:Outfit;font-weight:800;font-size:22px">1,59 M€</div></div>
+    <div style="border:1px solid #E4E7EE;border-top:4px solid #E56648;border-radius:12px;padding:12px"><div style="font-size:9pt;font-weight:700;color:#6B7280">FACTORES DE RIESGO</div><div style="font-family:Outfit;font-weight:800;font-size:22px">1,00 M€</div></div>
+    <div style="border:1px solid #E4E7EE;border-top:4px solid #111;border-radius:12px;padding:12px"><div style="font-size:9pt;font-weight:700;color:#6B7280">MÉTODO VC</div><div style="font-family:Outfit;font-weight:800;font-size:22px">0,9–1,4 M€</div></div>
+  </div>
+  <div style="background:#F4F6FB;border-radius:12px;padding:14px 16px;font-size:10.5pt;line-height:1.6;margin-bottom:24px;break-inside:avoid">
+    <b>Media de los cuatro métodos: ≈ 1,3 M€.</b> Rango defendible: <b>1,2 – 1,5 M€</b>. Pedimos el techo, 1,5 M€, porque tres de los cuatro métodos lo alcanzan o se acercan, y queda dentro del rango español para un pre-seed con prototipo.
+  </div>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 10px">7. Las rondas: 200.000 € ahora y 800.000 € para el lanzamiento</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;line-height:1.5;margin-bottom:10px">
+    <thead><tr style="text-align:left;border-bottom:2px solid #111"><th style="padding:6px 8px 6px 0;width:20%">Ronda</th><th style="padding:6px 8px">Para qué e instrumento</th><th style="padding:6px 8px;text-align:right;width:12%">Dilución</th><th style="padding:6px 0 6px 8px;width:26%">Cuándo</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #E4E7EE;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Pre-seed<br>200.000 €</td><td style="padding:6px 8px">Los dos MVP con garantías: test con 20 familias (enero) y piloto oficial en un colegio (abril). Nota convertible con techo de 1,5 M€ pre-money y 20 % de descuento sobre la segunda ronda.</td><td style="padding:6px 8px;text-align:right">≤ 11,8 %</td><td style="padding:6px 0 6px 8px">Ahora</td></tr>
+      <tr style="border-bottom:2px solid #111;vertical-align:top;break-inside:avoid"><td style="padding:6px 8px 6px 0;font-weight:700">Segunda ronda<br>800.000 €</td><td style="padding:6px 8px">Lanzamiento en la vuelta al cole de 2027 y desarrollo de las unidades de negocio. Ampliación de capital a 3,5 – 4,5 M€ pre-money.</td><td style="padding:6px 8px;text-align:right">15 – 19 %</td><td style="padding:6px 0 6px 8px">Mayo–junio de 2027, con los dos MVP medidos, el CTO dentro y la LOI de un colegio</td></tr>
+      <tr><td style="padding:8px 8px 8px 0;font-family:Outfit;font-weight:800">Total</td><td style="padding:8px">Los fundadores conservan ≈ 72 – 75 % antes de la bolsa para el CTO (5–10 %)</td><td style="padding:8px;text-align:right;font-family:Outfit;font-weight:800">≈ 25 – 28 %</td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:10pt;line-height:1.55;color:#374151;margin:0 0 8px"><b>Por qué 200.000 € y no 100.000 €:</b> con 100.000 € el colegio se haría con lo justo. Con 200.000 € hacemos los dos MVP sin recortar en soporte, compliance ni medición, y llegamos a la segunda ronda con datos de los dos. Sigue dentro de lo habitual en un pre-seed español (100–300 k€).</p>
+  <p style="font-size:10pt;line-height:1.55;color:#374151;margin:0 0 8px"><b>Por qué la segunda ronda a 3,5 – 4,5 M€:</b> es un salto de 2,3 – 3×, posible solo si los dos MVP salen bien. Si no, la valoración de la segunda ronda baja, pero los inversores del pre-seed están protegidos por el techo y el descuento.</p>
+  <p style="font-size:10pt;line-height:1.55;color:#6B7280;margin:0 0 24px">En una SL, la nota se hace como préstamo convertible en participaciones, y la segunda ronda como ampliación de capital ante notario. Pedir ya el certificado de empresa emergente de ENISA: abre la deducción del 50 % en el IRPF a los inversores.</p>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 10px">8. Las objeciones que nos van a hacer, y qué responder</h2>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«No tenéis CTO.»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">Es cierto, y está en la valoración: por eso pedimos 1,5 M€ y no 2,5. Estamos en conversaciones con perfiles senior de IT y telecomunicaciones, y la segunda ronda solo se abre con el CTO dentro.</div></div>
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«No tenéis ingresos ni usuarios.»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">Por eso es un pre-seed de 200.000 € para medir con 20 familias reales y con un colegio. El inversor entra antes de la prueba y con descuento sobre el precio de después.</div></div>
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«El hardware quema caja y es difícil.»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">No fabricamos: usamos móviles y pulseras ya certificados de terceros (ruta A). Nuestro valor está en el sistema operativo, la suscripción y el ecosistema. El hardware propio llegará cuando haya volumen.</div></div>
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«Apple y Google ya tienen control parental.»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">Limitan un móvil de adulto; no cambian lo que hay dentro. Nosotros diseñamos el móvil para la edad del niño, con comunidades reales, proyectos y rewards. Y en Europa no hay nadie haciendo esto.</div></div>
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«¿Y los datos de menores?»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">Es nuestro mayor riesgo y lo tratamos como tal: despacho especializado, evaluación de impacto antes del piloto, datos en la UE y consentimientos ya diseñados. La ley que viene juega a nuestro favor.</div></div>
+    <div style="border:1px solid #E4E7EE;border-left:4px solid #E56648;border-radius:10px;padding:10px 14px;break-inside:avoid"><div style="font-weight:700;font-size:10.5pt">«¿Por qué no 800.000 €, como la media de business angels?»</div><div style="font-size:10pt;line-height:1.55;color:#374151;margin-top:3px">Esa media es de un estudio antiguo y de proyectos con menos recorrido. Tenemos un prototipo completo, una LOI de Google, un equipo senior y puertas abiertas en retail, banca e instituciones: el mercado actual en España para eso está en 1–2,5 M€.</div></div>
+  </div>
+
+  <h2 style="font-family:Outfit;font-weight:700;font-size:20px;margin:0 0 10px">9. Qué sube la valoración (para la segunda ronda)</h2>
+  <ul style="margin:0 0 20px;padding-left:18px;font-size:10.5pt;line-height:1.65">
+    <li><b>CTO firmado</b>, con participación: es lo que más mueve la cifra.</li>
+    <li><b>Test de 20 familias medido:</b> uso, recomendación y disposición a pagar.</li>
+    <li><b>Piloto oficial en un colegio</b> con apoyo institucional e informe de impacto.</li>
+    <li><b>Preventa o lista de espera</b> con familias reales.</li>
+    <li><b>Acuerdo firmado</b> con un retailer, un banco o una marca.</li>
+  </ul>
+
+  <div style="background:#111;color:#fff;border-radius:14px;padding:14px 18px;font-size:10.5pt;line-height:1.6;margin-bottom:16px;break-inside:avoid">
+    <b>Qué no decir en una reunión:</b> los 11,8–17,7 M€ calculados sobre el business plan, ni lo que costaría rehacer el prototipo. Lo primero es una valoración de futuro sin validar y lo segundo es coste, no valor. Los dos restan credibilidad.
+  </div>
+
+  <div style="background:#F4F6FB;border-radius:12px;padding:12px 14px;font-size:9pt;line-height:1.55;color:#374151;break-inside:avoid">
+    <b>Fuentes:</b> PitchBook, European VC Valuations Report Q1 2025; Startkeel, Pre-seed &amp; Seed Pre-money Valuation Benchmarks (Europe 2026); Nexen Capital, Cómo valorar tu startup en fase pre-seed (2026); premoney.es, Valoración pre-seed y seed: 6 métodos (2026); Angels Capital, Análisis de 60 rondas seed. Notas de cada método, múltiplos e hipótesis del año 5: criterio propio, a validar con un asesor financiero.
+  </div>
+</doc-page>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CODIGO = 'BROSVAL26';
+const KEY = 'bros-valoracion-ok';
+class Component extends DCLogic {
+  state = (() => { let ok = false; try { ok = sessionStorage.getItem(KEY) === '1'; } catch (e) {} return { ok, codigo: '', error: false }; })();
+  entrar() {
+    if ((this.state.codigo || '').trim().toUpperCase().replace(/\s/g, '') === CODIGO) {
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      this.setState({ ok: true, error: false });
+    } else this.setState({ error: true });
+  }
+  renderVals() {
+    const s = this.state;
+    return {
+      bloqueado: !s.ok, abierto: s.ok, codigo: s.codigo, error: s.error,
+      onCodigo: e => this.setState({ codigo: e.target.value, error: false }),
+      onKey: e => { if (e.key === 'Enter') this.entrar(); },
+      entrar: () => this.entrar()
+    };
+  }
+}
+</script>
+</body>
+</html>
