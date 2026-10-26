@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;background:#F4F5F9;font-family:Inter,system-ui,sans-serif;color:#111;-webkit-text-size-adjust:100%} a{color:#3068ED} a:hover{color:#1f4fc0} button{font-family:inherit;border:0;cursor:pointer;color:inherit;background:none} input{font-family:inherit} input[type=range]{width:100%;accent-color:#3068ED}</style>
+</helmet>
+<div style="max-width:1280px;margin:0 auto;padding:20px 16px 60px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <img src="logo.png" alt="BroS Life" style="width:36px;height:36px">
+    <div style="flex:1;min-width:200px">
+      <div style="font-family:Outfit;font-weight:800;font-size:24px;letter-spacing:-.02em">Business plan · simulador</div>
+      <div style="font-size:12.5px;color:#6B7280">Mueve las hipótesis y el plan se recalcula al momento. Inicio: noviembre de 2026.</div>
+    </div>
+    <div style="display:flex;gap:4px;background:#fff;border:1px solid #E4E7EE;border-radius:12px;padding:4px">
+      <sc-for list="{{ horizontes }}" as="h" hint-placeholder-count="3">
+        <button onClick="{{ h.onClick }}" style="height:34px;padding:0 14px;border-radius:9px;font-weight:700;font-size:13.5px;background:{{ h.bg }};color:{{ h.tx }}">{{ h.t }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+
+    <div style="flex:1 1 600px;min-width:0;display:flex;flex-direction:column;gap:16px">
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px">
+        <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="8">
+          <div style="background:#fff;border:1px solid #E4E7EE;border-top:4px solid {{ k.c }};border-radius:14px;padding:12px 14px">
+            <div style="font-size:10.5px;font-weight:800;letter-spacing:.05em;color:#6B7280">{{ k.t }}</div>
+            <div style="font-family:Outfit;font-weight:800;font-size:22px;margin-top:4px;color:{{ k.vc }}">{{ k.v }}</div>
+            <div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ k.s }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+          <div style="font-family:Outfit;font-weight:800;font-size:16px">Caja mes a mes</div>
+          <div style="font-size:12px;color:#6B7280">{{ cajaRango }}</div>
+        </div>
+        <div style="display:flex;gap:2px;height:200px;align-items:stretch">
+          <sc-for list="{{ meses }}" as="m" hint-placeholder-count="12">
+            <div title="{{ m.tip }}" style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="flex:1;display:flex;align-items:flex-end"><div style="width:100%;height:{{ m.hPos }};background:{{ m.cPos }};border-radius:3px 3px 0 0"></div></div>
+              <div style="height:1px;background:#D5DAE3"></div>
+              <div style="flex:1;display:flex;align-items:flex-start"><div style="width:100%;height:{{ m.hNeg }};background:#E56648;border-radius:0 0 3px 3px"></div></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:2px;margin-top:6px">
+          <sc-for list="{{ meses }}" as="m" hint-placeholder-count="12">
+            <div style="flex:1;min-width:0;text-align:center;font-size:9.5px;color:#6B7280;overflow:hidden;white-space:nowrap">{{ m.lbl }}</div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:#6B7280">
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#3068ED"></span>Caja</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#82B94F"></span>Mes con ronda</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#E56648"></span>Caja negativa</span>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+          <div style="font-family:Outfit;font-weight:800;font-size:16px">Ingresos y gastos por mes</div>
+          <div style="font-size:12px;color:#6B7280">Máx. {{ flujoMax }}</div>
+        </div>
+        <div style="display:flex;gap:2px;height:150px;align-items:flex-end">
+          <sc-for list="{{ meses }}" as="m" hint-placeholder-count="12">
+            <div title="{{ m.tip2 }}" style="flex:1;min-width:0;height:100%;display:flex;gap:1px;align-items:flex-end">
+              <div style="flex:1;height:{{ m.hIng }};background:#82B94F;border-radius:2px 2px 0 0"></div>
+              <div style="flex:1;height:{{ m.hGas }};background:#111;border-radius:2px 2px 0 0"></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:#6B7280">
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#82B94F"></span>Ingresos netos</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#111"></span>Gastos totales</span>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:16px;overflow-x:auto">
+        <div style="font-family:Outfit;font-weight:800;font-size:16px;margin-bottom:10px">Resumen por año</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;line-height:1.45;min-width:520px">
+          <thead><tr style="text-align:right;border-bottom:2px solid #111"><th style="padding:7px 8px 7px 0;text-align:left">Año</th><th style="padding:7px 8px">Familias</th><th style="padding:7px 8px">Suscriptores</th><th style="padding:7px 8px">Ingresos</th><th style="padding:7px 8px">Gastos</th><th style="padding:7px 8px">EBITDA</th><th style="padding:7px 0 7px 8px">Caja final</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ anios }}" as="a" hint-placeholder-count="1">
+              <tr style="text-align:right;border-bottom:1px solid #E4E7EE"><td style="padding:7px 8px 7px 0;text-align:left;font-weight:700">{{ a.t }}</td><td style="padding:7px 8px">{{ a.fam }}</td><td style="padding:7px 8px">{{ a.subs }}</td><td style="padding:7px 8px">{{ a.ing }}</td><td style="padding:7px 8px">{{ a.gas }}</td><td style="padding:7px 8px;font-weight:700;color:{{ a.ec }}">{{ a.ebitda }}</td><td style="padding:7px 0 7px 8px;font-weight:700;color:{{ a.cc }}">{{ a.caja }}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+          <div style="font-family:Outfit;font-weight:800;font-size:16px">Escenarios</div>
+          <span style="font-size:11px;font-weight:800;letter-spacing:.05em;padding:4px 8px;border-radius:7px;background:{{ syncBg }};color:{{ syncTx }}">{{ syncTxt }}</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input value="{{ nombreEsc }}" onChange="{{ onNombreEsc }}" placeholder="Nombre del escenario (p. ej. Conservador)" style="flex:1;min-width:200px;height:42px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:14px;outline:none">
+          <button onClick="{{ guardarEsc }}" style="height:42px;padding:0 16px;border-radius:10px;background:#111;color:#fff;font-weight:700;font-size:14px">Guardar el actual</button>
+          <button onClick="{{ reset }}" style="height:42px;padding:0 14px;border-radius:10px;border:1px solid #E4E7EE;font-weight:600;font-size:13.5px">Volver al caso base</button>
+        </div>
+        <sc-if value="{{ hayEsc }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ escenarios }}" as="e" hint-placeholder-count="0">
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F0F2F6">
+                <button onClick="{{ e.toggleCmp }}" aria-label="Comparar" style="width:22px;height:22px;border-radius:7px;flex:none;display:grid;place-items:center;background:{{ e.chkBg }};border:2px solid {{ e.chkBorde }};box-sizing:border-box;color:#fff;font-weight:800;font-size:12px">{{ e.chk }}</button>
+                <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">{{ e.nombre }}</div><div style="font-size:11.5px;color:#6B7280">{{ e.sub }}</div></div>
+                <button onClick="{{ e.cargar }}" style="height:32px;padding:0 12px;border-radius:9px;background:#EEF3FE;color:#2452C4;font-weight:700;font-size:12.5px">Cargar</button>
+                <button onClick="{{ e.borrar }}" aria-label="Borrar" style="width:28px;height:28px;color:#9CA3AF;font-size:16px">×</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hayCmp }}" hint-placeholder-val="{{ false }}">
+          <div style="overflow-x:auto">
+            <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Comparación a {{ horizonteTxt }} (marca hasta 3)</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;line-height:1.45;min-width:420px">
+              <thead><tr style="border-bottom:2px solid #111"><th style="padding:7px 8px 7px 0;text-align:left">Indicador</th><sc-for list="{{ cmpCols }}" as="c" hint-placeholder-count="2"><th style="padding:7px 8px;text-align:right">{{ c }}</th></sc-for></tr></thead>
+              <tbody>
+                <sc-for list="{{ cmpFilas }}" as="f" hint-placeholder-count="6">
+                  <tr style="border-bottom:1px solid #E4E7EE"><td style="padding:7px 8px 7px 0;font-weight:600">{{ f.t }}</td><sc-for list="{{ f.v }}" as="v" hint-placeholder-count="2"><td style="padding:7px 8px;text-align:right">{{ v }}</td></sc-for></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ grupos }}" as="g" hint-placeholder-count="6">
+        <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-family:Outfit;font-weight:800;font-size:15px">{{ g.t }}</div>
+          <sc-for list="{{ g.ctrls }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;justify-content:space-between;gap:10px;font-size:13px"><span style="color:#374151">{{ c.label }}</span><b style="white-space:nowrap">{{ c.txt }}</b></div>
+              <input type="range" min="{{ c.min }}" max="{{ c.max }}" step="{{ c.step }}" value="{{ c.val }}" onChange="{{ c.onChange }}" aria-label="{{ c.label }}">
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+
+      <div style="background:#fff;border:1px solid #E4E7EE;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+          <div style="font-family:Outfit;font-weight:800;font-size:15px">Equipo</div>
+          <div style="font-size:12px;color:#6B7280">{{ equipoTxt }}</div>
+        </div>
+        <sc-for list="{{ equipo }}" as="r" hint-placeholder-count="4">
+          <div style="border:1px solid #F0F2F6;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;gap:6px;align-items:center">
+              <input value="{{ r.rol }}" onChange="{{ r.onRol }}" aria-label="Rol" style="flex:1;min-width:0;height:34px;border-radius:9px;border:1px solid #E4E7EE;padding:0 10px;font-size:13.5px;font-weight:600;outline:none">
+              <button onClick="{{ r.borrar }}" aria-label="Quitar" style="width:28px;height:28px;color:#9CA3AF;font-size:16px">×</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:12.5px;color:#374151">
+              <span style="flex:none">Sueldo bruto/año</span>
+              <input type="number" value="{{ r.sueldo }}" onChange="{{ r.onSueldo }}" step="1000" min="0" aria-label="Sueldo bruto anual" style="flex:1;min-width:0;height:32px;border-radius:9px;border:1px solid #E4E7EE;padding:0 8px;font-size:13px">
+              <span style="flex:none">€</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#374151"><span>Entra en</span><b>{{ r.inicioTxt }}</b></div>
+            <input type="range" min="0" max="35" step="1" value="{{ r.inicio }}" onChange="{{ r.onInicio }}" aria-label="Mes de entrada">
+          </div>
+        </sc-for>
+        <button onClick="{{ addRol }}" style="height:38px;border-radius:10px;border:1px dashed #D5DAE3;font-weight:700;font-size:13.5px;color:#3068ED">+ Añadir persona</button>
+        <div style="font-size:11.5px;color:#6B7280">Coste empresa = sueldo × {{ cargasTxt }} (cargas sociales).</div>
+      </div>
+
+      <div style="font-size:11.5px;line-height:1.5;color:#6B7280;padding:0 4px">Modelo simplificado: precios con IVA incluido, ingresos sin IVA. Pilotos de enero (20 kits) y abril (75 kits) gratis para las familias. Las compras de hardware se pagan el mes de la venta. Para decisiones finales, valídalo con el BP completo.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SB_URL = 'https://nxdkjayuonzrqwjokfyu.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54ZGtqYXl1b256cnF3am9rZnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODUyOTUsImV4cCI6MjEwNjI2MTI5NX0.f4hfHICq3NxJm8f5X7bnMq2WqqlRWahpaFjCEWl2FSg';
+const LS = 'bros-bp-actual';
+const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation', ...(opts.headers || {}) } });
+const MES = i => { const d = new Date(2026, 10 + i, 1); return d.toLocaleDateString('es-ES', { month: 'short' }).replace('.', '') + ' ' + String(d.getFullYear()).slice(2); };
+const MESL = i => { const d = new Date(2026, 10 + i, 1); const t = d.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }); return t.charAt(0).toUpperCase() + t.slice(1); };
+const PILOTOS = { 2: 20, 5: 75 };
+const BASE = {
+  precio: 350, sub: 9.99, desc: 15, descMeses: 3,
+  lanzM: 10, lanz: 400, crec: 10, attach: 70, bajas: 2,
+  hw: 140, log: 20, ia: 1.2, pasarela: 2.5,
+  mktPre: 2000, mktFijo: 5000, cac: 60,
+  marca: 0.5, marcaDesde: 3,
+  dev: 10000, otros: 4000,
+  caja0: 10000, r1: 200000, r1m: 1, r2: 800000, r2m: 7,
+  cargas: 31,
+  equipo: [
+    { rol: 'Desarrollador Android', sueldo: 50000, inicio: 1 },
+    { rol: 'Desarrollador servidor y web', sueldo: 45000, inicio: 1 },
+    { rol: 'CTO', sueldo: 70000, inicio: 8 },
+    { rol: 'CEO', sueldo: 60000, inicio: 10 },
+    { rol: 'Soporte y operaciones', sueldo: 28000, inicio: 10 },
+    { rol: 'Growth', sueldo: 45000, inicio: 10 }
+  ]
+};
+const kE = v => { const a = Math.abs(v), s = v < 0 ? '−' : ''; return a >= 1e6 ? s + (a / 1e6).toLocaleString('es-ES', { maximumFractionDigits: 2 }) + ' M€' : a >= 1e3 ? s + Math.round(a / 1e3).toLocaleString('es-ES') + ' k€' : s + Math.round(a).toLocaleString('es-ES') + ' €'; };
+const num = v => Math.round(v).toLocaleString('es-ES');
+
+function simular(P, H) {
+  const net = P.precio / 1.21, subNet = P.sub / 1.21, cf = 1 + P.cargas / 100;
+  let caja = P.caja0, activos = 0;
+  const out = [];
+  for (let m = 0; m < H; m++) {
+    const lanzado = m >= P.lanzM, i = m - P.lanzM;
+    const nuevas = lanzado ? P.lanz * Math.pow(1 + P.crec / 100, i) : 0;
+    const desc = lanzado && i < P.descMeses ? P.desc / 100 : 0;
+    activos = activos * (1 - P.bajas / 100) + nuevas * P.attach / 100;
+    const ingPack = nuevas * net * (1 - desc), ingSub = activos * subNet;
+    const ingMarca = lanzado && i >= P.marcaDesde ? activos * P.marca : 0;
+    const ing = ingPack + ingSub + ingMarca;
+    const kits = (PILOTOS[m] || 0) * (P.hw + P.log);
+    const cogs = nuevas * (P.hw + P.log) + ing * P.pasarela / 100 + activos * P.ia + kits;
+    const mkt = lanzado ? P.mktFijo + nuevas * P.cac : m >= P.lanzM - 2 ? P.mktFijo : P.mktPre;
+    const equipo = P.equipo.reduce((s, r) => s + (m >= r.inicio ? (+r.sueldo || 0) * cf / 12 : 0), 0);
+    const dev = lanzado ? 0 : P.dev;
+    const gastos = cogs + mkt + equipo + dev + P.otros;
+    const ronda = (m === P.r1m ? P.r1 : 0) + (m === P.r2m ? P.r2 : 0);
+    const ebitda = ing - gastos;
+    caja += ebitda + ronda;
+    out.push({ m, nuevas, activos, ing, gastos, ebitda, caja, ronda });
+  }
+  const minC = out.reduce((a, b) => b.caja < a.caja ? b : a, out[0]);
+  const neg = out.find(x => x.caja < 0);
+  const be = out.find((x, j) => x.m >= P.lanzM && x.ebitda >= 0 && out.slice(j).every(y => y.ebitda >= 0));
+  const famPack = net - P.hw - P.log - net * P.pasarela / 100;
+  const famAnio = famPack + (P.attach / 100) * 12 * (subNet * (1 - P.pasarela / 100) - P.ia + P.marca);
+  return {
+    out, ing: out.reduce((s, x) => s + x.ing, 0), ebitda: out.reduce((s, x) => s + x.ebitda, 0),
+    familias: out.reduce((s, x) => s + x.nuevas, 0), activos: out[out.length - 1].activos, cajaFin: out[out.length - 1].caja,
+    minC, neg, be, falta: Math.max(0, -minC.caja), famPack, famAnio
+  };
+}
+
+class Component extends DCLogic {
+  state = (() => {
+    let p = null; try { p = JSON.parse(localStorage.getItem(LS)); } catch (e) {}
+    return { P: p ? { ...BASE, ...p } : JSON.parse(JSON.stringify(BASE)), H: 24, esc: [], cmp: [], nombreEsc: '', sync: 'cargando' };
+  })();
+  componentDidMount() { this.cargarEsc(); }
+  componentDidUpdate(_, prev) { if (prev.P !== this.state.P) { try { localStorage.setItem(LS, JSON.stringify(this.state.P)); } catch (e) {} } }
+  setP(k, v) { this.setState(s => ({ P: { ...s.P, [k]: v } })); }
+  setRol(i, c) { this.setState(s => ({ P: { ...s.P, equipo: s.P.equipo.map((r, j) => j === i ? { ...r, ...c } : r) } })); }
+  async cargarEsc() {
+    try { const r = await sb('bro_escenarios?select=*&order=creado.desc'); if (!r.ok) throw new Error(r.status); this.setState({ esc: await r.json(), sync: 'ok' }); }
+    catch (e) { this.setState({ sync: 'error' }); }
+  }
+  async guardarEsc() {
+    const nombre = this.state.nombreEsc.trim() || 'Escenario ' + new Date().toLocaleDateString('es-ES');
+    let autor = null; try { autor = localStorage.getItem('bros-plan-yo'); } catch (e) {}
+    try {
+      const r = await sb('bro_escenarios', { method: 'POST', body: JSON.stringify({ nombre, autor, params: this.state.P }) });
+      if (!r.ok) throw new Error(r.status);
+      const [e] = await r.json();
+      this.setState(s => ({ esc: [e, ...s.esc], nombreEsc: '', sync: 'ok' }));
+    } catch (e) { this.setState({ sync: 'error' }); }
+  }
+  async borrarEsc(id) {
+    this.setState(s => ({ esc: s.esc.filter(e => e.id !== id), cmp: s.cmp.filter(c => c !== id) }));
+    try { await sb('bro_escenarios?id=eq.' + id, { method: 'DELETE' }); } catch (e) {}
+  }
+  renderVals() {
+    const s = this.state, P = s.P, H = s.H, R = simular(P, H);
+    const pct = v => v.toLocaleString('es-ES', { maximumFractionDigits: 1 }) + ' %';
+    const eur = v => v.toLocaleString('es-ES', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €';
+    const C = (k, label, min, max, step, f) => ({ label, min, max, step, val: P[k], txt: f(P[k]), onChange: e => this.setP(k, +e.target.value) });
+    const grupos = [
+      { t: 'Precio', ctrls: [C('precio', 'Pack (IVA incl.)', 149, 599, 1, eur), C('sub', 'Suscripción al mes (IVA incl.)', 2.99, 24.99, 0.5, eur), C('desc', 'Descuento de lanzamiento', 0, 40, 1, pct), C('descMeses', 'Meses con descuento', 0, 12, 1, v => v + ' meses')] },
+      { t: 'Volumen', ctrls: [C('lanzM', 'Lanzamiento', 6, 18, 1, MESL), C('lanz', 'Familias nuevas el primer mes', 50, 3000, 50, num), C('crec', 'Crecimiento mensual de familias nuevas', 0, 30, 1, pct), C('attach', 'Familias que se suscriben', 30, 100, 1, pct), C('bajas', 'Bajas mensuales de la suscripción', 0, 10, 0.5, pct)] },
+      { t: 'Costes por familia', ctrls: [C('hw', 'Móvil + pulsera', 60, 350, 5, eur), C('log', 'Logística, caja y envío', 0, 80, 1, eur), C('ia', 'IA y servidor por suscriptor al mes', 0.2, 5, 0.1, eur), C('pasarela', 'Pasarela de pago', 0, 5, 0.1, pct)] },
+      { t: 'Marketing', ctrls: [C('mktPre', 'Al mes antes del lanzamiento', 0, 20000, 500, kE), C('mktFijo', 'Marca al mes desde 2 meses antes', 0, 60000, 1000, kE), C('cac', 'Coste por familia captada', 0, 250, 5, eur)] },
+      { t: 'Marcas (rewards)', ctrls: [C('marca', 'Ingreso por suscriptor al mes', 0, 3, 0.1, eur), C('marcaDesde', 'Meses tras el lanzamiento hasta empezar', 0, 12, 1, v => v + ' meses')] },
+      { t: 'Otros gastos', ctrls: [C('dev', 'Desarrollo externo al mes (hasta lanzar)', 0, 50000, 1000, kE), C('otros', 'Gastos fijos al mes (legal, oficina, software)', 0, 30000, 500, kE), C('cargas', 'Cargas sociales', 0, 40, 1, pct)] },
+      { t: 'Inversión', ctrls: [C('caja0', 'Caja inicial', 0, 100000, 5000, kE), C('r1', 'Ronda 1', 0, 600000, 10000, kE), C('r1m', 'Fecha ronda 1', 0, 18, 1, MESL), C('r2', 'Ronda 2', 0, 3000000, 50000, kE), C('r2m', 'Fecha ronda 2', 0, 30, 1, MESL)] }
+    ];
+    const maxAbs = Math.max(1, ...R.out.map(x => Math.abs(x.caja)));
+    const maxF = Math.max(1, ...R.out.map(x => Math.max(x.ing, x.gastos)));
+    const salto = Math.ceil(H / 12);
+    const meses = R.out.map(x => ({
+      lbl: x.m % salto === 0 ? MES(x.m) : '',
+      hPos: (x.caja > 0 ? x.caja / maxAbs * 100 : 0) + '%', hNeg: (x.caja < 0 ? -x.caja / maxAbs * 100 : 0) + '%',
+      cPos: x.ronda ? '#82B94F' : '#3068ED',
+      hIng: (x.ing / maxF * 100) + '%', hGas: (x.gastos / maxF * 100) + '%',
+      tip: `${MES(x.m)} · caja ${kE(x.caja)}${x.ronda ? ' · ronda ' + kE(x.ronda) : ''}`,
+      tip2: `${MES(x.m)} · ingresos ${kE(x.ing)} · gastos ${kE(x.gastos)} · EBITDA ${kE(x.ebitda)}`
+    }));
+    const kpis = [
+      { t: 'INGRESOS', v: kE(R.ing), s: `${H} meses, sin IVA`, c: '#82B94F', vc: '#111' },
+      { t: 'EBITDA', v: kE(R.ebitda), s: `${H} meses`, c: '#3068ED', vc: R.ebitda < 0 ? '#B4442B' : '#111' },
+      { t: 'CAJA MÍNIMA', v: kE(R.minC.caja), s: MESL(R.minC.m), c: '#111', vc: R.minC.caja < 0 ? '#B4442B' : '#111' },
+      { t: 'SE ACABA LA CAJA', v: R.neg ? MESL(R.neg.m) : 'No se acaba', s: R.neg ? 'Hace falta más financiación' : 'Con estas rondas', c: R.neg ? '#E56648' : '#82B94F', vc: R.neg ? '#B4442B' : '#3D6B1F' },
+      { t: 'FALTA CAPTAR', v: R.falta ? kE(R.falta) : '0 €', s: 'Además de las rondas', c: '#E56648', vc: R.falta ? '#B4442B' : '#111' },
+      { t: 'PUNTO DE EQUILIBRIO', v: R.be ? MESL(R.be.m) : 'No se alcanza', s: 'EBITDA positivo sostenido', c: '#3068ED', vc: '#111' },
+      { t: 'SUSCRIPTORES ACTIVOS', v: num(R.activos), s: `Al final · ${num(R.familias)} familias`, c: '#82B94F', vc: '#111' },
+      { t: 'MARGEN POR FAMILIA', v: kE(R.famAnio), s: `Primer año · pack ${kE(R.famPack)}`, c: '#E56648', vc: R.famAnio < 0 ? '#B4442B' : '#111' }
+    ];
+    const anios = [];
+    for (let a = 0; a < H / 12; a++) {
+      const sl = R.out.slice(a * 12, a * 12 + 12); if (!sl.length) break;
+      const e = sl.reduce((t, x) => t + x.ebitda, 0), c = sl[sl.length - 1].caja;
+      anios.push({ t: `Año ${a + 1} · ${MES(a * 12)}–${MES(a * 12 + sl.length - 1)}`, fam: num(sl.reduce((t, x) => t + x.nuevas, 0)), subs: num(sl[sl.length - 1].activos), ing: kE(sl.reduce((t, x) => t + x.ing, 0)), gas: kE(sl.reduce((t, x) => t + x.gastos, 0)), ebitda: kE(e), caja: kE(c), ec: e < 0 ? '#B4442B' : '#3D6B1F', cc: c < 0 ? '#B4442B' : '#111' });
+    }
+    const coste = P.equipo.reduce((t, r) => t + (+r.sueldo || 0), 0) * (1 + P.cargas / 100);
+    const equipo = P.equipo.map((r, i) => ({ ...r, inicioTxt: MESL(r.inicio), onRol: e => this.setRol(i, { rol: e.target.value }), onSueldo: e => this.setRol(i, { sueldo: +e.target.value || 0 }), onInicio: e => this.setRol(i, { inicio: +e.target.value }), borrar: () => this.setState(st => ({ P: { ...st.P, equipo: st.P.equipo.filter((_, j) => j !== i) } })) }));
+    const escenarios = s.esc.map(e => { const on = s.cmp.includes(e.id); return { nombre: e.nombre, sub: [e.autor, new Date(e.creado).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })].filter(Boolean).join(' · '), chk: on ? '✓' : '', chkBg: on ? '#3068ED' : '#fff', chkBorde: on ? '#3068ED' : '#D5DAE3',
+      toggleCmp: () => this.setState(st => ({ cmp: on ? st.cmp.filter(c => c !== e.id) : [...st.cmp, e.id].slice(-3) })),
+      cargar: () => this.setState({ P: { ...BASE, ...e.params } }), borrar: () => this.borrarEsc(e.id) }; });
+    const sel = [{ nombre: 'Actual', params: P }, ...s.esc.filter(e => s.cmp.includes(e.id))];
+    const Rs = sel.map(e => simular({ ...BASE, ...e.params }, H));
+    const fila = (t, f) => ({ t, v: Rs.map(f) });
+    return {
+      horizontes: [12, 24, 36].map(h => ({ t: h + ' meses', bg: H === h ? '#111' : 'transparent', tx: H === h ? '#fff' : '#111', onClick: () => this.setState({ H: h }) })),
+      horizonteTxt: H + ' meses',
+      kpis, meses, anios, grupos, equipo,
+      cajaRango: `Máx. ${kE(Math.max(...R.out.map(x => x.caja)))} · mín. ${kE(R.minC.caja)}`, flujoMax: kE(maxF),
+      equipoTxt: `${P.equipo.length} personas · ${kE(coste)}/año a pleno`, cargasTxt: (1 + P.cargas / 100).toLocaleString('es-ES'),
+      addRol: () => this.setState(st => ({ P: { ...st.P, equipo: [...st.P.equipo, { rol: 'Nuevo rol', sueldo: 40000, inicio: st.P.lanzM }] } })),
+      nombreEsc: s.nombreEsc, onNombreEsc: e => this.setState({ nombreEsc: e.target.value }),
+      guardarEsc: () => this.guardarEsc(), reset: () => this.setState({ P: JSON.parse(JSON.stringify(BASE)) }),
+      escenarios, hayEsc: escenarios.length > 0,
+      hayCmp: s.cmp.length > 0, cmpCols: sel.map(e => e.nombre),
+      cmpFilas: [
+        fila('Ingresos', r => kE(r.ing)), fila('EBITDA', r => kE(r.ebitda)), fila('Caja mínima', r => kE(r.minC.caja)),
+        fila('Falta captar', r => kE(r.falta)), fila('Punto de equilibrio', r => r.be ? MES(r.be.m) : '—'),
+        fila('Suscriptores activos', r => num(r.activos)), fila('Margen por familia (año 1)', r => kE(r.famAnio))
+      ],
+      syncTxt: s.sync === 'ok' ? 'COMPARTIDO' : s.sync === 'error' ? 'SIN CONEXIÓN' : 'CARGANDO',
+      syncBg: s.sync === 'ok' ? '#EEF6E6' : s.sync === 'error' ? '#FDF0EC' : '#F0F2F6',
+      syncTx: s.sync === 'ok' ? '#3D6B1F' : s.sync === 'error' ? '#B4442B' : '#6B7280'
+    };
+  }
+}
+</script>
+</body>
+</html>
