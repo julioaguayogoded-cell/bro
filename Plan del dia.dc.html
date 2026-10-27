@@ -79,6 +79,17 @@
                         </button>
                         <sc-if value="{{ p.abierto }}" hint-placeholder-val="{{ false }}">
                           <div style="display:flex;flex-direction:column;gap:8px;padding:2px 12px 12px 30px">
+                            <sc-if value="{{ p.hayEmail }}" hint-placeholder-val="{{ false }}">
+                              <div style="border:1px solid #E4E7EE;border-radius:10px;background:#fff;padding:10px 12px;display:flex;flex-direction:column;gap:8px">
+                                <div style="display:flex;align-items:center;gap:8px">
+                                  <span style="flex:1;font-size:11px;font-weight:800;letter-spacing:.05em;color:#3068ED">EMAIL PERSONALIZADO</span>
+                                  <button onClick="{{ p.copiar }}" style="height:30px;padding:0 12px;border-radius:9px;background:#111;color:#fff;font-weight:700;font-size:12.5px">{{ p.copiarTxt }}</button>
+                                </div>
+                                <div style="font-size:12.5px;font-weight:700;line-height:1.4">Asunto: {{ p.asunto }}</div>
+                                <div style="font-size:12.5px;line-height:1.55;white-space:pre-wrap;color:#374151;user-select:text">{{ p.cuerpo }}</div>
+                                <div style="font-size:11px;color:#9CA3AF">Personalizado con: {{ p.fuente }}</div>
+                              </div>
+                            </sc-if>
                             <sc-for list="{{ p.pasos }}" as="h" hint-placeholder-count="0">
                               <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;border-radius:10px;background:{{ h.fondo }}">
                                 <div style="display:flex;align-items:center;gap:8px">
@@ -221,6 +232,46 @@ const color = n => (PERSONAS.find(p => p[0] === n) || [0, '#111'])[1];
 const hoy = () => new Date().toISOString().slice(0, 10);
 const VCOL = ['#3068ED', '#E56648', '#82B94F'];
 const CANALES = [['linkedin', 'LinkedIn'], ['email', 'Email'], ['llamada', 'Llamada']];
+const VIDEO = 'https://julioaguayogoded-cell.github.io/bro/Video%20Inversores%20v2.dc.html';
+const CUERPO = (saludo, gancho, encaje) => `Hola, ${saludo}:
+
+${gancho}
+
+Estamos construyendo BroS Life, el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.
+
+${encaje}
+
+Ya tenemos un MVP funcionando: el móvil del niño y la app de padres, conectados en tiempo real. En enero lo probamos con 20 familias y en abril con un piloto en colegios. Para llegar con garantías estamos abriendo una ronda pre-seed de 200.000 €.
+
+Te dejo un vídeo de 75 segundos: ${VIDEO}
+
+¿Te encajaría una llamada de 20 minutos en las próximas semanas?
+
+Un saludo,
+Julio Aguayo
+CEO · BroS Life
++34 619 402 892 · julio@thebros.life`;
+const NUELA = 'Anuncio de la ronda de Nuela (noviembre de 2025)';
+const EMAILS = {
+  'Guillermo Peigneux': { asunto: 'BroS Life · tecnología que cuida a niños y familias', fuente: NUELA,
+    cuerpo: CUERPO('Guillermo', 'He visto que entraste en la ronda de Nuela, y por eso me animo a escribirte: apuestas por la tecnología al servicio de la educación.', 'Nuela ayuda a los colegios a gestionarse mejor; nosotros llevamos esa misma idea al móvil que los niños tienen en el bolsillo.') },
+  'Javier López Costa': { asunto: 'BroS Life · un sistema operativo para niños, de un exCIO a otro proyecto', fuente: NUELA + ' · exCIO de FCC',
+    cuerpo: CUERPO('Javier', 'He visto que participaste en la ronda de Nuela y que fuiste CIO de FCC. Esa combinación de tecnología a gran escala y educación es justo la que buscamos.', 'Detrás de BroS Life hay un sistema operativo gestionado, IA y una app de padres conectada en tiempo real. Tu mirada de CIO nos ayudaría mucho a escalarlo bien.') },
+  'Juan Mostazo': { asunto: 'BroS Life · edtech para el primer móvil de los niños', fuente: NUELA,
+    cuerpo: CUERPO('Juan', 'He visto que eres uno de los business angels de la ronda de Nuela y que inviertes en edtech, así que creo que verás rápido la oportunidad.', 'El primer móvil llega hacia los 11 años y hoy solo existe el de adulto. Queremos que esa primera tecnología eduque en lugar de enganchar.') },
+  'Mariano Luis Sanz Montesa': { asunto: 'BroS Life · el primer móvil, pensado desde el colegio', fuente: NUELA + ' · exdirector del colegio Ramón y Cajal y fundador del colegio Greenfield',
+    cuerpo: CUERPO('Mariano', 'He visto que invertiste en Nuela y conozco tu trayectoria al frente del colegio Ramón y Cajal y como fundador de Greenfield. Pocas personas saben mejor lo que vive un colegio con el primer móvil de sus alumnos.', 'Además de la inversión, nos encantaría tu opinión sobre nuestro piloto con colegios: está diseñado para respetar el móvil fuera del aula y medir el impacto con encuestas validadas.') },
+  'Daniel Arce': { asunto: 'BroS Life · tecnología que cuida a niños y familias', fuente: NUELA,
+    cuerpo: CUERPO('Daniel', 'He visto que eres uno de los business angels que entraron en la ronda de Nuela, y por eso me animo a escribirte.', 'Queremos que la primera tecnología de un niño le ayude a crear en lugar de consumir, y que los padres decidan sin tener que vigilar.') },
+  'Jaime García Crespo': { asunto: 'BroS Life · producto digital de consumo + educación', fuente: NUELA + ' · exCEO de Affinitas Spain y presidente de Humanitas Bilingual School',
+    cuerpo: CUERPO('Jaime', 'He visto que participaste en la ronda de Nuela. Has sido CEO de Affinitas Spain y presides Humanitas Bilingual School: conoces a la vez el producto digital de consumo y la educación, los dos mundos en los que vive BroS Life.', 'Tu experiencia escalando un producto digital y tu visión desde un colegio nos aportarían muchísimo, tanto en la ronda como en el piloto.') },
+  'Ignacio María González': { asunto: 'BroS Life · un piloto pensado para redes de colegios', fuente: NUELA + ' · director de Desarrollo de Orbital Education',
+    cuerpo: CUERPO('Ignacio', 'He visto que participaste en la ronda de Nuela y que diriges el desarrollo de Orbital Education. Por eso creo que te puede interesar lo que hacemos.', 'Estamos diseñando un piloto con colegios, gratis para las familias y medido de principio a fin. Una red de colegios es el socio ideal para llevarlo a escala.') },
+  'Natalia Ramos Acosta': { asunto: 'BroS Life · edtech para el primer móvil de los niños', fuente: NUELA,
+    cuerpo: CUERPO('Natalia', 'He visto que eres business angel en el sector edtech y que entraste en la ronda de Nuela, así que creo que verás rápido la oportunidad.', 'El primer móvil llega hacia los 11 años y hoy solo existe el de adulto. Queremos que esa primera tecnología eduque en lugar de enganchar.') },
+  'Cristóbal Viedma': { asunto: 'BroS Life · de una app para niños a su primer móvil', fuente: 'Lingokids (web corporativa) y Tracxn',
+    cuerpo: CUERPO('Cristóbal', 'Has construido Lingokids desde Madrid hasta convertirla en una de las apps infantiles de referencia. Sabes mejor que nadie lo que cuesta ganarse la confianza de las familias.', 'Nosotros damos el siguiente paso: el primer móvil del niño. Tu visión como fundador y como inversor nos aportaría muchísimo.') }
+};
 const esCamp = h => !!h.campana || /^Edtech · /.test(h.titulo || '');
 const metaCamp = h => { if (h.campana) return { camp: h.campana, contacto: h.contacto || '—', paso: h.titulo }; const p = h.titulo.split(' · '); return { camp: 'Campaña Edtech investors', contacto: p[1] || '—', paso: p.slice(2).join(' · ') }; };
 const fFecha = (d, hecho) => {
@@ -298,6 +349,13 @@ class Component extends DCLogic {
       this.setState(st => ({ vitales: [...(st.vitales || []), v], nvT: '', nvP: '', nvF: '', abiertaV: v.id }));
     } catch (e) { this.avisar('No se pudo guardar'); }
   }
+  async copiar(texto, clave) {
+    let ok = false;
+    try { await navigator.clipboard.writeText(texto); ok = true; } catch (e) {}
+    if (!ok) { try { const t = document.createElement('textarea'); t.value = texto; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select(); ok = document.execCommand('copy'); t.remove(); } catch (e) {} }
+    if (ok) { this.setState({ copiado: clave }); clearTimeout(this.tc); this.tc = setTimeout(() => this.setState({ copiado: null }), 2000); }
+    else this.avisar('No se pudo copiar: selecciona el texto a mano');
+  }
   ser(n) { try { localStorage.setItem(YO_KEY, n); } catch (e) {} this.setState({ yo: n, filtro: n, nOwner: n }); }
   renderVals() {
     const s = this.state, F = s.filtro, H = hoy();
@@ -357,7 +415,11 @@ class Component extends DCLogic {
               toggle: () => this.setState({ abiertaC: s.abiertaC === kc ? null : kc }),
               contactos: g.contactos.map(c => {
                 const kp = kc + '|' + c.nombre, hechos = c.pasos.filter(h => h.hecho).length, sig = c.pasos.find(h => !h.hecho), fs = fFecha(sig ? sig.deadline : null, !sig);
+                const em = EMAILS[c.nombre];
                 return {
+                  hayEmail: !!em, asunto: em ? em.asunto : '', cuerpo: em ? em.cuerpo : '', fuente: em ? em.fuente : '',
+                  copiarTxt: s.copiado === kp ? 'Copiado ✓' : 'Copiar email',
+                  copiar: () => this.copiar(em ? `Asunto: ${em.asunto}\n\n${em.cuerpo}` : '', kp),
                   nombre: c.nombre, abierto: s.abiertoP === kp, progTxt: `${hechos}/${c.pasos.length}`,
                   punto: hechos === c.pasos.length ? '#82B94F' : hechos ? '#E8B04B' : '#D5DAE3',
                   fTxt: sig ? fs.txt : 'Hecho', fBg: fs.bg, fTx: fs.tx,
