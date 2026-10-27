@@ -60,6 +60,46 @@
             <sc-if value="{{ v.hayPorQue }}" hint-placeholder-val="{{ false }}">
               <div style="font-size:12.5px;color:#374151;line-height:1.45;margin-bottom:4px"><b>Por qué:</b> {{ v.por_que }}</div>
             </sc-if>
+            <sc-for list="{{ v.campanas }}" as="c" hint-placeholder-count="0">
+              <div style="border:1px solid #E4E7EE;border-radius:12px;overflow:hidden;margin:2px 0 6px">
+                <button onClick="{{ c.toggle }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;background:#F7F8FB;text-align:left">
+                  <span style="font-size:13px;color:#6B7280;width:12px">{{ c.flecha }}</span>
+                  <span style="flex:1;min-width:0;font-weight:700;font-size:14px">{{ c.nombre }}</span>
+                  <span style="font-size:11.5px;font-weight:700;color:#6B7280;white-space:nowrap">{{ c.progTxt }}</span>
+                </button>
+                <sc-if value="{{ c.abierta }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column">
+                    <sc-for list="{{ c.contactos }}" as="p" hint-placeholder-count="0">
+                      <div style="border-top:1px solid #F0F2F6">
+                        <button onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px 9px 30px;text-align:left">
+                          <span style="width:9px;height:9px;border-radius:50%;flex:none;background:{{ p.punto }}"></span>
+                          <span style="flex:1;min-width:0;font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.nombre }}</span>
+                          <span style="flex:none;height:22px;padding:0 8px;border-radius:7px;display:inline-flex;align-items:center;font-size:11px;font-weight:700;background:{{ p.fBg }};color:{{ p.fTx }};white-space:nowrap">{{ p.fTxt }}</span>
+                          <span style="flex:none;font-size:11.5px;font-weight:700;color:#6B7280">{{ p.progTxt }}</span>
+                        </button>
+                        <sc-if value="{{ p.abierto }}" hint-placeholder-val="{{ false }}">
+                          <div style="display:flex;flex-direction:column;gap:8px;padding:2px 12px 12px 30px">
+                            <sc-for list="{{ p.pasos }}" as="h" hint-placeholder-count="0">
+                              <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;border-radius:10px;background:{{ h.fondo }}">
+                                <div style="display:flex;align-items:center;gap:8px">
+                                  <span style="flex:1;min-width:0;font-size:13px;font-weight:600;color:{{ h.tx }};text-decoration:{{ h.tachado }}">{{ h.paso }}</span>
+                                  <label style="position:relative;flex:none;display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:7px;background:{{ h.fBg }};color:{{ h.fTx }};font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">{{ h.fTxt }}<input type="date" value="{{ h.deadline }}" onChange="{{ h.onFecha }}" aria-label="Fecha" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0"></label>
+                                </div>
+                                <div style="display:flex;gap:6px;flex-wrap:wrap">
+                                  <sc-for list="{{ h.canales }}" as="k" hint-placeholder-count="3">
+                                    <button onClick="{{ k.onClick }}" style="height:30px;padding:0 11px;border-radius:999px;font-size:12px;font-weight:700;background:{{ k.bg }};color:{{ k.tx }};border:1px solid {{ k.borde }}">{{ k.t }}</button>
+                                  </sc-for>
+                                </div>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
             <sc-for list="{{ v.hitos }}" as="h" hint-placeholder-count="3">
               <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #F0F2F6">
                 <button onClick="{{ h.toggle }}" aria-label="Hito hecho" style="width:24px;height:24px;border-radius:8px;flex:none;display:grid;place-items:center;background:{{ h.chkBg }};border:2px solid {{ h.chkBorde }};box-sizing:border-box;color:#fff;font-weight:800;font-size:13px">{{ h.chk }}</button>
@@ -180,6 +220,9 @@ const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, he
 const color = n => (PERSONAS.find(p => p[0] === n) || [0, '#111'])[1];
 const hoy = () => new Date().toISOString().slice(0, 10);
 const VCOL = ['#3068ED', '#E56648', '#82B94F'];
+const CANALES = [['linkedin', 'LinkedIn'], ['email', 'Email'], ['llamada', 'Llamada']];
+const esCamp = h => !!h.campana || /^Edtech · /.test(h.titulo || '');
+const metaCamp = h => { if (h.campana) return { camp: h.campana, contacto: h.contacto || '—', paso: h.titulo }; const p = h.titulo.split(' · '); return { camp: 'Campaña Edtech investors', contacto: p[1] || '—', paso: p.slice(2).join(' · ') }; };
 const fFecha = (d, hecho) => {
   const H = hoy(), M = new Date(Date.now() + 864e5).toISOString().slice(0, 10), tarde = !hecho && d && d < H;
   const txt = !d ? 'Sin fecha' : d === H ? 'Hoy' : d === M ? 'Mañana' : (tarde ? 'Vencida · ' : '') + new Date(d + 'T12:00:00').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\./g, '');
@@ -298,7 +341,43 @@ class Component extends DCLogic {
         siguiente: sig ? `Siguiente: ${sig.titulo} · ${fFecha(sig.deadline, false).txt}` : hs.length ? 'Todos los hitos hechos' : 'Añade el primer hito',
         progTxt: `${hechos}/${hs.length} hitos`, pct: (hs.length ? Math.round(hechos / hs.length * 100) : 0) + '%',
         abierto: s.abiertaV === v.id, toggle: () => this.setState({ abiertaV: s.abiertaV === v.id ? null : v.id }),
-        hitos: hs.map(h => { const fh = fFecha(h.deadline, h.hecho); return { ...h, deadline: h.deadline || '', fTxt: fh.txt, fBg: fh.bg, fTx: fh.tx, chk: h.hecho ? '✓' : '', chkBg: h.hecho ? '#82B94F' : '#fff', chkBorde: h.hecho ? '#82B94F' : '#D5DAE3', tachado: h.hecho ? 'line-through' : 'none', tx: h.hecho ? '#9CA3AF' : '#111',
+        campanas: (() => {
+          const grupos = [];
+          hs.filter(esCamp).forEach(h => {
+            const m = metaCamp(h);
+            let g = grupos.find(x => x.nombre === m.camp); if (!g) grupos.push(g = { nombre: m.camp, contactos: [] });
+            let c = g.contactos.find(x => x.nombre === m.contacto); if (!c) g.contactos.push(c = { nombre: m.contacto, pasos: [] });
+            c.pasos.push({ ...h, paso: m.paso });
+          });
+          return grupos.map(g => {
+            const kc = v.id + '|' + g.nombre, todos = g.contactos.flatMap(c => c.pasos), hechosC = todos.filter(h => h.hecho).length;
+            return {
+              nombre: g.nombre, abierta: s.abiertaC === kc, flecha: s.abiertaC === kc ? '▾' : '▸',
+              progTxt: `${g.contactos.filter(c => c.pasos.every(h => h.hecho)).length}/${g.contactos.length} contactos · ${hechosC}/${todos.length}`,
+              toggle: () => this.setState({ abiertaC: s.abiertaC === kc ? null : kc }),
+              contactos: g.contactos.map(c => {
+                const kp = kc + '|' + c.nombre, hechos = c.pasos.filter(h => h.hecho).length, sig = c.pasos.find(h => !h.hecho), fs = fFecha(sig ? sig.deadline : null, !sig);
+                return {
+                  nombre: c.nombre, abierto: s.abiertoP === kp, progTxt: `${hechos}/${c.pasos.length}`,
+                  punto: hechos === c.pasos.length ? '#82B94F' : hechos ? '#E8B04B' : '#D5DAE3',
+                  fTxt: sig ? fs.txt : 'Hecho', fBg: fs.bg, fTx: fs.tx,
+                  toggle: () => this.setState({ abiertoP: s.abiertoP === kp ? null : kp }),
+                  pasos: c.pasos.map(h => {
+                    const fh = fFecha(h.deadline, h.hecho);
+                    return {
+                      paso: h.paso, deadline: h.deadline || '', fTxt: fh.txt, fBg: fh.bg, fTx: fh.tx,
+                      fondo: h.hecho ? '#F1F8EA' : '#F7F8FB', tx: h.hecho ? '#6B7280' : '#111', tachado: h.hecho ? 'line-through' : 'none',
+                      onFecha: e => this.guardar('bro_hitos', h.id, { deadline: e.target.value || null }, 'hitos'),
+                      canales: CANALES.map(([k, t]) => { const on = h.hecho && h.canal === k; return { t: (on ? '✓ ' : '') + t, bg: on ? '#82B94F' : '#fff', tx: on ? '#fff' : '#111', borde: on ? '#82B94F' : '#E4E7EE',
+                        onClick: () => this.guardar('bro_hitos', h.id, on ? { hecho: false, canal: null } : { hecho: true, canal: k }, 'hitos') }; })
+                    };
+                  })
+                };
+              })
+            };
+          });
+        })(),
+        hitos: hs.filter(h => !esCamp(h)).map(h => { const fh = fFecha(h.deadline, h.hecho); return { ...h, deadline: h.deadline || '', fTxt: fh.txt, fBg: fh.bg, fTx: fh.tx, chk: h.hecho ? '✓' : '', chkBg: h.hecho ? '#82B94F' : '#fff', chkBorde: h.hecho ? '#82B94F' : '#D5DAE3', tachado: h.hecho ? 'line-through' : 'none', tx: h.hecho ? '#9CA3AF' : '#111',
           toggle: () => this.guardar('bro_hitos', h.id, { hecho: !h.hecho }, 'hitos'), onFecha: e => this.guardar('bro_hitos', h.id, { deadline: e.target.value || null }, 'hitos'), borrar: () => this.borrarHito(h.id) }; }),
         nuevoHito: d.t || '', nuevoHitoF: d.f || '',
         onNuevoHito: e => setB({ t: e.target.value }), onNuevoHitoF: e => setB({ f: e.target.value }),
