@@ -85,6 +85,7 @@
                                   <span style="flex:1;font-size:11px;font-weight:800;letter-spacing:.05em;color:#3068ED">EMAIL PERSONALIZADO</span>
                                   <button onClick="{{ p.copiar }}" style="height:30px;padding:0 12px;border-radius:9px;background:#111;color:#fff;font-weight:700;font-size:12.5px">{{ p.copiarTxt }}</button>
                                 </div>
+                                <sc-if value="{{ p.hayPara }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;line-height:1.45;overflow-wrap:anywhere;background:#F4F6FB;border-radius:8px;padding:7px 9px"><b>Para:</b> {{ p.para }}<br><b>Cómo llegar:</b> {{ p.via }}</div></sc-if>
                                 <div style="font-size:12.5px;font-weight:700;line-height:1.4;overflow-wrap:anywhere">Asunto: {{ p.asunto }}</div>
                                 <div style="font-size:12.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;color:#374151;user-select:text">{{ p.cuerpo }}</div>
                                 <div style="font-size:11px;color:#9CA3AF">Personalizado con: {{ p.fuente }}</div>
@@ -298,6 +299,107 @@ CEO · BroS Life
   'Cristóbal Viedma': { asunto: 'BroS Life · de una app para niños a su primer móvil', fuente: 'Lingokids (web corporativa) y Tracxn',
     cuerpo: CUERPO('Cristóbal', 'Has construido Lingokids desde Madrid hasta convertirla en una de las apps infantiles de referencia. Sabes mejor que nadie lo que cuesta ganarse la confianza de las familias.', 'Nosotros damos el siguiente paso: el primer móvil del niño. Tu visión como fundador y como inversor nos aportaría muchísimo.') }
 };
+const DOSSIER_INST = "https://julioaguayogoded-cell.github.io/bro/instituciones.html";
+Object.assign(EMAILS, {
+ "Control Z (plataforma de expertos)": {
+  "para": "Equipo de Control Z (pediatras, psicólogos, psiquiatras, neurólogos y expertos educativos)",
+  "via": "Formulario de contacto de la plataforma",
+  "fuente": "Decálogo de Control Z presentado el 28 oct 2026",
+  "asunto": "BroS Life · una herramienta para que las familias apliquen vuestro decálogo",
+  "cuerpo": "Hola:\n\nHemos leído el decálogo que presentasteis y compartimos el diagnóstico: hay una sobredosis digital en la infancia y la adolescencia, y hacen falta límites claros.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nLas familias nos dicen que entienden las recomendaciones, pero no tienen cómo aplicarlas: el único móvil que pueden dar a sus hijos es uno de adulto. BroS Life convierte vuestros límites (tiempo por edad, sin redes hasta los 16, descanso) en reglas que el móvil cumple.\n\nAntes de lanzarlo queremos que lo revisen expertos como vosotros: nos encantaría presentároslo y escuchar lo que encaja y lo que no.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Consejo Escolar de la Comunidad de Madrid": {
+  "para": "María del Pilar Ponce Velasco · presidenta",
+  "via": "consejoescolar@madrid.org · 91 420 82 15",
+  "fuente": "Web del Consejo Escolar (composición y funciones)",
+  "asunto": "BroS Life · conectividad saludable para las familias madrileñas",
+  "cuerpo": "Hola, María del Pilar:\n\nMe dirijo al Consejo Escolar porque reúne a administración, familias, profesorado y titulares de colegios: todos los actores que hoy debaten el uso de pantallas en la infancia.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life no entra en el aula: es una herramienta para las familias fuera del colegio, coherente con la restricción de móviles en clase.\n\nNos gustaría presentarlo en una comisión o jornada del Consejo y que nos orientéis hacia la Consejería y las federaciones para un piloto con colegios en febrero–marzo de 2027.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "FAPA Francisco Giner de los Ríos": {
+  "para": "Junta directiva de la FAPA",
+  "via": "info@fapaginerdelosrios.es · 91 553 97 73",
+  "fuente": "Web de la FAPA (cerca de mil AMPAs, escuela pública)",
+  "asunto": "BroS Life · una alternativa real para el primer móvil de vuestras familias",
+  "cuerpo": "Hola:\n\nEscribo a la FAPA porque representáis a cerca de mil AMPAs y más de medio millón de familias de la escuela pública, que son quienes viven cada día el debate del primer móvil.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nQueremos que la conectividad saludable no sea un privilegio: diseñamos BroS Life para que cualquier familia pueda dar a su hijo un móvil adecuado a su edad.\n\nOs proponemos una charla para familias en vuestras AMPAs y difundir entre ellas el test que haremos con 20 familias en enero.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "CONCAPA Madrid (Educación y Familias)": {
+  "para": "Covadonga Cuervo Arango · presidenta",
+  "via": "915 325 865",
+  "fuente": "Web de Educación y Familias (CONCAPA Madrid)",
+  "asunto": "BroS Life · las familias deciden cómo se conectan sus hijos",
+  "cuerpo": "Hola, Covadonga:\n\nMe dirijo a Educación y Familias porque defendéis que las familias son las primeras responsables de la educación de sus hijos.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nEn BroS Life los padres deciden: qué apps, qué contenido, cuánto tiempo y con quién se conectan sus hijos. El móvil lo cumple.\n\nNos gustaría presentarlo a vuestras asociaciones y explorar un piloto con familias de colegios concertados.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Consejería de Educación · DG Infantil, Primaria y Especial": {
+  "para": "Dirección General de Educación Infantil, Primaria y Especial",
+  "via": "dgeipe@madrid.org",
+  "fuente": "Web de la Comunidad de Madrid (funciones de la DG)",
+  "asunto": "BroS Life · bienestar digital de las familias, coherente con el aula sin pantallas",
+  "cuerpo": "Hola:\n\nMe dirijo a la Dirección General porque marcáis la orientación de infantil y primaria, justo cuando llega el primer móvil (en torno a los 11 años).\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life es una herramienta para las familias fuera del aula, coherente con la restricción de pantallas en clase y con la futura ley de protección de menores en entornos digitales.\n\nOs proponemos una reunión técnica para ver cómo encaja como programa de bienestar digital para familias de primaria.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Consejería de Educación · DG Secundaria y FP": {
+  "para": "Dirección General de Educación Secundaria, FP y Régimen Especial",
+  "via": "91 720 14 04",
+  "fuente": "Web de la Comunidad de Madrid (funciones de la DG)",
+  "asunto": "BroS Life · el móvil de 12 a 16 años, con las familias al mando",
+  "cuerpo": "Hola:\n\nMe dirijo a la Dirección General porque la ESO es la franja en la que el móvil propio ya es casi universal.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life acompaña al adolescente hasta los 16 sin redes sociales ni desconocidos, con más autonomía según crece y con los padres al mando.\n\nNos gustaría validar el enfoque con vosotros y que nos recomendéis institutos para un piloto.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "DAT Madrid-Capital": {
+  "para": "Mario Dorrego Martín · jefe de Área Territorial",
+  "via": "91 720 30 00",
+  "fuente": "Web de la DAT Madrid-Capital",
+  "asunto": "BroS Life · piloto con colegios de Madrid capital",
+  "cuerpo": "Hola, Mario:\n\nMe dirijo a la DAT Madrid-Capital porque mantenéis la relación con los colegios públicos y concertados de la ciudad.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nEn febrero–marzo de 2027 haremos un piloto de 8 semanas en 3 colegios, gratis para las familias y fuera del horario escolar, con un informe de impacto al final.\n\nNos ayudaría mucho que nos identificarais 3–5 colegios de la capital con interés en participar.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Escuelas Católicas de Madrid": {
+  "para": "Equipo de Escuelas Católicas de Madrid",
+  "via": "ecmadrid.org (contacto)",
+  "fuente": "Web de ECM y su posición sobre las pantallas en el aula",
+  "asunto": "BroS Life · una herramienta para las familias, sin tocar el proyecto educativo del colegio",
+  "cuerpo": "Hola:\n\nMe dirijo a Escuelas Católicas porque agrupáis unos 340 colegios y defendéis la autonomía de los centros en el debate sobre las pantallas.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life no entra en el aula ni en el proyecto educativo: es una herramienta para que las familias gestionen el móvil de sus hijos en casa.\n\nNos gustaría presentároslo y explorar cómo difundirlo entre vuestros colegios.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "COFAPA Madrid": {
+  "para": "Junta de COFAPA Madrid",
+  "via": "cofapamadrid.org (contacto)",
+  "fuente": "Web de COFAPA",
+  "asunto": "BroS Life · conectividad saludable para las familias de la concertada",
+  "cuerpo": "Hola:\n\nMe dirijo a COFAPA Madrid porque representáis a las familias de la enseñanza concertada, dentro de una red de cerca de un millón de familias en España.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life da a las familias lo que piden: un primer móvil adecuado a la edad, con ellas al mando.\n\nOs proponemos una sesión para familias y difundir entre vuestras asociaciones el test de enero con 20 familias.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "CONFAPA Madrid": {
+  "para": "Junta de CONFAPA Madrid",
+  "via": "confapamadrid.org (contacto)",
+  "fuente": "Web de CONFAPA y su encuesta a unas 4.000 familias",
+  "asunto": "BroS Life · ¿hacemos juntos una encuesta sobre el primer móvil?",
+  "cuerpo": "Hola:\n\nMe dirijo a CONFAPA porque ya habéis escuchado a unas 4.000 familias para llevar su voz a la Consejería.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nQueremos que BroS Life responda a lo que de verdad preocupa a las familias sobre el primer móvil.\n\nOs proponemos hacer juntos una encuesta a familias sobre el primer móvil y el uso de pantallas, y presentar los resultados a la Consejería.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "DAT Madrid-Norte": {
+  "para": "Lavinia Llamedo Valle · directora de Área Territorial",
+  "via": "91 720 38 00",
+  "fuente": "Web de la DAT Madrid-Norte",
+  "asunto": "BroS Life · colegios de la zona norte para nuestro piloto",
+  "cuerpo": "Hola, Lavinia:\n\nMe dirijo a la DAT Madrid-Norte porque gestionáis los colegios de la zona norte de la región.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nTras el piloto de primavera en 3 colegios queremos ampliarlo a más zonas, siempre gratis para las familias y fuera del horario escolar.\n\nNos ayudaría que nos indicarais colegios de la zona norte con interés en participar.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "DAT Madrid-Sur, Este y Oeste": {
+  "para": "Direcciones de Área Territorial Sur, Este y Oeste",
+  "via": "comunidad.madrid › Direcciones de Área Territorial",
+  "fuente": "Web de la Comunidad de Madrid (DAT)",
+  "asunto": "BroS Life · colegios para la fase de escala de septiembre de 2027",
+  "cuerpo": "Hola:\n\nMe dirijo a vuestras Direcciones de Área porque gestionáis los colegios del sur, este y oeste de la región.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nDespués de los pilotos de primavera, en septiembre de 2027 abriremos BroS Life a más colegios y familias.\n\nNos gustaría presentároslo y saber qué colegios podrían estar interesados en esa fase.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "CICAE": {
+  "para": "Equipo de CICAE",
+  "via": "cicae.com (contacto)",
+  "fuente": "Web de CICAE",
+  "asunto": "BroS Life · un piloto con colegios privados e independientes",
+  "cuerpo": "Hola:\n\nMe dirijo a CICAE porque vuestros colegios privados e internacionales suelen ser los primeros en adoptar innovaciones educativas.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life encaja con familias que buscan lo mejor para sus hijos y que quieren decidir cómo se conectan.\n\nOs proponemos un piloto en 2–3 de vuestros colegios.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Ayuntamiento de Madrid · Educación y Juventud": {
+  "para": "Subdirección General de Educación y Juventud",
+  "via": "sej@madrid.es · 914 801 112",
+  "fuente": "Web del Ayuntamiento de Madrid (Educación y Juventud)",
+  "asunto": "BroS Life · talleres de conectividad saludable para familias madrileñas",
+  "cuerpo": "Hola:\n\nMe dirijo a la Subdirección porque lleváis los programas educativos y de juventud de la ciudad, y estáis presentes en los consejos escolares de los colegios públicos.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con límites y horarios que fijan los padres y un uso orientado a crear, aprender y conectar en persona.\n\nBroS Life ayuda a las familias a dar a sus hijos un primer móvil adecuado a su edad, orientado a crear y a conectar en persona.\n\nOs proponemos talleres para familias en centros municipales y explorar la entrada en vuestros programas de juventud.\n\nOs dejo el dossier para instituciones: https://julioaguayogoded-cell.github.io/bro/instituciones.html (código de acceso: BROS2026).\n\n¿Os vendría bien una reunión de 30 minutos en las próximas semanas?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ }
+});
 const esCamp = h => !!h.campana || /^Edtech · /.test(h.titulo || '');
 const metaCamp = h => { if (h.campana) return { camp: h.campana, contacto: h.contacto || '—', paso: h.titulo }; const p = h.titulo.split(' · '); return { camp: 'Campaña Edtech investors', contacto: p[1] || '—', paso: p.slice(2).join(' · ') }; };
 const fFecha = (d, hecho) => {
@@ -443,7 +545,7 @@ class Component extends DCLogic {
                 const kp = kc + '|' + c.nombre, hechos = c.pasos.filter(h => h.hecho).length, sig = c.pasos.find(h => !h.hecho), fs = fFecha(sig ? sig.deadline : null, !sig);
                 const em = EMAILS[c.nombre], reu = c.pasos.find(h => h.hecho && h.canal === 'reunion');
                 return {
-                  hayEmail: !!em, asunto: em ? em.asunto : '', cuerpo: em ? em.cuerpo : '', fuente: em ? em.fuente : '',
+                  hayEmail: !!em, hayPara: !!(em && em.para), para: em && em.para || '', via: em && em.via || '', asunto: em ? em.asunto : '', cuerpo: em ? em.cuerpo : '', fuente: em ? em.fuente : '',
                   copiarTxt: s.copiado === kp ? 'Copiado ✓' : 'Copiar email',
                   copiar: () => this.copiar(em ? `Asunto: ${em.asunto}\n\n${em.cuerpo}` : '', kp),
                   nombre: c.nombre, abierto: s.abiertoP === kp, progTxt: `${hechos}/${c.pasos.length}`,
