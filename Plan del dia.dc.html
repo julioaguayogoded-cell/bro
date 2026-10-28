@@ -38,7 +38,7 @@
 
   <div style="display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
-      <div style="font-family:Outfit;font-weight:800;font-size:18px">Las 3 vitales</div>
+      <div style="font-family:Outfit;font-weight:800;font-size:18px">Las vitales</div>
       <div style="font-size:12.5px;color:#6B7280">Lo que más acelera la empresa ahora</div>
     </div>
     <sc-for list="{{ vitales }}" as="v" hint-placeholder-count="3">
@@ -138,7 +138,7 @@
     </sc-for>
     <sc-if value="{{ hayHueco }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border:1px dashed #D5DAE3;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
-        <div style="font-weight:700;font-size:14px">Nueva vital ({{ nVitales }} de 3)</div>
+        <div style="font-weight:700;font-size:14px">Nueva vital ({{ nVitales }} de 4)</div>
         <input value="{{ nvT }}" onChange="{{ onNvT }}" placeholder="Qué tiene que conseguirse" style="height:42px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:14px;outline:none">
         <input value="{{ nvP }}" onChange="{{ onNvP }}" placeholder="Por qué es vital (opcional)" style="height:40px;border-radius:10px;border:1px solid #E4E7EE;padding:0 12px;font-size:13.5px;outline:none">
         <div style="display:flex;gap:8px;align-items:center">
@@ -233,7 +233,7 @@ const PERSONAS = [['Julio', '#3068ED'], ['Jesús', '#E56648'], ['Pilar', '#82B94
 const sb = (path, opts = {}) => fetch(SB_URL + '/rest/v1/' + path, { ...opts, headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation', ...(opts.headers || {}) } });
 const color = n => (PERSONAS.find(p => p[0] === n) || [0, '#111'])[1];
 const hoy = () => new Date().toISOString().slice(0, 10);
-const VCOL = ['#3068ED', '#E56648', '#82B94F'];
+const VCOL = ['#3068ED', '#E56648', '#82B94F', '#111111'];
 const CANALES = [['inv_linkedin', 'Invitación LinkedIn'], ['linkedin', 'Mensaje LinkedIn'], ['email', 'Email'], ['llamada', 'Llamada'], ['reunion', 'Reunión cerrada']];
 const aLocal = iso => { if (!iso) return ''; const d = new Date(iso), p = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
 const fReunion = iso => iso ? new Date(iso).toLocaleString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).replace(/\./g, '') : '';
@@ -367,7 +367,7 @@ class Component extends DCLogic {
   async crearVital() {
     const s = this.state, titulo = (s.nvT || '').trim();
     if (!titulo) return this.avisar('Escribe la vital');
-    if ((s.vitales || []).filter(v => !v.completada).length >= 3) return this.avisar('Ya hay 3 vitales: completa una antes');
+    if ((s.vitales || []).filter(v => !v.completada).length >= 4) return this.avisar('Ya hay 4 vitales: completa una antes');
     try {
       const r = await sb('bro_vitales', { method: 'POST', body: JSON.stringify({ titulo, por_que: (s.nvP || '').trim() || null, deadline: s.nvF || null, owner: s.yo || null, orden: Date.now() % 100000 }) });
       if (!r.ok) throw new Error(r.status);
@@ -415,7 +415,7 @@ class Component extends DCLogic {
     });
     const papelera = s.tareas.filter(x => x.borrada).map(x => ({ titulo: x.titulo, recuperar: () => this.cambiar(x.id, { borrada: false }) }));
     const activas = (s.vitales || []).filter(v => !v.completada);
-    const vitales = activas.slice(0, 3).map((v, i) => {
+    const vitales = activas.slice(0, 4).map((v, i) => {
       const hs = (s.hitos || []).filter(h => h.vital_id === v.id).sort((a, b) => (a.orden - b.orden) || (a.deadline || '9999').localeCompare(b.deadline || '9999'));
       const hechos = hs.filter(h => h.hecho).length, sig = hs.find(h => !h.hecho), f = fFecha(v.deadline, false), todo = hs.length > 0 && hechos === hs.length;
       const d = (s.borr || {})[v.id] || {}, setB = c => this.setState(st => ({ borr: { ...st.borr, [v.id]: { ...((st.borr || {})[v.id] || {}), ...c } } }));
@@ -480,7 +480,7 @@ class Component extends DCLogic {
     });
     const completadas = (s.vitales || []).filter(v => v.completada);
     return {
-      vitales, nVitales: activas.length + 1, hayHueco: !s.cargando && activas.length < 3,
+      vitales, nVitales: activas.length + 1, hayHueco: !s.cargando && activas.length < 4,
       nvT: s.nvT || '', nvP: s.nvP || '', nvF: s.nvF || '',
       onNvT: e => this.setState({ nvT: e.target.value }), onNvP: e => this.setState({ nvP: e.target.value }), onNvF: e => this.setState({ nvF: e.target.value }),
       crearVital: () => this.crearVital(),
