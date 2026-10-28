@@ -75,10 +75,14 @@
                           <span style="width:9px;height:9px;border-radius:50%;flex:none;background:{{ p.punto }}"></span>
                           <span style="flex:1;min-width:0;font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.nombre }}</span>
                           <span style="flex:none;height:22px;padding:0 8px;border-radius:7px;display:inline-flex;align-items:center;font-size:11px;font-weight:700;background:{{ p.fBg }};color:{{ p.fTx }};white-space:nowrap">{{ p.fTxt }}</span>
+                          <sc-if value="{{ p.hayOwner }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:11px;font-weight:700;color:#6B7280">{{ p.ownerTxt }}</span></sc-if>
                           <span style="flex:none;font-size:11.5px;font-weight:700;color:#6B7280">{{ p.progTxt }}</span>
                         </button>
                         <sc-if value="{{ p.abierto }}" hint-placeholder-val="{{ false }}">
                           <div style="display:flex;flex-direction:column;gap:8px;padding:2px 12px 12px 30px">
+                            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:11px;font-weight:800;letter-spacing:.05em;color:#6B7280">OWNER</span>
+                              <sc-for list="{{ p.owners }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="height:28px;padding:0 11px;border-radius:999px;font-size:12px;font-weight:700;background:{{ o.bg }};color:{{ o.tx }};border:1px solid {{ o.borde }}">{{ o.n }}</button></sc-for>
+                            </div>
                             <sc-if value="{{ p.hayEmail }}" hint-placeholder-val="{{ false }}">
                               <div style="border:1px solid #E4E7EE;border-radius:10px;background:#fff;padding:10px 12px;display:flex;flex-direction:column;gap:8px">
                                 <div style="display:flex;align-items:center;gap:8px">
@@ -300,6 +304,134 @@ CEO · BroS Life
     cuerpo: CUERPO('Cristóbal', 'Has construido Lingokids desde Madrid hasta convertirla en una de las apps infantiles de referencia. Sabes mejor que nadie lo que cuesta ganarse la confianza de las familias.', 'Nosotros damos el siguiente paso: el primer móvil del niño. Tu visión como fundador y como inversor nos aportaría muchísimo.') }
 };
 const DOSSIER_INST = "https://julioaguayogoded-cell.github.io/bro/instituciones.html";
+Object.assign(EMAILS, {
+ "LEGO": {
+  "para": "Prioridad A · encaje Alto — Brand / Marketing Manager LEGO Iberia, o responsable de LEGO Foundation y juego responsable",
+  "via": "LinkedIn (LEGO Iberia) · lego.com/es-es contacto corporativo",
+  "fuente": "Web de LEGO (Build the Change, juego responsable) · ¡Hola! 2025",
+  "asunto": "BroS Life × LEGO · retos de construcción que salen de la pantalla",
+  "cuerpo": "Hola:\n\nLEGO es, año tras año, el juguete más pedido por los niños en España, y vuestro trabajo en juego responsable va justo en nuestra dirección.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nNuestro pilar Build convierte las ideas de los niños en proyectos reales. Encaja de forma natural con construir, compartir y volver a construir.\n\nOs proponemos retos LEGO dentro de Projects y rewards pactados con los padres («construye y enséñaselo a tu comunidad»). En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Playmobil": {
+  "para": "Prioridad A · encaje Alto — Marketing Manager Playmobil España (Horst Brandstätter Group)",
+  "via": "LinkedIn · playmobil.es contacto",
+  "fuente": "¡Hola! 2025 (juguete más pedido junto a LEGO)",
+  "asunto": "BroS Life × Playmobil · historias que los niños crean con sus manos",
+  "cuerpo": "Hola:\n\nJunto a LEGO, Playmobil es el juguete que más piden los niños en España, y es una marca que los padres asocian a juego de calidad.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nEn BroS Life los niños crean sus propias historias y proyectos; queremos que esa creatividad acabe en el mundo físico.\n\nOs proponemos retos de historias y rewards Playmobil pactados con las familias. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Decathlon": {
+  "para": "Prioridad A · encaje Alto — Marketing / Partnerships Decathlon España, o Fundación Decathlon",
+  "via": "LinkedIn · decathlon.es (prensa y partnerships)",
+  "fuente": "Web de Decathlon (misión de acercar el deporte a todos)",
+  "asunto": "BroS Life × Decathlon · más pasos, menos pantalla",
+  "cuerpo": "Hola:\n\nVuestra misión de acercar el deporte a todos coincide con lo que mide nuestra pulsera Aura: movimiento y descanso.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life empuja a los niños fuera de la pantalla: retos de actividad física validados con datos reales de la pulsera.\n\nOs proponemos retos deportivos con reward Decathlon («X pasos esta semana»), siempre por lo que hacen, no por comprar. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Adidas": {
+  "para": "Prioridad A · encaje Medio-alto — Brand Activation / Partnerships Adidas España",
+  "via": "LinkedIn (Adidas España)",
+  "fuente": "Premios EFYK (marca favorita de niños de 8–14 años) · Reason Why",
+  "asunto": "BroS Life × Adidas · el deporte como recompensa, no como consumo",
+  "cuerpo": "Hola:\n\nEn la última encuesta EFYK a 400 niños de 8 a 14 años en España, Adidas salió como su marca favorita.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life usa la pulsera Aura para que los retos de movimiento sean reales y medibles.\n\nOs proponemos retos deportivos con experiencias Adidas (clinics, eventos), por lo que el niño hace, no por lo que compra. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Nike": {
+  "para": "Prioridad A · encaje Medio-alto — Community Impact / Brand Nike Iberia",
+  "via": "LinkedIn (Nike Iberia)",
+  "fuente": "Premios EFYK (marca de moda favorita) · programa Nike Community Impact",
+  "asunto": "BroS Life × Nike · mover a la próxima generación",
+  "cuerpo": "Hola:\n\nNike fue la marca de moda favorita de los niños en la encuesta EFYK, y vuestro programa de impacto comunitario busca que los niños se muevan más.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life mide actividad y descanso con la pulsera Aura y convierte el movimiento en retos reales.\n\nOs proponemos retos de actividad con experiencias Nike para las familias del piloto. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Casa del Libro": {
+  "para": "Prioridad A · encaje Alto — Javier (CEO) o responsable de marketing infantil y juvenil",
+  "via": "Email ya enviado al CEO · seguimiento",
+  "fuente": "Conversación previa · reto «Lee 3 libros» en el prototipo",
+  "asunto": "BroS Life × Casa del Libro · siguiente paso: carta de intenciones",
+  "cuerpo": "Hola:\n\nGracias de nuevo por el interés en BroS Life. Ya tenemos funcionando el reto de lectura con Casa del Libro dentro del prototipo.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nLa lectura es uno de los ejes de BroS Life: Bro AI valida la lectura con un test y los padres aprueban el reward.\n\nOs proponemos ser marca fundadora con los retos de lectura del test de enero. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Fundación Real Madrid": {
+  "para": "Prioridad A · encaje Alto — Área de Proyectos Sociales y Educativos, Fundación Real Madrid",
+  "via": "fundacionrealmadrid.org contacto · LinkedIn",
+  "fuente": "Web de la Fundación (escuelas sociodeportivas y valores)",
+  "asunto": "BroS Life × Fundación Real Madrid · valores del deporte en el primer móvil",
+  "cuerpo": "Hola:\n\nVuestras escuelas sociodeportivas educan en valores a través del fútbol, la gran pasión de los niños de esta edad.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life da a los niños contenido oficial y retos deportivos en un entorno seguro, sin redes ni desconocidos.\n\nOs proponemos contenido oficial y retos de valores para las familias del piloto. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Fundación Atlético de Madrid": {
+  "para": "Prioridad A · encaje Alto — Área social y de proyectos educativos, Fundación Atlético de Madrid",
+  "via": "fundacion.atleticodemadrid.com contacto",
+  "fuente": "Web de la Fundación (programas educativos y sociales)",
+  "asunto": "BroS Life × Fundación Atlético · deporte y valores, sin redes",
+  "cuerpo": "Hola:\n\nLa Fundación trabaja con niños y familias a través del deporte, y el fútbol es lo que más les mueve a esta edad.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life ofrece contenido oficial y retos deportivos en un primer móvil sin redes sociales.\n\nOs proponemos retos y contenido oficial para las familias del piloto de Madrid. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Fundación LaLiga": {
+  "para": "Prioridad A · encaje Alto — Fundación LaLiga · proyectos sociales y educativos",
+  "via": "fundacion.laliga.com contacto",
+  "fuente": "Web de la Fundación LaLiga",
+  "asunto": "BroS Life × Fundación LaLiga · el fútbol como escuela de valores digitales",
+  "cuerpo": "Hola:\n\nLa Fundación LaLiga trabaja los valores del fútbol con niños de toda España.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life lleva esos valores al primer móvil: contenido oficial, retos deportivos y comunidades reales.\n\nOs proponemos ser partner de contenido y retos de valores. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Minecraft (Microsoft)": {
+  "para": "Prioridad B · encaje Medio (con condiciones) — Minecraft Education / Microsoft Education España",
+  "via": "education.minecraft.net partners · LinkedIn Microsoft Education España",
+  "fuente": "Kids' Choice Awards (Minecraft) · taquilla España 2025",
+  "asunto": "BroS Life × Minecraft Education · crear fuera de la pantalla",
+  "cuerpo": "Hola:\n\nMinecraft es el videojuego que más inspira a construir a los niños, y su película fue de las más vistas de 2025 en España.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life no mete juegos dentro del móvil: convertimos la creatividad en proyectos reales.\n\nOs proponemos retos creativos con Minecraft Education fuera del juego. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Pokémon": {
+  "para": "Prioridad B · encaje Medio (con condiciones) — The Pokémon Company International · marketing Europa",
+  "via": "pokemon.com/es contacto corporativo · LinkedIn",
+  "fuente": "Circana (ventas récord de Pokémon)",
+  "asunto": "BroS Life × Pokémon · quedadas reales, no cajas sorpresa",
+  "cuerpo": "Hola:\n\nPokémon es la licencia que más vende entre los niños, y su juego organizado reúne a familias en persona.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life conecta a los niños solo en persona, y eso encaja con torneos y quedadas.\n\nOs proponemos rewards físicos y eventos en persona, sin compras sorpresa por dinero. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Nintendo": {
+  "para": "Prioridad B · encaje Medio (con condiciones) — Marketing Nintendo Ibérica",
+  "via": "nintendo.es (prensa) · LinkedIn",
+  "fuente": "Popularidad de la consola familiar en esta edad",
+  "asunto": "BroS Life × Nintendo · el juego en familia, pactado con los padres",
+  "cuerpo": "Hola:\n\nNintendo es la consola de las familias, y siempre ha cuidado el juego en compañía.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nEn BroS Life los padres pactan los rewards; el tiempo de juego en familia es uno de los favoritos.\n\nOs proponemos rewards de juego en familia pactados con los padres, siempre fuera del móvil. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Disney": {
+  "para": "Prioridad B · encaje Medio-alto — Brand / Consumer Products Disney España",
+  "via": "LinkedIn (The Walt Disney Company Iberia)",
+  "fuente": "Taquilla España 2025 (Lilo & Stitch, número uno)",
+  "asunto": "BroS Life × Disney · historias que los niños crean",
+  "cuerpo": "Hola:\n\nLilo & Stitch fue la película más vista de 2025 en España, y Disney cuida como pocas marcas su relación con los niños.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life convierte la imaginación en proyectos: dibujos, historias y retos creativos.\n\nOs proponemos contenido oficial y retos creativos con vuestras historias. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Educa Borrás": {
+  "para": "Prioridad C · encaje Alto — Marketing Educa Borrás",
+  "via": "educaborras.com contacto · LinkedIn",
+  "fuente": "¡Hola! 2025 (Educa Magnetics, top ventas STEM)",
+  "asunto": "BroS Life × Educa · aprender jugando, fuera de la pantalla",
+  "cuerpo": "Hola:\n\nEduca es una marca española de juego educativo y STEM que los padres conocen y valoran.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nNuestro pilar Projects anima a los niños a aprender haciendo.\n\nOs proponemos retos educativos con reward Educa. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Cefa Toys": {
+  "para": "Prioridad C · encaje Alto — Marketing Cefa Toys",
+  "via": "cefatoys.com contacto",
+  "fuente": "Marca española de juguete científico (Quimicefa)",
+  "asunto": "BroS Life × Cefa · pequeños científicos",
+  "cuerpo": "Hola:\n\nQuimicefa ha despertado vocaciones científicas en generaciones de niños en España.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life ayuda a los niños a convertir su curiosidad en proyectos reales.\n\nOs proponemos retos de ciencia en Projects con reward Cefa. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Faber-Castell": {
+  "para": "Prioridad C · encaje Alto — Marketing Faber-Castell España",
+  "via": "faber-castell.es contacto · LinkedIn",
+  "fuente": "Marca de dibujo y creatividad infantil",
+  "asunto": "BroS Life × Faber-Castell · crear con las manos",
+  "cuerpo": "Hola:\n\nFaber-Castell acompaña a los niños en su primera forma de crear: dibujar.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nBroS Life empuja la creatividad fuera de la pantalla.\n\nOs proponemos retos de dibujo y manualidades con reward Faber-Castell. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Fnac": {
+  "para": "Prioridad C · encaje Medio-alto — Marketing / Partnerships Fnac España",
+  "via": "LinkedIn (Fnac España)",
+  "fuente": "Distribución de libros, cultura y tecnología",
+  "asunto": "BroS Life × Fnac · cultura y tecnología para la próxima generación",
+  "cuerpo": "Hola:\n\nFnac reúne cultura y tecnología, justo el cruce en el que nace BroS Life.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nPodemos llevar lectura, música y creación a los niños con un primer móvil sano.\n\nOs proponemos rewards culturales y explorar la distribución del pack. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ },
+ "Parques Reunidos (Faunia, Parque Warner)": {
+  "para": "Prioridad C · encaje Alto — Marketing / Alianzas Parques Reunidos",
+  "via": "parquesreunidos.com contacto corporativo · LinkedIn",
+  "fuente": "Parques de ocio familiar en Madrid",
+  "asunto": "BroS Life × Parques Reunidos · el mejor reward es vivirlo en familia",
+  "cuerpo": "Hola:\n\nFaunia y Parque Warner son de los planes favoritos de las familias madrileñas.\n\nSoy Julio Aguayo, CEO de BroS Life. Estamos construyendo el primer ecosistema de conectividad saludable para niños y adolescentes de 8 a 16 años: un primer móvil y una pulsera con sistema operativo propio, sin redes sociales, feeds ni desconocidos, con los padres al mando y una IA que les ayuda a convertir sus ideas en proyectos reales.\n\nEn BroS Life los rewards que más valor dan son las experiencias en familia.\n\nOs proponemos rewards de experiencias en vuestros parques. En esta fase buscamos marcas fundadoras que firmen una carta de intenciones (LOI) no vinculante: sin coste ni exclusividad, solo el compromiso de explorar juntos los primeros retos con las familias de nuestro test (enero) y del piloto en colegios (abril).\n\n¿Te encajaría una llamada de 20 minutos en noviembre?\n\nUn saludo,\nJulio Aguayo\nCEO · BroS Life\n+34 619 402 892 · julio@thebros.life"
+ }
+});
 Object.assign(EMAILS, {
  "Control Z (plataforma de expertos)": {
   "para": "Equipo de Control Z (pediatras, psicólogos, psiquiatras, neurólogos y expertos educativos)",
@@ -539,19 +671,21 @@ class Component extends DCLogic {
             const kc = v.id + '|' + g.nombre, todos = g.contactos.flatMap(c => c.pasos), hechosC = todos.filter(h => h.hecho).length;
             return {
               nombre: g.nombre, abierta: s.abiertaC === kc, flecha: s.abiertaC === kc ? '▾' : '▸',
-              progTxt: `${g.contactos.filter(c => c.pasos.some(h => h.hecho && h.canal === 'reunion')).length} reuniones · ${g.contactos.filter(c => c.pasos.every(h => h.hecho)).length}/${g.contactos.length} contactos · ${hechosC}/${todos.length}`,
+              progTxt: `${(n => n ? n + ' LOI · ' : '')(g.contactos.filter(c => c.pasos.some(h => h.hecho && h.canal === 'loi')).length)}${g.contactos.filter(c => c.pasos.some(h => h.hecho && h.canal === 'reunion')).length} reuniones · ${g.contactos.filter(c => c.pasos.every(h => h.hecho)).length}/${g.contactos.length} contactos · ${hechosC}/${todos.length}`,
               toggle: () => this.setState({ abiertaC: s.abiertaC === kc ? null : kc }),
               contactos: g.contactos.map(c => {
                 const kp = kc + '|' + c.nombre, hechos = c.pasos.filter(h => h.hecho).length, sig = c.pasos.find(h => !h.hecho), fs = fFecha(sig ? sig.deadline : null, !sig);
-                const em = EMAILS[c.nombre], reu = c.pasos.find(h => h.hecho && h.canal === 'reunion');
+                const em = EMAILS[c.nombre], reu = c.pasos.find(h => h.hecho && h.canal === 'reunion'), loi = c.pasos.find(h => h.hecho && h.canal === 'loi'), own = (c.pasos.find(h => h.owner) || {}).owner || null;
                 return {
                   hayEmail: !!em, hayPara: !!(em && em.para), para: em && em.para || '', via: em && em.via || '', asunto: em ? em.asunto : '', cuerpo: em ? em.cuerpo : '', fuente: em ? em.fuente : '',
                   copiarTxt: s.copiado === kp ? 'Copiado ✓' : 'Copiar email',
                   copiar: () => this.copiar(em ? `Asunto: ${em.asunto}\n\n${em.cuerpo}` : '', kp),
                   nombre: c.nombre, abierto: s.abiertoP === kp, progTxt: `${hechos}/${c.pasos.length}`,
-                  punto: reu ? '#3068ED' : hechos === c.pasos.length ? '#82B94F' : hechos ? '#E8B04B' : '#D5DAE3',
-                  fTxt: reu ? (reu.reunion ? 'Reunión · ' + fReunion(reu.reunion) : 'Reunión cerrada') : sig ? fs.txt : 'Hecho',
-                  fBg: reu ? '#3068ED' : fs.bg, fTx: reu ? '#fff' : fs.tx,
+                  punto: loi ? '#E56648' : reu ? '#3068ED' : hechos === c.pasos.length ? '#82B94F' : hechos ? '#E8B04B' : '#D5DAE3',
+                  fTxt: loi ? '★ LOI firmada' : reu ? (reu.reunion ? 'Reunión · ' + fReunion(reu.reunion) : 'Reunión cerrada') : sig ? fs.txt : 'Hecho',
+                  fBg: loi ? '#E56648' : reu ? '#3068ED' : fs.bg, fTx: loi || reu ? '#fff' : fs.tx,
+                  ownerTxt: own || '', hayOwner: !!own,
+                  owners: PERSONAS.map(([n, col]) => { const on = own === n; return { n, bg: on ? col : '#fff', tx: on ? '#fff' : '#111', borde: on ? col : '#E4E7EE', onClick: () => c.pasos.forEach(h => this.guardar('bro_hitos', h.id, { owner: on ? null : n }, 'hitos')) }; }),
                   toggle: () => this.setState({ abiertoP: s.abiertoP === kp ? null : kp }),
                   pasos: c.pasos.map(h => {
                     const fh = fFecha(h.deadline, h.hecho);
@@ -561,7 +695,7 @@ class Component extends DCLogic {
                       onFecha: e => this.guardar('bro_hitos', h.id, { deadline: e.target.value || null }, 'hitos'),
                       esReunion: h.hecho && h.canal === 'reunion', reunionVal: aLocal(h.reunion), reunionTxt: h.reunion ? fReunion(h.reunion) : 'Pon fecha y hora',
                       onReunion: e => this.guardar('bro_hitos', h.id, { reunion: e.target.value ? new Date(e.target.value).toISOString() : null }, 'hitos'),
-                      canales: CANALES.map(([k, t]) => { const on = h.hecho && h.canal === k, col = k === 'reunion' ? '#3068ED' : '#82B94F'; return { t: (on ? '✓ ' : '') + t, bg: on ? col : '#fff', tx: on ? '#fff' : k === 'reunion' ? '#2452C4' : '#111', borde: on ? col : k === 'reunion' ? '#BFD0F8' : '#E4E7EE',
+                      canales: (h.titulo === 'LOI firmada' ? [['loi', 'LOI firmada']] : CANALES).map(([k, t]) => { const on = h.hecho && h.canal === k, col = k === 'loi' ? '#E56648' : k === 'reunion' ? '#3068ED' : '#82B94F'; return { t: (on ? '✓ ' : '') + t, bg: on ? col : '#fff', tx: on ? '#fff' : k === 'reunion' ? '#2452C4' : '#111', borde: on ? col : k === 'reunion' ? '#BFD0F8' : '#E4E7EE',
                         onClick: () => this.guardar('bro_hitos', h.id, on ? { hecho: false, canal: null } : { hecho: true, canal: k }, 'hitos') }; })
                     };
                   })
